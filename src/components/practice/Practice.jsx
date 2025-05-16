@@ -23,7 +23,7 @@ export default function Practice({ collection }) {
   return (
     <div
       ref={containerRef}
-      className="max-w-7xl mx-auto min-h-screen bg-gradient-to-br from-white to-blue-50 p-10 rounded-3xl shadow-xl mt-10"
+      className="max-w-7xl mx-auto min-h-[95vh] bg-gradient-to-br from-white to-blue-50 p-10 rounded-3xl shadow-xl mt-10"
     >
       {collection.title ? (
         <PracticeItem

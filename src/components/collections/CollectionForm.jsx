@@ -35,42 +35,42 @@ const CollectionForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-semibold mb-6 text-center text-blue-700">
+    <div className="max-w-2xl mx-auto bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg p-10">
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-600">
         Yeni Koleksiyon Oluştur
       </h2>
 
-      <form className="space-y-5" onSubmit={handleSaveCollection}>
+      <form className="space-y-6" onSubmit={handleSaveCollection}>
         <div>
           <label
             htmlFor="title"
-            className="block mb-2 font-medium text-gray-700"
+            className="block mb-2 text-base font-medium text-gray-700"
           >
             Koleksiyon Başlığı
           </label>
           <input
             type="text"
             id="title"
-            placeholder="Başlık girin"
+            placeholder="Örneğin: İngilizce Fiiller"
             onChange={(e) =>
               setNewCollection((prev) => ({ ...prev, title: e.target.value }))
             }
             value={newCollection.title}
-            className="w-full border border-gray-300 rounded-md px-4 py-2 capitalize focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border border-gray-300 rounded-lg px-5 py-3 capitalize bg-blue-100/40 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
         </div>
 
         <div>
           <label
             htmlFor="description"
-            className="block mb-2 font-medium text-gray-700"
+            className="block mb-2 text-base font-medium text-gray-700"
           >
             Açıklama (isteğe bağlı)
           </label>
           <textarea
             id="description"
-            rows="3"
-            placeholder="Koleksiyon hakkında kısa bilgi"
+            rows="4"
+            placeholder="Koleksiyon hakkında kısa bir açıklama yazabilirsiniz..."
             onChange={(e) =>
               setNewCollection((prev) => ({
                 ...prev,
@@ -78,15 +78,15 @@ const CollectionForm = () => {
               }))
             }
             value={newCollection.description}
-            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+            className="w-full border border-gray-300 rounded-lg px-5 py-3 bg-blue-100/40 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition-colors"
+          className="w-full bg-blue-300 hover:bg-blue-400 text-blue-900 font-semibold py-3 rounded-lg transition-colors"
         >
-          Oluştur
+          Koleksiyonu Oluştur
         </button>
       </form>
     </div>

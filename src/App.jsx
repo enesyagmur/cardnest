@@ -10,7 +10,7 @@ function App() {
   const [collectionForPractice, setCollectionForPractice] = useState({});
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-r from-blue-200 via-cyan-200 to-teal-200">
+    <div className="flex flex-col min-h-screen bg-gradient-to-r from-[#a3cef1] via-[#a8d5ba] to-[#ffb6b9] bg-[length:800%_800%] animate-gradientShift">
       <Header page={page} setPage={setPage} />
 
       <main className="flex-grow container mx-auto px-4 py-10 max-w-4xl">
@@ -25,7 +25,7 @@ function App() {
       </main>
 
       <footer className="text-center py-4 text-sm text-gray-500 border-t border-gray-200">
-        © 2025 CardNest - Basit Kart Uygulaması
+        © 2025 CardNest - Enes Yağmur Tarafından Basit Kart Uygulaması
       </footer>
     </div>
   );

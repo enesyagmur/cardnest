@@ -31,48 +31,51 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <div className="max-w-7xl mx-auto bg-white p-8 rounded-2xl shadow-lg opacity-95">
       {selectCollection.state ? (
         <CollectionItem selectedCollection={selectCollection.collection} />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="flex flex-wrap justify-center gap-6">
           {collections.map((col) => (
             <div
               key={col.id}
-              className="bg-gradient-to-tr from-white to-blue-50 border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-lg transition-all duration-300"
+              className="w-full sm:w-5/12 bg-gradient-to-br from-white to-blue-50 border border-gray-200 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 
+          flex flex-col justify-between min-h-[240px]"
             >
-              <div className="flex justify-between items-center mb-2">
-                <div>
-                  <h3 className="text-xl font-bold text-blue-700 capitalize">
-                    {col.title}
-                  </h3>
-                  <span className="inline-block text-xs font-medium text-blue-400">
-                    Koleksiyon
-                  </span>
+              <div>
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h3 className="text-xl font-bold text-blue-700 capitalize">
+                      {col.title}
+                    </h3>
+                    <span className="text-xs font-medium text-blue-400">
+                      Koleksiyon
+                    </span>
+                  </div>
+                  <div className="text-sm text-blue-600 font-semibold whitespace-nowrap">
+                    🗂️ {col.cards.length} kart
+                  </div>
                 </div>
-                <div className="text-sm text-gray-600 font-medium whitespace-nowrap">
-                  🗂️ {col.cards.length} kart
-                </div>
+
+                <p className="text-gray-700 text-sm line-clamp-3 leading-relaxed">
+                  {col.description}
+                </p>
               </div>
 
-              <p className="text-gray-600 mt-1 line-clamp-2">
-                {col.description}
-              </p>
-
-              <div className="mt-4 flex flex-wrap gap-2 text-sm">
+              <div className="mt-5 flex flex-wrap gap-2 text-sm">
                 <button
-                  className="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                  className="px-4 py-1.5 bg-blue-200 hover:bg-blue-300 text-blue-800 rounded-md transition-colors"
                   onClick={() => handleMoveToPractice(col)}
                 >
                   Pratik Yap
                 </button>
                 <button
-                  className="px-3 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition"
+                  className="px-4 py-1.5 bg-yellow-200 hover:bg-yellow-300 text-yellow-800 rounded-md transition-colors"
                   onClick={() => handleSelectCollection(col)}
                 >
                   Düzenle
                 </button>
-                <button className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
+                <button className="px-4 py-1.5 bg-red-200 hover:bg-red-300 text-red-800 rounded-md transition-colors">
                   Sil
                 </button>
               </div>
