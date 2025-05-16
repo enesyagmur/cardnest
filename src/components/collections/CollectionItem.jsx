@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CardForm from "./CardForm"; // yolunu projene göre ayarla
+import CardList from "./CardList";
 
 const CollectionItem = ({ selectedCollection }) => {
   const [showCardForm, setShowCardForm] = useState(false);
@@ -14,9 +15,6 @@ const CollectionItem = ({ selectedCollection }) => {
           <p className="text-gray-600">{selectedCollection.description}</p>
         </div>
         <div className="space-x-3 flex">
-          <button className="text-sm px-3 py-1 bg-red-500 hover:bg-red-600 rounded-md text-white transition-colors">
-            Koleksiyonu Sil
-          </button>
           <button
             onClick={() => setShowCardForm(!showCardForm)}
             className="text-sm px-3 py-1 bg-green-500 hover:bg-green-600 rounded-md text-white transition-colors"
@@ -25,10 +23,10 @@ const CollectionItem = ({ selectedCollection }) => {
           </button>
         </div>
       </header>
-
+      {!showCardForm && <CardList cards={selectedCollection.cards} />}
       {/* Kart ekleme formu burada açılıp kapanacak */}
       {showCardForm && (
-        <div className="mt-4 border-t border-gray-300 pt-6 bg-white rounded-lg shadow-md px-6 pb-6">
+        <div className="mt-4 border-t border-gray-300 pt-6 bg-white  px-6 pb-6">
           <CardForm collection={selectedCollection} />
         </div>
       )}

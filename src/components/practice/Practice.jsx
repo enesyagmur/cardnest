@@ -1,14 +1,40 @@
-export default function Practice() {
-  return (
-    <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
-      <button
-        className="mb-4 text-blue-600 hover:underline"
-        aria-label="Koleksiyonlar sayfasına geri dön"
-      >
-        &larr; Koleksiyonlar
-      </button>
+import { useEffect, useRef, useState } from "react";
+import PracticeItem from "./PracticeItem";
 
-      <h2 className="text-2xl font-bold mb-4 text-blue-700">ile Pratik Yap</h2>
+export default function Practice({ collection }) {
+  const [rnd, setRnd] = useState(0);
+  const containerRef = useRef(null);
+
+  const createRandomNumber = () => {
+    if (collection.cards.length > 0) {
+      setRnd(Math.floor(Math.random() * collection.cards.length));
+    }
+  };
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [collection]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="max-w-7xl mx-auto min-h-screen bg-gradient-to-br from-white to-blue-50 p-10 rounded-3xl shadow-xl mt-10"
+    >
+      {collection.title ? (
+        <PracticeItem
+          card={collection.cards[rnd]}
+          createRandomNumberFunc={createRandomNumber}
+        />
+      ) : (
+        <div className="text-center text-gray-500 text-lg mt-20">
+          <p>📂 Henüz bir koleksiyon seçilmedi.</p>
+        </div>
+      )}
     </div>
   );
 }

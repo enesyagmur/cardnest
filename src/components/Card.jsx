@@ -1,12 +1,10 @@
 import React from "react";
 
-const Card = () => {
+const Card = ({ card }) => {
   return (
     <div className="bg-white border border-gray-300 rounded-xl shadow-md max-w-sm mx-auto p-5 cursor-pointer">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Kart Başlığı</h3>
-      <p className="text-gray-700 text-sm leading-relaxed mb-5">
-        Kart içeriği buraya yazılır. Burada kısa açıklama ya da detay olabilir.
-      </p>
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">{card.front}</h3>
+      <p className="text-gray-700 text-sm leading-relaxed mb-5">{card.back}</p>
 
       <div className="flex gap-3">
         <button className="flex-grow py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition">

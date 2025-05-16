@@ -22,6 +22,7 @@ const CardForm = ({ collection }) => {
     });
 
     localStorage.setItem("collectionList", JSON.stringify(updatedCollections));
+    setInputCard({ front: "", back: "" });
   };
 
   return (
@@ -43,6 +44,7 @@ const CardForm = ({ collection }) => {
           onChange={(e) =>
             setInputCard((prev) => ({ ...prev, front: e.target.value }))
           }
+          value={inputCard.front}
         />
       </label>
 
@@ -56,6 +58,7 @@ const CardForm = ({ collection }) => {
           onChange={(e) =>
             setInputCard((prev) => ({ ...prev, back: e.target.value }))
           }
+          value={inputCard.back}
         />
       </label>
 
