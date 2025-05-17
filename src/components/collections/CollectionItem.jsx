@@ -4,6 +4,7 @@ import CardList from "./CardList";
 
 const CollectionItem = ({ selectedCollection }) => {
   const [showCardForm, setShowCardForm] = useState(false);
+  console.log(selectedCollection);
 
   return (
     <div className="max-w-3xl container mx-auto bg-white rounded-lg shadow-md p-6 mb-6">

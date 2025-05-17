@@ -2,9 +2,15 @@ const CardList = ({ cards }) => {
   return (
     <div className="max-w-7xl mx-auto space-y-6 mt-6">
       {cards.length === 0 && (
-        <p className="text-gray-500 italic text-center">
-          Bu koleksiyonda henüz kart yok.
-        </p>
+        <div className="flex flex-col items-center justify-center text-center p-8 bg-gray-50 border border-dashed border-gray-300 rounded-xl shadow-sm mt-10 max-w-xl mx-auto">
+          <div className="text-4xl text-gray-400 mb-4">🃏</div>
+          <h2 className="text-lg font-semibold text-gray-700 mb-2">
+            Bu koleksiyonda henüz kart bulunmuyor
+          </h2>
+          <p className="text-gray-500 mb-4">
+            Kart ekleyerek bu koleksiyonu zenginleştirebilirsiniz.
+          </p>
+        </div>
       )}
 
       {cards.map((card) => (
@@ -26,8 +32,6 @@ const CardList = ({ cards }) => {
               </button>
             </div>
           </div>
-
-          <p className="mt-4 text-gray-700 leading-relaxed">{card.back}</p>
         </div>
       ))}
     </div>

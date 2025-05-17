@@ -1,155 +1,26 @@
 import React, { useReducer } from "react";
-
-const initialState = {
-  front: "",
-  back: {
-    paragraphList: [],
-    descriptionList: [],
-    dotList: [],
-  },
-};
-
-function cardReducer(state, action) {
-  switch (action.type) {
-    case "SET_FRONT":
-      return { ...state, front: action.payload };
-
-    case "ADD_PARAGRAPH":
-      return {
-        ...state,
-        back: {
-          ...state.back,
-          paragraphList: [
-            ...state.back.paragraphList,
-            { paragraphTitle: "", paragraphContent: "" },
-          ],
-        },
-      };
-
-    case "SET_PARAGRAPH_TITLE":
-      return {
-        ...state,
-        back: {
-          ...state.back,
-          paragraphList: state.back.paragraphList.map((p, index) =>
-            index === action.payload.index
-              ? { ...p, paragraphTitle: action.payload.value }
-              : p
-          ),
-        },
-      };
-
-    case "SET_PARAGRAPH_CONTENT":
-      return {
-        ...state,
-        back: {
-          ...state.back,
-          paragraphList: state.back.paragraphList.map((p, index) =>
-            index === action.payload.index
-              ? { ...p, paragraphContent: action.payload.value }
-              : p
-          ),
-        },
-      };
-
-    case "ADD_DESCRIPTION_ITEM":
-      return {
-        ...state,
-        back: {
-          ...state.back,
-          descriptionList: [...state.back.descriptionList, ""],
-        },
-      };
-
-    case "SET_DESCRIPTION_ITEM":
-      return {
-        ...state,
-        back: {
-          ...state.back,
-          descriptionList: state.back.descriptionList.map((desc, index) =>
-            index === action.payload.index ? action.payload.value : desc
-          ),
-        },
-      };
-
-    case "ADD_LIST":
-      return {
-        ...state,
-        back: {
-          ...state.back,
-          dotList: [...state.back.dotList, { listTitle: "", listArray: [] }],
-        },
-      };
-
-    case "ADD_ITEM_LISTARRAY":
-      return {
-        ...state,
-        back: {
-          ...state.back,
-          dotList: state.back.dotList.map((item, index) =>
-            index === action.payload
-              ? { ...item, listArray: [...item.listArray, ""] }
-              : item
-          ),
-        },
-      };
-
-    case "SET_ITEM_LISTARRAY":
-      return {
-        ...state,
-        back: {
-          ...state.back,
-          dotList: state.back.dotList.map((array, index) =>
-            index === action.payload.listIndex
-              ? {
-                  ...array,
-                  listArray: array.listArray.map((item, index) =>
-                    index === action.payload.dotIndex
-                      ? action.payload.value
-                      : item
-                  ),
-                }
-              : array
-          ),
-        },
-      };
-
-    case "SET_LIST_TITLE":
-      return {
-        ...state,
-        back: {
-          ...state.back,
-          dotList: state.back.dotList.map((l, index) =>
-            index === action.payload.index
-              ? { ...l, listTitle: action.payload.value }
-              : l
-          ),
-        },
-      };
-  }
-}
+import { cardReducer, initialState } from "../../reducers/cardReducer";
 
 const CardForm = ({ collection }) => {
   const [state, dispatch] = useReducer(cardReducer, initialState);
-  console.log(state);
 
   const handleSaveCard = (e) => {
     e.preventDefault();
-    // const newCards = collection.cards;
-    // newCards.push({ id: Date.now(), ...state });
+    const newCards = collection.cards;
+    newCards.push({ id: Date.now(), ...state });
 
-    // const data = localStorage.getItem("collectionList");
-    // const collections = JSON.parse(data);
+    const data = localStorage.getItem("collectionList");
+    const collections = JSON.parse(data);
 
-    // const updatedCollections = collections.map((item) => {
-    //   if (item.id === collection.id) {
-    //     return { ...item, cards: [...newCards] };
-    //   }
-    //   return item;
-    // });
+    const updatedCollections = collections.map((item) => {
+      if (item.id === collection.id) {
+        return { ...item, cards: [...newCards] };
+      }
+      return item;
+    });
 
-    // localStorage.setItem("collectionList", JSON.stringify(updatedCollections));
-    // state({ front: "", back: "" });
+    localStorage.setItem("collectionList", JSON.stringify(updatedCollections));
+    dispatch({ type: "RESET_STATE" });
   };
 
   return (
@@ -170,6 +41,7 @@ const CardForm = ({ collection }) => {
           onChange={(e) =>
             dispatch({ type: "SET_FRONT", payload: e.target.value })
           }
+          value={state.front}
         />
       </label>
 

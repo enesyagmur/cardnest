@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PracticeCard from "./PracticeCard";
 
 export default function PracticeItem({ card, createRandomNumberFunc }) {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -16,11 +17,7 @@ export default function PracticeItem({ card, createRandomNumberFunc }) {
       </h2>
 
       {/* Cevap */}
-      {showAnswer && (
-        <div className="flex-grow text-base leading-relaxed bg-white text-start text-gray-800 p-4 rounded-md border border-gray-100 shadow-inner">
-          {card.back}
-        </div>
-      )}
+      {showAnswer && <PracticeCard card={card} />}
 
       {/* Butonlar */}
       <div className="flex flex-col items-center gap-4">

@@ -21,7 +21,9 @@ function App() {
             setCollectionForPractice={setCollectionForPractice}
           />
         )}
-        {page === "practice" && <Practice collection={collectionForPractice} />}
+        {page === "practice" && (
+          <Practice collection={collectionForPractice} setPage={setPage} />
+        )}
       </main>
 
       <footer className="text-center py-4 text-sm text-gray-500 border-t border-gray-200">

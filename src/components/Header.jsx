@@ -15,7 +15,7 @@ export default function Header({ page, setPage }) {
         </button>
         <button
           className={`px-6 py-2 rounded-md font-semibold transition-colors duration-300 ${
-            page === "collections"
+            page === "collectionList"
               ? "bg-blue-600 text-white shadow-md shadow-blue-300"
               : "text-blue-600 hover:bg-blue-100"
           }`}
