@@ -1,70 +1,197 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
+
+const initialState = {
+  front: "",
+  back: {
+    paragraphList: [],
+    lists: [],
+  },
+};
+
+function cardReducer(state, action) {
+  switch (action.type) {
+    case "ADD_PARAGRAPH":
+      return {
+        ...state,
+        back: {
+          ...state.back,
+          paragraphList: [
+            ...state.back.paragraphList,
+            { paragraphTitle: "", paragraphContent: "" },
+          ],
+        },
+      };
+
+    case "SET_PARAGRAPH_TITLE":
+      return {
+        ...state,
+        back: {
+          ...state.back,
+          paragraphList: state.back.paragraphList.map((p, index) =>
+            index === action.payload.index
+              ? { ...p, paragraphTitle: action.payload.value }
+              : p
+          ),
+        },
+      };
+
+    case "SET_PARAGRAPH_CONTENT":
+      return {
+        ...state,
+        back: {
+          ...state.back,
+          paragraphList: state.back.paragraphList.map((p, index) =>
+            index === action.payload.index
+              ? { ...p, paragraphContent: action.payload.value }
+              : p
+          ),
+        },
+      };
+    case "ADD_LIST":
+      return {
+        ...state,
+        back: {
+          ...state.back,
+          lists: [...state.back.lists, { listTitle: "", listArray: [] }],
+        },
+      };
+
+    case "SET_FRONT":
+      return { ...state, front: action.payload };
+  }
+}
 
 const CardForm = ({ collection }) => {
-  const [inputCard, setInputCard] = useState({
-    front: "",
-    back: "",
-  });
+  const [state, dispatch] = useReducer(cardReducer, initialState);
+  console.log(state);
 
   const handleSaveCard = (e) => {
     e.preventDefault();
-    const newCards = collection.cards;
-    newCards.push({ id: Date.now(), ...inputCard });
+    // const newCards = collection.cards;
+    // newCards.push({ id: Date.now(), ...state });
 
-    const data = localStorage.getItem("collectionList");
-    const collections = JSON.parse(data);
+    // const data = localStorage.getItem("collectionList");
+    // const collections = JSON.parse(data);
 
-    const updatedCollections = collections.map((item) => {
-      if (item.id === collection.id) {
-        return { ...item, cards: [...newCards] };
-      }
-      return item;
-    });
+    // const updatedCollections = collections.map((item) => {
+    //   if (item.id === collection.id) {
+    //     return { ...item, cards: [...newCards] };
+    //   }
+    //   return item;
+    // });
 
-    localStorage.setItem("collectionList", JSON.stringify(updatedCollections));
-    setInputCard({ front: "", back: "" });
+    // localStorage.setItem("collectionList", JSON.stringify(updatedCollections));
+    // state({ front: "", back: "" });
   };
 
   return (
     <form
-      className="max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200"
+      className="w-full  bg-gradient-to-br from-white to-blue-50 border border-gray-200 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 space-y-6"
       onSubmit={handleSaveCard}
     >
-      <h2 className="text-2xl font-bold mb-6 text-gray-900">
-        Yeni Kart Oluştur
-      </h2>
+      <h2 className="text-2xl font-bold text-blue-700">Yeni Kart Oluştur</h2>
 
-      <label className="block mb-5">
+      {/* Başlık */}
+      <label className="block">
         <span className="text-gray-700 font-semibold mb-1 block">Başlık:</span>
         <input
           type="text"
-          className="w-full px-4 py-3 border border-gray-300 capitalize rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
           placeholder="Kart başlığını ya da sorusu giriniz"
           required
           onChange={(e) =>
-            setInputCard((prev) => ({ ...prev, front: e.target.value }))
+            dispatch({ type: "SET_FRONT", payload: e.target.value })
           }
-          value={inputCard.front}
         />
       </label>
 
-      <label className="block mb-6">
-        <span className="text-gray-700 font-semibold mb-1 block">İçerik:</span>
-        <textarea
-          rows={5}
-          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"
-          placeholder="Kart içeriğini yazın"
-          required
-          onChange={(e) =>
-            setInputCard((prev) => ({ ...prev, back: e.target.value }))
-          }
-          value={inputCard.back}
-        />
-      </label>
+      {/* Paragraf Ekle Bölümü */}
+      <div className="space-y-4">
+        {state.back.paragraphList.map((item, index) => (
+          <div
+            className="bg-white p-4 rounded-xl border border-gray-200 space-y-3"
+            key={index}
+          >
+            <input
+              type="text"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+              placeholder="Paragraf başlığı"
+              onChange={(e) =>
+                dispatch({
+                  type: "SET_PARAGRAPH_TITLE",
+                  payload: { index: index, value: e.target.value },
+                })
+              }
+            />
+            <textarea
+              className="w-full h-24 p-2 border border-gray-300 rounded-md resize-none focus:outline-none"
+              placeholder="Paragraf içeriğini yazınız..."
+              onChange={(e) =>
+                dispatch({
+                  type: "SET_PARAGRAPH_CONTENT",
+                  payload: { index: index, value: e.target.value },
+                })
+              }
+            />
+          </div>
+        ))}
 
+        <div className="flex justify-start">
+          <button
+            type="button"
+            onClick={() => dispatch({ type: "ADD_PARAGRAPH" })}
+            className="flex items-center gap-1 text-sm  text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition"
+          >
+            📝 Paragraf Ekle
+          </button>
+        </div>
+      </div>
+
+      {/* Liste Ekle Bölümü */}
+      <div className="space-y-4">
+        {state.back.lists.map((item, index) => (
+          <div
+            className="bg-white p-4 rounded-xl border border-gray-200 space-y-3"
+            key={index}
+          >
+            <input
+              type="text"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+              placeholder="Liste başlığı"
+            />
+
+            <input
+              type="text"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+              placeholder="1. Liste elemanı"
+            />
+
+            <div className="flex justify-end">
+              <button
+                type="button"
+                className="flex items-center gap-1 text-sm px-2 py-1 text-purple-700 rounded hover:bg-purple-200 transition"
+              >
+                ➕ Liste Elemanı
+              </button>
+            </div>
+          </div>
+        ))}
+
+        <div className="flex justify-start">
+          <button
+            type="button"
+            onClick={() => dispatch({ type: "ADD_LIST" })}
+            className="flex items-center gap-1 text-sm  text-blue-700 px-3 py-1 rounded hover:bg-blue-200 transition"
+          >
+            📋 Liste Ekle
+          </button>
+        </div>
+      </div>
+
+      {/* Oluştur Butonu */}
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition"
+        className="w-full bg-yellow-200 hover:bg-yellow-300 text-yellow-800 font-semibold py-2.5 rounded-md transition"
       >
         Oluştur
       </button>
