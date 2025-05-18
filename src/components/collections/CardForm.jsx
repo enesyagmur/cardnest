@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
 import { cardReducer, initialState } from "../../reducers/cardReducer";
+import CardFormItem from "./CardFormItem";
 
 const CardForm = ({ collection }) => {
   const [state, dispatch] = useReducer(cardReducer, initialState);
@@ -44,141 +45,34 @@ const CardForm = ({ collection }) => {
           value={state.front}
         />
       </label>
+      {state.back.length
+        ? state.back.map((item, index) => (
+            <CardFormItem item={item} index={index} />
+          ))
+        : null}
+      <button
+        type="button"
+        onClick={() => dispatch({ type: "ADD_PARAGRAPH" })}
+        className="flex items-center gap-1 text-sm  text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition"
+      >
+        📝 Paragraf Ekle
+      </button>
 
-      {/* Paragraf Ekle Bölümü */}
-      <div className="space-y-4">
-        {state.back.paragraphList.map((item, index) => (
-          <div
-            className="bg-white p-4 rounded-xl border border-gray-200 space-y-3"
-            key={index}
-          >
-            <input
-              type="text"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
-              placeholder="Paragraf başlığı"
-              onChange={(e) =>
-                dispatch({
-                  type: "SET_PARAGRAPH_TITLE",
-                  payload: { index: index, value: e.target.value },
-                })
-              }
-            />
-            <textarea
-              className="w-full h-24 p-2 border border-gray-300 rounded-md resize-none focus:outline-none"
-              placeholder="Paragraf içeriğini yazınız..."
-              onChange={(e) =>
-                dispatch({
-                  type: "SET_PARAGRAPH_CONTENT",
-                  payload: { index: index, value: e.target.value },
-                })
-              }
-            />
-          </div>
-        ))}
+      <button
+        type="button"
+        onClick={() => dispatch({ type: "ADD_LIST" })}
+        className="flex items-center gap-1 text-sm  text-blue-700 px-3 py-1 rounded hover:bg-blue-200 transition"
+      >
+        📋 Liste Ekle
+      </button>
 
-        <div className="flex justify-start">
-          <button
-            type="button"
-            onClick={() => dispatch({ type: "ADD_PARAGRAPH" })}
-            className="flex items-center gap-1 text-sm  text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition"
-          >
-            📝 Paragraf Ekle
-          </button>
-        </div>
-      </div>
-
-      {/* Açıklama Ekle Bölümü */}
-      <div className="space-y-4">
-        {state.back.descriptionList.map((item, index) => (
-          <div
-            className="bg-white p-4 rounded-xl border border-gray-200 space-y-3"
-            key={index}
-          >
-            <textarea
-              className="w-full h-24 p-2 border border-gray-300 rounded-md resize-none focus:outline-none"
-              placeholder="Açıklama yazınız..."
-              onChange={(e) =>
-                dispatch({
-                  type: "SET_DESCRIPTION_ITEM",
-                  payload: { index: index, value: e.target.value },
-                })
-              }
-            />
-          </div>
-        ))}
-
-        <div className="flex justify-start">
-          <button
-            type="button"
-            onClick={() => dispatch({ type: "ADD_DESCRIPTION_ITEM" })}
-            className="flex items-center gap-1 text-sm  text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition"
-          >
-            📄 Kısa Açıklama Ekle
-          </button>
-        </div>
-      </div>
-
-      {/* Liste Ekle Bölümü */}
-      <div className="space-y-4">
-        {state.back.dotList.map((item, listIndex) => (
-          <div
-            className="bg-white p-4 rounded-xl border border-gray-200 space-y-3"
-            key={listIndex}
-          >
-            <input
-              type="text"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
-              placeholder="Liste Başlığı Giriniz"
-              onChange={(e) =>
-                dispatch({
-                  type: "SET_LIST_TITLE",
-                  payload: { index: listIndex, value: e.target.value },
-                })
-              }
-            />
-            {item.listArray.map((listDot, dotIndex) => (
-              <input
-                key={dotIndex}
-                type="text"
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
-                placeholder="Madde giriniz"
-                onChange={(e) =>
-                  dispatch({
-                    type: "SET_ITEM_LISTARRAY",
-                    payload: {
-                      listIndex: listIndex,
-                      dotIndex: dotIndex,
-                      value: e.target.value,
-                    },
-                  })
-                }
-              />
-            ))}
-
-            <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={() =>
-                  dispatch({ type: "ADD_ITEM_LISTARRAY", payload: listIndex })
-                }
-                className="flex items-center gap-1 text-sm px-2 py-1 text-purple-700 rounded hover:bg-purple-200 transition"
-              >
-                ➕ Liste Elemanı
-              </button>
-            </div>
-          </div>
-        ))}
-
-        <div className="flex justify-start">
-          <button
-            type="button"
-            onClick={() => dispatch({ type: "ADD_LIST" })}
-            className="flex items-center gap-1 text-sm  text-blue-700 px-3 py-1 rounded hover:bg-blue-200 transition"
-          >
-            📋 Liste Ekle
-          </button>
-        </div>
-      </div>
+      <button
+        type="button"
+        onClick={() => dispatch({ type: "ADD_DESCRIPTION_ITEM" })}
+        className="flex items-center gap-1 text-sm  text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition"
+      >
+        📄 Kısa Açıklama Ekle
+      </button>
 
       {/* Oluştur Butonu */}
       <button

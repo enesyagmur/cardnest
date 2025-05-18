@@ -12,11 +12,13 @@ export default function Practice({ collection, setPage }) {
   };
 
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
+    if (collection.title && collection.cards.length > 0) {
+      if (containerRef.current) {
+        containerRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
     }
   }, [collection]);
 

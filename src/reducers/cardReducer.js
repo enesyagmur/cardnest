@@ -1,10 +1,6 @@
 export const initialState = {
   front: "",
-  back: {
-    paragraphList: [],
-    descriptionList: [],
-    dotList: [],
-  },
+  back: [],
 };
 
 export const cardReducer = (state, action) => {
@@ -15,13 +11,10 @@ export const cardReducer = (state, action) => {
     case "ADD_PARAGRAPH":
       return {
         ...state,
-        back: {
+        back: [
           ...state.back,
-          paragraphList: [
-            ...state.back.paragraphList,
-            { paragraphTitle: "", paragraphContent: "" },
-          ],
-        },
+          { type: "paragraph", paragraphTitle: "", paragraphContent: "" },
+        ],
       };
 
     case "SET_PARAGRAPH_TITLE":
@@ -53,10 +46,7 @@ export const cardReducer = (state, action) => {
     case "ADD_DESCRIPTION_ITEM":
       return {
         ...state,
-        back: {
-          ...state.back,
-          descriptionList: [...state.back.descriptionList, ""],
-        },
+        back: [...state.back, { type: "description", description: "" }],
       };
 
     case "SET_DESCRIPTION_ITEM":
@@ -73,23 +63,20 @@ export const cardReducer = (state, action) => {
     case "ADD_LIST":
       return {
         ...state,
-        back: {
-          ...state.back,
-          dotList: [...state.back.dotList, { listTitle: "", listArray: [] }],
-        },
+        back: [...state.back, { type: "list", listTitle: "", listArray: [] }],
       };
 
     case "ADD_ITEM_LISTARRAY":
       return {
         ...state,
-        back: {
+        back: [
           ...state.back,
-          dotList: state.back.dotList.map((item, index) =>
+          state.back.map((item, index) =>
             index === action.payload
               ? { ...item, listArray: [...item.listArray, ""] }
               : item
           ),
-        },
+        ],
       };
 
     case "SET_ITEM_LISTARRAY":
@@ -128,11 +115,7 @@ export const cardReducer = (state, action) => {
     case "RESET_STATE":
       return {
         front: "",
-        back: {
-          paragraphList: [],
-          descriptionList: [],
-          dotList: [],
-        },
+        back: [],
       };
   }
 };
