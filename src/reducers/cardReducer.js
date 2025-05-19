@@ -20,44 +20,46 @@ export const cardReducer = (state, action) => {
     case "SET_PARAGRAPH_TITLE":
       return {
         ...state,
-        back: {
-          ...state.back,
-          paragraphList: state.back.paragraphList.map((p, index) =>
-            index === action.payload.index
-              ? { ...p, paragraphTitle: action.payload.value }
-              : p
-          ),
-        },
+        back: state.back.map((item, index) =>
+          index === action.payload.index
+            ? {
+                ...item,
+                paragraphTitle: action.payload.value,
+              }
+            : item
+        ),
       };
 
     case "SET_PARAGRAPH_CONTENT":
       return {
         ...state,
-        back: {
-          ...state.back,
-          paragraphList: state.back.paragraphList.map((p, index) =>
-            index === action.payload.index
-              ? { ...p, paragraphContent: action.payload.value }
-              : p
-          ),
-        },
+        back: state.back.map((item, index) =>
+          index === action.payload.index
+            ? {
+                ...item,
+                paragraphContent: action.payload.value,
+              }
+            : item
+        ),
       };
 
-    case "ADD_DESCRIPTION_ITEM":
+    case "ADD_DESCRIPTION":
       return {
         ...state,
         back: [...state.back, { type: "description", description: "" }],
       };
 
-    case "SET_DESCRIPTION_ITEM":
+    case "SET_DESCRIPTION":
       return {
         ...state,
-        back: {
-          ...state.back,
-          descriptionList: state.back.descriptionList.map((desc, index) =>
-            index === action.payload.index ? action.payload.value : desc
-          ),
-        },
+        back: state.back.map((item, index) =>
+          index === action.payload.index
+            ? {
+                ...item,
+                description: action.payload.value,
+              }
+            : item
+        ),
       };
 
     case "ADD_LIST":
@@ -69,47 +71,62 @@ export const cardReducer = (state, action) => {
     case "ADD_ITEM_LISTARRAY":
       return {
         ...state,
-        back: [
-          ...state.back,
-          state.back.map((item, index) =>
-            index === action.payload
-              ? { ...item, listArray: [...item.listArray, ""] }
-              : item
-          ),
-        ],
+        back: state.back.map((item, index) =>
+          index === action.payload
+            ? {
+                ...item,
+                listArray: Array.isArray(item.listArray)
+                  ? [...item.listArray, ""]
+                  : [""],
+              }
+            : item
+        ),
       };
 
-    case "SET_ITEM_LISTARRAY":
+    case "DELETE_LISTARRAY_ITEM":
       return {
         ...state,
-        back: {
-          ...state.back,
-          dotList: state.back.dotList.map((array, index) =>
-            index === action.payload.listIndex
-              ? {
-                  ...array,
-                  listArray: array.listArray.map((item, index) =>
-                    index === action.payload.dotIndex
-                      ? action.payload.value
-                      : item
-                  ),
-                }
-              : array
-          ),
-        },
+        back: state.back.map((list, index) =>
+          index === action.payload.listIndex
+            ? {
+                ...list,
+                listArray: list.listArray.filter(
+                  (dot, index) => index !== action.payload.dotIndex
+                ),
+              }
+            : list
+        ),
       };
 
     case "SET_LIST_TITLE":
       return {
         ...state,
-        back: {
-          ...state.back,
-          dotList: state.back.dotList.map((l, index) =>
-            index === action.payload.index
-              ? { ...l, listTitle: action.payload.value }
-              : l
-          ),
-        },
+        back: state.back.map((item, index) =>
+          index === action.payload.index
+            ? { ...item, listTitle: action.payload.value }
+            : item
+        ),
+      };
+
+    case "SET_LISTARRAY_ITEM":
+      return {
+        ...state,
+        back: state.back.map((list, index) =>
+          index === action.payload.listIndex
+            ? {
+                ...list,
+                listArray: list.listArray.map((dot, index) =>
+                  index === action.payload.dotIndex ? action.payload.value : dot
+                ),
+              }
+            : list
+        ),
+      };
+
+    case "DELETE_ITEM":
+      return {
+        ...state,
+        back: state.back.filter((_, index) => index !== action.payload),
       };
 
     case "RESET_STATE":
@@ -117,5 +134,8 @@ export const cardReducer = (state, action) => {
         front: "",
         back: [],
       };
+
+    default:
+      return state;
   }
 };

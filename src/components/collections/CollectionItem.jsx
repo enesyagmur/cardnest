@@ -1,10 +1,9 @@
 import { useState } from "react";
-import CardForm from "./CardForm"; // yolunu projene göre ayarla
+import CardForm from "./cardForm/CardForm"; // yolunu projene göre ayarla
 import CardList from "./CardList";
 
 const CollectionItem = ({ selectedCollection }) => {
   const [showCardForm, setShowCardForm] = useState(false);
-  console.log(selectedCollection);
 
   return (
     <div className="max-w-3xl container mx-auto bg-white rounded-lg shadow-md p-6 mb-6">
@@ -28,7 +27,10 @@ const CollectionItem = ({ selectedCollection }) => {
       {/* Kart ekleme formu burada açılıp kapanacak */}
       {showCardForm && (
         <div className="mt-4 border-t border-gray-300 pt-6 bg-white  px-6 pb-6">
-          <CardForm collection={selectedCollection} />
+          <CardForm
+            collection={selectedCollection}
+            setShowCardForm={setShowCardForm}
+          />
         </div>
       )}
     </div>
