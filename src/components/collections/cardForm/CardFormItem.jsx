@@ -2,13 +2,13 @@ import Description from "./Description";
 import List from "./List";
 import Paragraph from "./Paragraph";
 
-const CardFormItem = ({ item, index, dispatch }) => {
+const CardFormItem = ({ item, id, dispatch }) => {
   if (item.type === "paragraph") {
-    return <Paragraph index={index} dispatch={dispatch} />;
+    return <Paragraph id={id} dispatch={dispatch} />;
   } else if (item.type === "description") {
-    return <Description index={index} dispatch={dispatch} />;
+    return <Description id={id} dispatch={dispatch} />;
   } else {
-    return <List index={index} item={item} dispatch={dispatch} />;
+    return <List id={id} item={item} dispatch={dispatch} />;
   }
 };
 

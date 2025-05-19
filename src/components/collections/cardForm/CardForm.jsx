@@ -27,11 +27,13 @@ const CardForm = ({ collection, setShowCardForm }) => {
 
   return (
     <form
-      className="w-full  bg-gradient-to-br from-white to-blue-50 border border-gray-200 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 space-y-6"
+      className="w-full  bg-gradient-to-bl from-white to-blue-50 border border-gray-200 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 space-y-6"
       onSubmit={handleSaveCard}
     >
       <div className="relative">
-        <h2 className="text-2xl font-bold text-blue-700">Yeni Kart Oluştur</h2>
+        <h2 className="text-lg sm:text-2xl font-bold text-blue-700">
+          Yeni Kart Oluştur
+        </h2>
         <button
           type="button"
           className="absolute top-0 right-0 mt-1 mr-1 text-gray-400 hover:text-red-500 text-xl"
@@ -57,11 +59,11 @@ const CardForm = ({ collection, setShowCardForm }) => {
         />
       </label>
       {state.back.length
-        ? state.back.map((item, index) => (
+        ? state.back.map((item) => (
             <CardFormItem
               item={item}
-              index={index}
-              key={index}
+              id={item.id}
+              key={item.id}
               dispatch={dispatch}
             />
           ))

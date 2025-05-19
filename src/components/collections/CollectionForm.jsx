@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const CollectionForm = () => {
   const [newCollection, setNewCollection] = useState({
+    id: Date.now(),
     title: "",
     description: "",
     cards: [],
@@ -9,7 +10,6 @@ const CollectionForm = () => {
 
   const handleSaveCollection = (e) => {
     e.preventDefault();
-    const collectionWithId = { id: Date.now(), ...newCollection };
 
     if (newCollection.title !== "") {
       const storedCollections = localStorage.getItem("collectionList");
@@ -17,14 +17,14 @@ const CollectionForm = () => {
         ? JSON.parse(storedCollections)
         : [];
 
-      const updatedCollectionList = [...collectionList, collectionWithId];
+      const updatedCollectionList = [...collectionList, newCollection];
       localStorage.setItem(
         "collectionList",
         JSON.stringify(updatedCollectionList)
       );
       console.log("Koleksiyon Oluşturuldu");
       setNewCollection({
-        id: "",
+        id: Date.now(),
         title: "",
         description: "",
         cards: [],
@@ -35,7 +35,7 @@ const CollectionForm = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg p-10">
+    <div className="w-full min-h-[590px] bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg p-10">
       <h2 className="text-3xl font-bold mb-8 text-center text-blue-600">
         Yeni Koleksiyon Oluştur
       </h2>

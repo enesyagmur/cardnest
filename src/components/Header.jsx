@@ -1,9 +1,15 @@
+import {
+  AiFillEdit,
+  AiOutlineUnorderedList,
+  AiOutlinePlayCircle,
+} from "react-icons/ai";
+
 export default function Header({ page, setPage }) {
   return (
-    <header className="bg-white shadow-md py-4">
-      <nav className="container mx-auto flex justify-center gap-8">
+    <header className="w-full md:w-10/12 lg:w-11/12 rounded-b-xl bg-white shadow-md py-4">
+      <nav className="container mx-auto flex justify-center flex-wrap gap-4 sm:gap-8 px-4">
         <button
-          className={`px-6 py-2 rounded-md font-semibold transition-colors duration-300 ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold transition-colors duration-300 ${
             page === "collectionForm"
               ? "bg-blue-600 text-white shadow-md shadow-blue-300"
               : "text-blue-600 hover:bg-blue-100"
@@ -11,10 +17,12 @@ export default function Header({ page, setPage }) {
           onClick={() => setPage("collectionForm")}
           aria-label="Koleksiyon Oluştur Sayfasına Git"
         >
-          Koleksiyon Oluştur
+          <AiFillEdit className="text-lg" />
+          <span className="hidden sm:inline">Koleksiyon Oluştur</span>
         </button>
+
         <button
-          className={`px-6 py-2 rounded-md font-semibold transition-colors duration-300 ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold transition-colors duration-300 ${
             page === "collectionList"
               ? "bg-blue-600 text-white shadow-md shadow-blue-300"
               : "text-blue-600 hover:bg-blue-100"
@@ -22,11 +30,12 @@ export default function Header({ page, setPage }) {
           onClick={() => setPage("collectionList")}
           aria-label="Koleksiyonlar Sayfasına Git"
         >
-          Koleksiyonlar
+          <AiOutlineUnorderedList className="text-lg" />
+          <span className="hidden sm:inline">Koleksiyonlar</span>
         </button>
 
         <button
-          className={`px-6 py-2 rounded-md font-semibold transition-colors duration-300 ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold transition-colors duration-300 ${
             page === "practice"
               ? "bg-blue-600 text-white shadow-md shadow-blue-300"
               : "text-blue-600 hover:bg-blue-100"
@@ -34,7 +43,8 @@ export default function Header({ page, setPage }) {
           onClick={() => setPage("practice")}
           aria-label="Pratik Yap Sayfasına Git"
         >
-          Pratik Yap
+          <AiOutlinePlayCircle className="text-lg" />
+          <span className="hidden sm:inline">Pratik Yap</span>
         </button>
       </nav>
     </header>

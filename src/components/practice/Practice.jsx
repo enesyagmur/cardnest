@@ -25,7 +25,7 @@ export default function Practice({ collection, setPage }) {
   return (
     <div
       ref={containerRef}
-      className="max-w-7xl mx-auto min-h-[95vh] bg-gradient-to-br from-white to-blue-50 p-10 rounded-3xl shadow-xl mt-10"
+      className="w-full  min-h-[590px] bg-gradient-to-br from-white to-blue-50 p-10 rounded-3xl shadow-xl "
     >
       {collection.title ? (
         <PracticeItem
@@ -33,7 +33,7 @@ export default function Practice({ collection, setPage }) {
           createRandomNumberFunc={createRandomNumber}
         />
       ) : (
-        <div className="flex flex-col items-center justify-center text-center p-8 bg-gray-50 border border-dashed border-purple-300 rounded-xl shadow-sm mt-20 max-w-xl mx-auto">
+        <div className="w-full min-h-[510px] flex flex-col items-center justify-center text-center p-8 bg-gray-50 border border-dashed border-purple-300 rounded-xl shadow-sm  ">
           <div className="text-purple-500 text-4xl mb-4">📂</div>
           <h2 className="text-xl font-semibold text-gray-800 mb-2">
             Henüz bir koleksiyon seçilmedi

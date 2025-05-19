@@ -40,28 +40,27 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
 
   if (collections.length > 0) {
     return (
-      <div className="max-w-7xl mx-auto bg-white p-8 rounded-2xl shadow-lg opacity-95">
+      <div className="w-full mih-h-[590px] flex items-center justify-center  bg-white p-4  rounded-xl shadow-lg opacity-95">
         {selectCollection.state ? (
           <CollectionItem selectedCollection={selectCollection.collection} />
         ) : (
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="w-full min-h-[590px] flex flex-wrap justify-center items-center gap-4 sm:gap-6">
             {collections.map((col) => (
               <div
                 key={col.id}
-                className="w-full sm:w-5/12 bg-gradient-to-br from-white to-blue-50 border border-gray-200 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 
-            flex flex-col justify-between min-h-[240px]"
+                className="w-full md:w-96 h-44 bg-gradient-to-br  from-white to-blue-50 border border-gray-200 rounded-2xl p-4 sm:p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between min-h-[240px]"
               >
                 <div>
                   <div className="flex justify-between items-start mb-3">
                     <div>
-                      <h3 className="text-xl font-bold text-blue-700 capitalize">
+                      <h3 className="text-lg sm:text-xl font-bold text-blue-700 capitalize">
                         {col.title}
                       </h3>
                       <span className="text-xs font-medium text-blue-400">
                         Koleksiyon
                       </span>
                     </div>
-                    <div className="text-sm text-blue-600 font-semibold whitespace-nowrap">
+                    <div className="text-xs sm:text-sm text-blue-600 font-semibold whitespace-nowrap">
                       🗂️ {col.cards.length} kart
                     </div>
                   </div>
@@ -71,24 +70,25 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
                   </p>
                 </div>
 
-                <div className="mt-5 flex flex-wrap gap-2 text-sm">
-                  {col.cards.length > 0 ? (
+                <div className="mt-4 sm:mt-5 flex flex-wrap gap-2 text-sm">
+                  {col.cards.length > 0 && (
                     <button
-                      className="px-4 py-1.5 bg-blue-200 hover:bg-blue-300 text-blue-800 rounded-md transition-colors"
+                      className="px-3 py-1.5 sm:px-4 bg-blue-200 hover:bg-blue-300 text-blue-800 rounded-md transition-colors"
                       onClick={() => handleMoveToPractice(col)}
                     >
                       Pratik Yap
                     </button>
-                  ) : null}
+                  )}
 
                   <button
-                    className="px-4 py-1.5 bg-yellow-200 hover:bg-yellow-300 text-yellow-800 rounded-md transition-colors"
+                    className="px-3 py-1.5 sm:px-4 bg-yellow-200 hover:bg-yellow-300 text-yellow-800 rounded-md transition-colors"
                     onClick={() => handleSelectCollection(col)}
                   >
                     Düzenle
                   </button>
+
                   <button
-                    className="px-4 py-1.5 bg-red-200 hover:bg-red-300 text-red-800 rounded-md transition-colors"
+                    className="px-3 py-1.5 sm:px-4 bg-red-200 hover:bg-red-300 text-red-800 rounded-md transition-colors"
                     onClick={() => handleDeleteCollection(col.id)}
                   >
                     Sil
@@ -102,21 +102,23 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
     );
   } else {
     return (
-      <div className="flex flex-col items-center justify-center text-center p-8 bg-gray-50 border border-dashed border-purple-300 rounded-xl shadow-sm">
-        <div className="text-purple-500 mb-4 text-4xl">📂</div>
-        <h2 className="text-xl font-semibold text-gray-800 mb-2">
-          Henüz bir koleksiyonunuz yok
-        </h2>
-        <p className="text-gray-600 mb-4">
-          Koleksiyonlarınızı düzenlemek ve kart oluşturmak için önce bir
-          koleksiyon eklemelisiniz.
-        </p>
-        <button
-          className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition"
-          onClick={() => setPage("collectionForm")}
-        >
-          Koleksiyon Oluştur
-        </button>
+      <div className="w-full  min-h-[590px] bg-gradient-to-br from-white to-blue-50 p-10 rounded-3xl shadow-xl ">
+        <div className="w-full h-[510px] flex flex-col items-center justify-center text-center p-6 sm:p-8 bg-gray-50 border border-dashed border-blue-300 rounded-xl shadow-sm">
+          <div className="text-purple-500 mb-4 text-4xl">📂</div>
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">
+            Henüz bir koleksiyonunuz yok
+          </h2>
+          <p className="text-gray-600 text-sm sm:text-base mb-4">
+            Koleksiyonlarınızı düzenlemek ve kart oluşturmak için önce bir
+            koleksiyon eklemelisiniz.
+          </p>
+          <button
+            className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition"
+            onClick={() => setPage("collectionForm")}
+          >
+            Koleksiyon Oluştur
+          </button>
+        </div>
       </div>
     );
   }
