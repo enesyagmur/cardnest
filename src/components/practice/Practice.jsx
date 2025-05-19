@@ -22,6 +22,8 @@ export default function Practice({ collection, setPage }) {
     }
   }, [collection]);
 
+  console.log(collection.cards);
+
   return (
     <div
       ref={containerRef}

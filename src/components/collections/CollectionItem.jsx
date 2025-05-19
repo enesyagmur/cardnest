@@ -26,7 +26,7 @@ const CollectionItem = ({ selectedCollection }) => {
         </div>
       </header>
 
-      {!showCardForm && <CardList cards={selectedCollection.cards} />}
+      {!showCardForm && <CardList selectedCollection={selectedCollection} />}
       {/* Kart ekleme formu burada açılıp kapanacak */}
       {showCardForm && (
         <div className="mt-4 border-t border-gray-300 sm:pt-6 bg-white  sm:px-6 sm:pb-6">

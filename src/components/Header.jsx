@@ -6,7 +6,7 @@ import {
 
 export default function Header({ page, setPage }) {
   return (
-    <header className="w-full md:w-10/12 lg:w-11/12 rounded-b-xl bg-white shadow-md py-4">
+    <header className="w-full md:w-11/12 rounded-b-xl bg-white shadow-md py-4">
       <nav className="container mx-auto flex justify-center flex-wrap gap-4 sm:gap-8 px-4">
         <button
           className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold transition-colors duration-300 ${

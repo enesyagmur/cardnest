@@ -25,8 +25,8 @@ export const cardReducer = (state, action) => {
     case "SET_PARAGRAPH_TITLE":
       return {
         ...state,
-        back: state.back.map((item, id) =>
-          id === action.payload.id
+        back: state.back.map((item) =>
+          item.id === action.payload.id
             ? {
                 ...item,
                 paragraphTitle: action.payload.value,
@@ -38,8 +38,8 @@ export const cardReducer = (state, action) => {
     case "SET_PARAGRAPH_CONTENT":
       return {
         ...state,
-        back: state.back.map((item, id) =>
-          id === action.payload.id
+        back: state.back.map((item) =>
+          item.id === action.payload.id
             ? {
                 ...item,
                 paragraphContent: action.payload.value,
@@ -60,8 +60,8 @@ export const cardReducer = (state, action) => {
     case "SET_DESCRIPTION":
       return {
         ...state,
-        back: state.back.map((item, id) =>
-          id === action.payload.id
+        back: state.back.map((item) =>
+          item.id === action.payload.id
             ? {
                 ...item,
                 description: action.payload.value,
@@ -82,8 +82,8 @@ export const cardReducer = (state, action) => {
     case "ADD_ITEM_LISTARRAY":
       return {
         ...state,
-        back: state.back.map((item, index) =>
-          index === action.payload
+        back: state.back.map((item) =>
+          item.id === action.payload
             ? {
                 ...item,
                 listArray: Array.isArray(item.listArray)
@@ -97,8 +97,8 @@ export const cardReducer = (state, action) => {
     case "DELETE_LISTARRAY_ITEM":
       return {
         ...state,
-        back: state.back.map((list, index) =>
-          index === action.payload.listIndex
+        back: state.back.map((list) =>
+          list.id === action.payload.listIndex
             ? {
                 ...list,
                 listArray: list.listArray.filter(
@@ -112,8 +112,8 @@ export const cardReducer = (state, action) => {
     case "SET_LIST_TITLE":
       return {
         ...state,
-        back: state.back.map((item, id) =>
-          id === action.payload.index
+        back: state.back.map((item) =>
+          item.id === action.payload.index
             ? { ...item, listTitle: action.payload.value }
             : item
         ),
@@ -122,8 +122,8 @@ export const cardReducer = (state, action) => {
     case "SET_LISTARRAY_ITEM":
       return {
         ...state,
-        back: state.back.map((list, id) =>
-          id === action.payload.listId
+        back: state.back.map((list) =>
+          list.id === action.payload.listId
             ? {
                 ...list,
                 listArray: list.listArray.map((dot, index) =>

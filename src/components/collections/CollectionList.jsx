@@ -2,24 +2,14 @@ import { useEffect, useState } from "react";
 import CollectionItem from "./CollectionItem";
 
 export default function CollectionList({ setPage, setCollectionForPractice }) {
-  const [collections, setCollections] = useState([]);
+  const [collections, setCollections] = useState(() => {
+    const data = localStorage.getItem("collectionList");
+    return data ? JSON.parse(data) : [];
+  });
   const [selectCollection, setSelectCollection] = useState({
     state: false,
     collection: {},
   });
-
-  const fetchData = () => {
-    const data = localStorage.getItem("collectionList");
-    const convertCollections = JSON.parse(data);
-
-    if (convertCollections) {
-      setCollections(convertCollections);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const handleSelectCollection = (item) => {
     setSelectCollection({ state: true, collection: item });
@@ -38,13 +28,13 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
     }
   };
 
-  if (collections.length > 0) {
+  if (Array.isArray(collections) && collections.length > 0) {
     return (
       <div className="w-full mih-h-[590px] flex items-center justify-center  bg-white p-4  rounded-xl shadow-lg opacity-95">
         {selectCollection.state ? (
           <CollectionItem selectedCollection={selectCollection.collection} />
         ) : (
-          <div className="w-full min-h-[590px] flex flex-wrap justify-center items-center gap-4 sm:gap-6">
+          <div className="w-full min-h-[565px] flex flex-wrap justify-center items-center gap-4 sm:gap-6">
             {collections.map((col) => (
               <div
                 key={col.id}
@@ -61,7 +51,7 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
                       </span>
                     </div>
                     <div className="text-xs sm:text-sm text-blue-600 font-semibold whitespace-nowrap">
-                      🗂️ {col.cards.length} kart
+                      🗂️ {col.cards?.length ?? 0} kart
                     </div>
                   </div>
 
@@ -71,7 +61,7 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
                 </div>
 
                 <div className="mt-4 sm:mt-5 flex flex-wrap gap-2 text-sm">
-                  {col.cards.length > 0 && (
+                  {col.cards?.length > 0 && (
                     <button
                       className="px-3 py-1.5 sm:px-4 bg-blue-200 hover:bg-blue-300 text-blue-800 rounded-md transition-colors"
                       onClick={() => handleMoveToPractice(col)}
