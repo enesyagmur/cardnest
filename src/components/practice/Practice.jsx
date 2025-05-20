@@ -22,7 +22,7 @@ export default function Practice({ collection, setPage }) {
     }
   }, [collection]);
 
-  console.log(collection.cards);
+  console.log(collection);
 
   return (
     <div
@@ -33,6 +33,7 @@ export default function Practice({ collection, setPage }) {
         <PracticeItem
           card={collection.cards[rnd]}
           createRandomNumberFunc={createRandomNumber}
+          coldId={collection.id}
         />
       ) : (
         <div className="w-full min-h-[510px] flex flex-col items-center justify-center text-center p-8 bg-gray-50 border border-dashed border-purple-300 rounded-xl shadow-sm  ">

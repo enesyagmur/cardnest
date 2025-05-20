@@ -1,6 +1,16 @@
 export const initialState = {
   front: "",
   back: [],
+  difficulty: "medium",
+  createdAt: null,
+  updatedAt: null,
+  stats: {
+    totalAttempts: 0,
+    correctAttempts: 0,
+    incorrectAttempts: 0,
+    successRate: 0,
+  },
+  isArchived: false,
 };
 
 export const cardReducer = (state, action) => {
@@ -144,6 +154,16 @@ export const cardReducer = (state, action) => {
       return {
         front: "",
         back: [],
+        difficulty: "medium",
+        createdAt: null,
+        updatedAt: null,
+        stats: {
+          totalAttempts: 0,
+          correctAttempts: 0,
+          incorrectAttempts: 0,
+          successRate: 0,
+        },
+        isArchived: false,
       };
 
     default:

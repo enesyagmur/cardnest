@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CollectionItem from "./CollectionItem";
 
 export default function CollectionList({ setPage, setCollectionForPractice }) {
@@ -32,7 +32,10 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
     return (
       <div className="w-full mih-h-[590px] flex items-center justify-center  bg-white p-4  rounded-xl shadow-lg opacity-95">
         {selectCollection.state ? (
-          <CollectionItem selectedCollection={selectCollection.collection} />
+          <CollectionItem
+            selectedCollection={selectCollection.collection}
+            setSelectCollection={setSelectCollection}
+          />
         ) : (
           <div className="w-full min-h-[565px] flex flex-wrap justify-center items-center gap-4 sm:gap-6">
             {collections.map((col) => (

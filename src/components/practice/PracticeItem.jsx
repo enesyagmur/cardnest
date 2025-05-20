@@ -1,10 +1,10 @@
 import { useState } from "react";
 import PracticeCard from "./PracticeCard";
 
-export default function PracticeItem({ card, createRandomNumberFunc }) {
+export default function PracticeItem({ card, createRandomNumberFunc, colId }) {
   const [showAnswer, setShowAnswer] = useState(false);
 
-  const handleSelectedDificulty = () => {
+  const handleSelectedDificulty = (selectedDificulty) => {
     setShowAnswer(false);
     createRandomNumberFunc();
   };
@@ -41,7 +41,7 @@ export default function PracticeItem({ card, createRandomNumberFunc }) {
               Kolay
             </button>
             <button
-              onClick={() => handleSelectedDificulty("normal")}
+              onClick={() => handleSelectedDificulty("medium")}
               className="px-4 py-2 bg-yellow-100 text-yellow-700 text-sm font-medium rounded-lg hover:bg-yellow-200 transition"
             >
               Normal
