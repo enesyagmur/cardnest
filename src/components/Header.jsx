@@ -5,11 +5,25 @@ import {
   AiOutlinePlayCircle,
 } from "react-icons/ai";
 import { FaLayerGroup, FaUserCircle } from "react-icons/fa";
+import { logout } from "../services/firebaseAuthService";
+import { useNavigate } from "react-router-dom";
 
-export default function Header({ page, setPage, userName, onLogout }) {
+export default function Header({ page, setPage, userName }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
-  // Buton renkleri pastel ve farklı
+  const navigate = useNavigate();
+
+  const onLogout = async () => {
+    try {
+      await logout();
+      console.log("Header | Çıkış işlemi başarılı");
+      navigate("/");
+    } catch (err) {
+      console.error("Header | Çıkış işlemi başarısız: ", err.message, err.code);
+      throw err;
+    }
+  };
+
   const buttonStyles = {
     collectionForm:
       "text-blue-600 hover:bg-blue-100 focus:ring-blue-300 focus:ring",
