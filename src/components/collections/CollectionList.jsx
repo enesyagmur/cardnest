@@ -37,7 +37,10 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
             setSelectCollection={setSelectCollection}
           />
         ) : (
-          <div className="w-full min-h-[565px] flex flex-wrap justify-center items-center gap-4 sm:gap-6">
+          <div
+            className="w-full min-h-[565px] flex flex-wrap justify-center items-center gap-5 sm:gap-6
+    bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-gray-200 shadow-sm"
+          >
             {collections.map((col) => (
               <div
                 key={col.id}

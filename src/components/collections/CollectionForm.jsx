@@ -35,8 +35,8 @@ const CollectionForm = () => {
   };
 
   return (
-    <div className="w-full min-h-[590px] bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg p-10">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-600">
+    <div className="w-full min-h-[590px] bg-gradient-to-br from-white to-blue-100 rounded-2xl shadow-lg p-10">
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-700">
         Yeni Koleksiyon Oluştur
       </h2>
 
@@ -44,7 +44,7 @@ const CollectionForm = () => {
         <div>
           <label
             htmlFor="title"
-            className="block mb-2 text-base font-medium text-gray-700"
+            className="block mb-2 text-base font-medium text-gray-800"
           >
             Koleksiyon Başlığı
           </label>
@@ -56,14 +56,14 @@ const CollectionForm = () => {
               setNewCollection((prev) => ({ ...prev, title: e.target.value }))
             }
             value={newCollection.title}
-            className="w-full border border-gray-300 rounded-lg px-5 py-3 capitalize bg-blue-100/40 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="w-full border border-gray-300 rounded-lg px-5 py-3 capitalize bg-blue-100/50 placeholder:text-gray-500 focus:outline-none focus:ring-4 focus:ring-blue-400 shadow-sm transition-shadow duration-300"
           />
         </div>
 
         <div>
           <label
             htmlFor="description"
-            className="block mb-2 text-base font-medium text-gray-700"
+            className="block mb-2 text-base font-medium text-gray-800"
           >
             Açıklama (isteğe bağlı)
           </label>
@@ -78,13 +78,13 @@ const CollectionForm = () => {
               }))
             }
             value={newCollection.description}
-            className="w-full border border-gray-300 rounded-lg px-5 py-3 bg-blue-100/40 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
+            className="w-full border border-gray-300 rounded-lg px-5 py-3 bg-blue-100/50 placeholder:text-gray-500 focus:outline-none focus:ring-4 focus:ring-blue-400 shadow-sm transition-shadow duration-300 resize-none"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-300 hover:bg-blue-400 text-blue-900 font-semibold py-3 rounded-lg transition-colors"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-md transition-colors duration-300"
         >
           Koleksiyonu Oluştur
         </button>
