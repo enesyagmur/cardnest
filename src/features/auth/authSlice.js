@@ -55,7 +55,7 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(loginThunk.rejected, (state, action) => {
-        state.payload = false;
+        state.loading = false;
         state.error = action.payload.message;
       })
 

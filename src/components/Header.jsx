@@ -6,8 +6,11 @@ import {
 } from "react-icons/ai";
 import { FaLayerGroup, FaUserCircle } from "react-icons/fa";
 import LogoutButton from "./authComponents/LogoutButton";
+import { useSelector } from "react-redux";
+import NotifyCustom from "../utils/NotifyCustom";
 
-export default function Header({ page, setPage, userName }) {
+export default function Header({ page, setPage }) {
+  const { displayName } = useSelector((state) => state.auth.user);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const buttonStyles = {
@@ -89,9 +92,9 @@ export default function Header({ page, setPage, userName }) {
           aria-expanded={userMenuOpen}
           aria-label="Kullanıcı menüsü"
         >
-          <FaUserCircle className="text-lg text-gray-600" />
-          <span className="hidden sm:inline text-sm font-medium">
-            {userName || "Kullanıcı"}
+          <FaUserCircle className="text-lg text-purple-400" />
+          <span className="hidden sm:inline text-sm font-medium capitalize">
+            {displayName || "Kullanıcı"}
           </span>
         </button>
 

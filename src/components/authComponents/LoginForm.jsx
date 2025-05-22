@@ -6,6 +6,7 @@ import { loginSchema } from "../../utils/validationAuthSchemas";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginThunk } from "../../features/auth/authThunks";
+import NotifyCustom from "../../utils/NotifyCustom";
 
 const LoginForm = ({ setShowRegister }) => {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const LoginForm = ({ setShowRegister }) => {
         navigate("/home");
       }
     } catch (err) {
-      console.error("LoginForm da thunk hatası: ", err);
+      NotifyCustom("error", err);
     }
   };
 

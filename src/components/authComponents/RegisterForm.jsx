@@ -5,6 +5,7 @@ import { registerSchema } from "../../utils/validationAuthSchemas";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerThunk } from "../../features/auth/authThunks";
+import NotifyCustom from "../../utils/NotifyCustom";
 
 const RegisterForm = ({ setShowRegister }) => {
   const {
@@ -34,7 +35,7 @@ const RegisterForm = ({ setShowRegister }) => {
         navigate("/home");
       }
     } catch (err) {
-      console.error("RegisterForm da hata: ", err);
+      NotifyCustom("error", "Kayıt Başarısız: ", err);
     }
   };
 

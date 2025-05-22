@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutThunk } from "../../features/auth/authThunks";
+import NotifyCustom from "../../utils/NotifyCustom";
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
@@ -15,10 +16,10 @@ const LogoutButton = () => {
 
         navigate("/");
       } else {
-        console.error("Header | Çıkış işlemi başarısız:", resultAction.payload);
+        NotifyCustom("error", "Header | Çıkış işlemi başarısız");
       }
     } catch (err) {
-      console.error("Header | dispatch logoutThunk başarısız:", err.message);
+      NotifyCustom("error", "Dispatch logoutThunk başarısız ", err.message);
     }
   };
 
