@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { observeAuthThunk } from "./features/auth/authThunks";
 import PrivateRoute from "./components/route/PrivateRoute";
 import PublicRoute from "./components/route/PublicRoute";
+import Loading from "./components/Loading";
+import NotFound from "./pages/notFound/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,7 +21,7 @@ function App() {
   }, [dispatch]);
 
   if (loading) {
-    return <div>Loading....</div>;
+    return <Loading />;
   }
 
   return (
@@ -49,6 +51,7 @@ function App() {
             </PublicRoute>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
