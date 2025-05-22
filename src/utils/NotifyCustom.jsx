@@ -27,7 +27,7 @@ const NotifyCustom = (type, message) => {
         </div>
       );
     },
-    { duration: 2000 }
+    { duration: 3000 }
   );
 };
 

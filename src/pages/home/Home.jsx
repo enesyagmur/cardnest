@@ -1,10 +1,10 @@
 // pages/Home.jsx
 import { useState } from "react";
 import Header from "../../components/Header";
-import CollectionList from "../../components/collections/CollectionList";
-import CollectionForm from "../../components/collections/CollectionForm";
-import Practice from "../../components/practice/Practice";
 import Footer from "../../components/Footer";
+import CollectionList from "../../components/homeComponents/collections/CollectionList";
+import Practice from "../../components/homeComponents/practice/Practice";
+import CollectionForm from "../../components/homeComponents/collections/CollectionForm";
 
 function Home() {
   const [page, setPage] = useState("collectionForm");

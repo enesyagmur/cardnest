@@ -1,11 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CollectionItem from "./CollectionItem";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteCollection,
+  fetchCollections,
+} from "../../../features/collections/collectionsThunks";
+import Loading from "../../Loading";
 
 export default function CollectionList({ setPage, setCollectionForPractice }) {
-  const [collections, setCollections] = useState(() => {
-    const data = localStorage.getItem("collectionList");
-    return data ? JSON.parse(data) : [];
-  });
+  const dispatch = useDispatch();
+  const { collections, isLoading, error } = useSelector(
+    (state) => state.collections
+  );
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (user?.uid) {
+      dispatch(fetchCollections(user.uid));
+    }
+  }, [dispatch, user?.uid]);
+
+  const handleDeleteCollection = (colId) => {
+    const userId = user.uid;
+    const idies = { userId, colId };
+    dispatch(deleteCollection(idies));
+  };
+
   const [selectCollection, setSelectCollection] = useState({
     state: false,
     collection: {},
@@ -20,13 +40,17 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
     setPage("practice");
   };
 
-  const handleDeleteCollection = (id) => {
-    if (collections.length !== 0) {
-      const newCollections = collections.filter((item) => item.id !== id);
-      localStorage.setItem("collectionList", JSON.stringify(newCollections));
-      setCollections(newCollections);
-    }
-  };
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return (
+      <div className="w-full min-h-[590px] flex items-center justify-center bg-red-100 p-4 rounded-xl shadow-lg opacity-95">
+        <p className="text-red-700 text-lg font-semibold">Hata: {error}</p>
+      </div>
+    );
+  }
 
   if (Array.isArray(collections) && collections.length > 0) {
     return (
@@ -46,6 +70,8 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
                 key={col.id}
                 className="w-full md:w-96 h-44 bg-gradient-to-br  from-white to-blue-50 border border-gray-200 rounded-2xl p-4 sm:p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between min-h-[240px]"
               >
+                {console.log(col.id)}
+
                 <div>
                   <div className="flex justify-between items-start mb-3">
                     <div>

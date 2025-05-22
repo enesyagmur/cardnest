@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutThunk } from "../../features/auth/authThunks";
 import NotifyCustom from "../../utils/NotifyCustom";
+import { FiLogOut } from "react-icons/fi";
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
@@ -28,11 +29,12 @@ const LogoutButton = () => {
       onClick={() => {
         onLogout();
       }}
-      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 focus:outline-none text-sm"
+      className="flex items-center gap-2 w-full text-left px-4 py-2 text-red-600 bg-white hover:bg-red-50 hover:shadow-md shadow-sm rounded-md focus:outline-none text-sm transition duration-150"
       role="menuitem"
       type="button"
     >
-      Çıkış Yap
+      <FiLogOut className="text-base" />
+      <span>Çıkış Yap</span>
     </button>
   );
 };

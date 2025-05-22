@@ -28,19 +28,19 @@ export default function Header({ page, setPage }) {
   };
 
   return (
-    <header className="w-full md:w-11/12 rounded-b-xl bg-gradient-to-br from-blue-50 via-green-50 to-pink-50 shadow-sm py-3 mx-auto flex items-center justify-between px-5">
+    <header className="w-full md:w-11/12 rounded-b-xl bg-gradient-to-br from-blue-50 via-green-50 to-pink-50 shadow-sm py-2 md:py-3 mx-auto flex items-center justify-between px-3 sm:px-5">
       {/* Sol: Logo ve Proje İsmi */}
-      <div className="flex items-center gap-2 cursor-pointer select-none">
-        <FaLayerGroup className="text-2xl text-purple-500" />
-        <span className="font-semibold text-xl text-gray-700 tracking-wide">
+      <div className="flex items-center gap-1 sm:gap-2 cursor-pointer select-none">
+        <FaLayerGroup className="text-xl sm:text-2xl text-purple-500" />
+        <span className="font-semibold text-base sm:text-lg md:text-xl text-gray-700 tracking-wide">
           CARDNEST
         </span>
       </div>
 
       {/* Orta: Sayfa Geçiş Butonları */}
-      <nav className="flex justify-center flex-wrap gap-3 px-4 flex-1 max-w-lg">
+      <nav className="flex justify-center flex-wrap gap-2 sm:gap-3 px-2 sm:px-4 flex-1 max-w-lg">
         <button
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
+          className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md font-medium text-xs sm:text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
             page === "collectionForm"
               ? activeButtonStyles.collectionForm
               : buttonStyles.collectionForm
@@ -49,12 +49,12 @@ export default function Header({ page, setPage }) {
           aria-label="Koleksiyon Oluştur Sayfasına Git"
           type="button"
         >
-          <AiFillEdit className="text-base" />
-          <span className="hidden sm:inline">Koleksiyon Oluştur</span>
+          <AiFillEdit className="text-sm sm:text-base" />
+          <span className="hidden md:inline">Koleksiyon Oluştur</span>
         </button>
 
         <button
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
+          className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md font-medium text-xs sm:text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
             page === "collectionList"
               ? activeButtonStyles.collectionList
               : buttonStyles.collectionList
@@ -63,12 +63,12 @@ export default function Header({ page, setPage }) {
           aria-label="Koleksiyonlar Sayfasına Git"
           type="button"
         >
-          <AiOutlineUnorderedList className="text-base" />
-          <span className="hidden sm:inline">Koleksiyonlar</span>
+          <AiOutlineUnorderedList className="text-sm sm:text-base" />
+          <span className="hidden md:inline">Koleksiyonlar</span>
         </button>
 
         <button
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
+          className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md font-medium text-xs sm:text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
             page === "practice"
               ? activeButtonStyles.practice
               : buttonStyles.practice
@@ -77,8 +77,8 @@ export default function Header({ page, setPage }) {
           aria-label="Pratik Yap Sayfasına Git"
           type="button"
         >
-          <AiOutlinePlayCircle className="text-base" />
-          <span className="hidden sm:inline">Pratik Yap</span>
+          <AiOutlinePlayCircle className="text-sm sm:text-base" />
+          <span className="hidden md:inline">Pratik Yap</span>
         </button>
       </nav>
 
@@ -86,14 +86,14 @@ export default function Header({ page, setPage }) {
       <div className="relative">
         <button
           onClick={() => setUserMenuOpen((prev) => !prev)}
-          className="flex items-center gap-1.5 bg-white border border-gray-300 rounded-full px-3 py-1.5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+          className="flex items-center gap-1 sm:gap-1.5 bg-white border border-gray-300 rounded-full px-2 sm:px-3 py-1 sm:py-1.5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-300"
           type="button"
           aria-haspopup="true"
           aria-expanded={userMenuOpen}
           aria-label="Kullanıcı menüsü"
         >
-          <FaUserCircle className="text-lg text-purple-400" />
-          <span className="hidden sm:inline text-sm font-medium capitalize">
+          <FaUserCircle className="text-base sm:text-lg text-purple-400" />
+          <span className="hidden sm:inline text-xs sm:text-sm font-medium capitalize">
             {displayName || "Kullanıcı"}
           </span>
         </button>

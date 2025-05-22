@@ -2,7 +2,7 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#a3cef1] via-[#a8d5ba] to-[#ffb6b9]">
+    <div className={`flex items-center justify-center `}>
       <div className="flex flex-col items-center space-y-4">
         <svg
           className="animate-spin h-12 w-12 text-indigo-600"

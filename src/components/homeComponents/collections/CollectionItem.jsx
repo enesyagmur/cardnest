@@ -1,7 +1,8 @@
 import { useState } from "react";
-import CardForm from "./cardForm/CardForm"; // yolunu projene göre ayarla
-import CardList from "./CardList";
+
 import { FiArrowLeft } from "react-icons/fi";
+import CardList from "./CardList";
+import CardForm from "../cardForm/CardForm";
 
 const CollectionItem = ({ selectedCollection, setSelectCollection }) => {
   const [showCardForm, setShowCardForm] = useState(false);

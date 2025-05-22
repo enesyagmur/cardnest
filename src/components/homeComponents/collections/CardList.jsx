@@ -1,4 +1,4 @@
-import SİngleCardInList from "./SİngleCardInList";
+import SingleCardInList from "./SingleCardInList";
 
 const CardList = ({ selectedCollection }) => {
   return (
@@ -16,7 +16,7 @@ const CardList = ({ selectedCollection }) => {
         </div>
       ) : (
         selectedCollection.cards.map((card) => (
-          <SİngleCardInList
+          <SingleCardInList
             selectedCollectionId={selectedCollection.id}
             card={card}
             key={card.id}

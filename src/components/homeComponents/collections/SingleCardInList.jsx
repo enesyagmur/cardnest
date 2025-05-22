@@ -1,7 +1,7 @@
 import { FiEdit } from "react-icons/fi";
 import CardDeleteButton from "./CardDeleteButton";
 
-const SİngleCardInList = ({ selectedCollectionId, card }) => {
+const SingleCardInList = ({ selectedCollectionId, card }) => {
   return (
     <div
       key={card.id}
@@ -31,4 +31,4 @@ const SİngleCardInList = ({ selectedCollectionId, card }) => {
   );
 };
 
-export default SİngleCardInList;
+export default SingleCardInList;

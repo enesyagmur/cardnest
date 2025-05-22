@@ -1,5 +1,5 @@
 import { FiXCircle } from "react-icons/fi";
-import { getCollectionList } from "../../lib/getCollectionList";
+import { getCollectionList } from "../../../lib/getCollectionList";
 
 const CardDeleteButton = ({ selectedCollectionId, cardId }) => {
   const handleDeleteCard = () => {
