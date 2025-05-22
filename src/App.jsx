@@ -4,14 +4,51 @@ import Home from "./pages/home/Home";
 import LandingPage from "./pages/landing/LandingPage";
 import Auth from "./pages/auth/Auth";
 import "./App.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { observeAuthThunk } from "./features/auth/authThunks";
+import PrivateRoute from "./components/route/PrivateRoute";
+import PublicRoute from "./components/route/PublicRoute";
 
 function App() {
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(observeAuthThunk());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading....</div>;
+  }
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <LandingPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/home"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/auth"
+          element={
+            <PublicRoute>
+              <Auth />
+            </PublicRoute>
+          }
+        />
       </Routes>
     </Router>
   );

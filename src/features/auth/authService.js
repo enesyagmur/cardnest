@@ -1,15 +1,14 @@
 import {
   createUserWithEmailAndPassword,
-  getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
-import app, { db } from "../../firebase/firebaseConfig";
+import { auth, db } from "../../firebase/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
-
-const auth = getAuth(app);
+import { GoogleAuthProvider } from "firebase/auth/web-extension";
 
 /**
  * Yeni bir kullanıcı kayıt eder
@@ -72,6 +71,29 @@ export const loginUser = async (email, password) => {
   } catch (err) {
     console.error(
       "FirebaseAuthService | Giriş başarısız: ",
+      err.message,
+      err.code
+    );
+    throw err;
+  }
+};
+
+/**
+ * Google ile giriş işlemi
+ * @returns {Promise<UserCredential>} başarılı giriş sonrası
+ * @throws {FirebaseError} hata sonrası
+ */
+
+export const provider = new GoogleAuthProvider();
+
+export const signWithGoogle = async () => {
+  try {
+    const userCredential = await signInWithPopup(auth, provider);
+    console.log("FirebaseAuthService | Google ile giriş başarılı");
+    return userCredential;
+  } catch (err) {
+    console.error(
+      "FirebaseAuthService | Google ile giriş başarısız:",
       err.message,
       err.code
     );

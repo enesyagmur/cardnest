@@ -9,6 +9,7 @@ import { loginThunk } from "../../features/auth/authThunks";
 
 const LoginForm = ({ setShowRegister }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -23,8 +24,6 @@ const LoginForm = ({ setShowRegister }) => {
       password: "",
     },
   });
-
-  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {

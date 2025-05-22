@@ -1,5 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { loginUser, logout, registerUser } from "./authService";
+import {
+  loginUser,
+  logout,
+  observeAuthState,
+  registerUser,
+  signWithGoogle,
+} from "./authService";
+import { setUser } from "./authSlice";
 
 export const registerThunk = createAsyncThunk(
   "auth/register",
@@ -51,6 +58,31 @@ export const loginThunk = createAsyncThunk(
   }
 );
 
+export const googleLoginThunk = createAsyncThunk(
+  "auth/googleLogin",
+  async (_, { rejectWithValue }) => {
+    try {
+      const result = await signWithGoogle();
+      if (!result || !result.user) {
+        throw new Error("googleLoginThunk | giriş başarısız");
+      }
+      const user = result.user;
+      const { uid, email, displayName, photoURL } = user;
+
+      return {
+        user: {
+          uid,
+          email,
+          displayName,
+          photoURL,
+        },
+      };
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
 export const logoutThunk = createAsyncThunk(
   "auth/logout",
   async (__, { rejectWithValue }) => {
@@ -61,3 +93,21 @@ export const logoutThunk = createAsyncThunk(
     }
   }
 );
+
+export const observeAuthThunk = () => (dispatch) => {
+  observeAuthState((user) => {
+    if (user) {
+      const { uid, email, displayName, photoURL } = user;
+      dispatch(
+        setUser({
+          uid,
+          email,
+          displayName,
+          photoURL,
+        })
+      );
+    } else {
+      dispatch(setUser(null));
+    }
+  });
+};
