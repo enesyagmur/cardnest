@@ -3,10 +3,13 @@ import GoogleLoginButton from "./GoogleLoginButton";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../utils/validationAuthSchemas";
-import { loginUser } from "../../services/firebaseAuthService";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../../features/auth/authThunks";
 
 const LoginForm = ({ setShowRegister }) => {
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -25,13 +28,15 @@ const LoginForm = ({ setShowRegister }) => {
 
   const onSubmit = async (data) => {
     try {
-      const userCredential = await loginUser(data.email, data.password);
-      if (userCredential.user) {
+      const user = await dispatch(
+        loginThunk({ email: data.email, password: data.password })
+      ).unwrap();
+      if (user) {
         reset();
         navigate("/home");
       }
     } catch (err) {
-      console.error("LoginForm da hata: ", err);
+      console.error("LoginForm da thunk hatası: ", err);
     }
   };
 

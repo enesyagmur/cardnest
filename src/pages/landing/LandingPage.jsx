@@ -1,95 +1,78 @@
 export default function LandingPage() {
+  const boxData = [
+    {
+      title: "Özgürce Koleksiyon Oluştur",
+      color: "text-blue-600",
+      desc: "Dilersen konuya göre koleksiyonlar oluştur. Tüm bilgilerin düzenli ve erişilebilir olsun.",
+    },
+    {
+      title: "Dinamik Kart Türleri",
+      color: "text-green-600",
+      desc: "Paragraf, açıklama, liste gibi farklı türlerde kartlar oluştur. Her öğrenme biçimine uygun!",
+    },
+    {
+      title: "Zorluk Seviyeli Tekrar",
+      color: "text-purple-600",
+      desc: "Kolay, orta, zor gibi seviyelerle öğrenmeni kişiselleştir. Zor kartlar daha sık tekrar edilir.",
+    },
+    {
+      title: "Akıllı Zaman Yönetimi",
+      color: "text-pink-600",
+      desc: "Bildiklerin daha az tekrar edilir. Zaman kazanır, odaklanırsın.",
+    },
+    {
+      title: "Sade ve Kullanıcı Dostu",
+      color: "text-yellow-600",
+      desc: "Modern tasarım, kolay kullanım. Karmaşadan uzak bir deneyim seni bekliyor.",
+    },
+    {
+      title: "Her Cihazda Uyumlu",
+      color: "text-red-600",
+      desc: "Bilgisayar, tablet ya da telefon fark etmez. Her yerde öğren!",
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-green-100 to-pink-100 px-4 py-8 flex flex-col items-center">
-      <header className="text-center mt-8">
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-800">
-          Kartlarla Öğrenmenin En Kolay Yolu
+    <div className="w-full h-screen   overflow-y-auto bg-gradient-to-br from-blue-100 via-green-100 to-pink-100 px-4 py-6 flex flex-col justify-between items-center">
+      <header className="text-center">
+        <h1 className="text-3xl md:text-5xl font-bold text-gray-800 leading-snug">
+          Kartlarla Öğrenmenin En Kolay Yolu <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 font-extrabold tracking-wide text-4xl md:text-5xl font-cursive">
+            CardNest
+          </span>
         </h1>
-        <p className="mt-4 text-lg md:text-xl text-gray-700 max-w-2xl text-center mx-auto">
+        <p className="mt-3 text-base md:text-lg text-gray-700 max-w-2xl mx-auto">
           Kendi öğrenme stiline uygun kartlar oluştur, zorluk seviyesine göre
           tekrar et ve zamanını verimli kullan!
         </p>
       </header>
 
-      <section className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-        {/* Özellik kutusu 1 */}
-        <div className="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3 className="text-xl font-semibold text-blue-600">
-            Özgürce Koleksiyon Oluştur
-          </h3>
-          <p className="mt-2 text-gray-700">
-            Dilersen konuya göre koleksiyonlar oluştur. Tüm bilgilerin düzenli
-            ve erişilebilir olsun.
-          </p>
-        </div>
-
-        {/* Özellik kutusu 2 */}
-        <div className="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3 className="text-xl font-semibold text-green-600">
-            Dinamik Kart Türleri
-          </h3>
-          <p className="mt-2 text-gray-700">
-            Paragraf, açıklama, liste gibi farklı türlerde kartlar oluştur. Her
-            öğrenme biçimine uygun!
-          </p>
-        </div>
-
-        {/* Özellik kutusu 3 */}
-        <div className="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3 className="text-xl font-semibold text-purple-600">
-            Zorluk Seviyeli Tekrar
-          </h3>
-          <p className="mt-2 text-gray-700">
-            Kolay, orta, zor gibi seviyelerle öğrenmeni kişiselleştir. Zor
-            kartlar daha sık tekrar edilir.
-          </p>
-        </div>
-
-        {/* Özellik kutusu 4 */}
-        <div className="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3 className="text-xl font-semibold text-pink-600">
-            Akıllı Zaman Yönetimi
-          </h3>
-          <p className="mt-2 text-gray-700">
-            Bildiğin kartlar daha az tekrar edilir. Böylece zaman kazanır, odak
-            noktanı artırırsın.
-          </p>
-        </div>
-
-        {/* Özellik kutusu 5 */}
-        <div className="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3 className="text-xl font-semibold text-yellow-600">
-            Sade ve Kullanıcı Dostu
-          </h3>
-          <p className="mt-2 text-gray-700">
-            Modern tasarımı ile karmaşadan uzak, kolay anlaşılır bir deneyim
-            seni bekliyor.
-          </p>
-        </div>
-
-        {/* Özellik kutusu 6 */}
-        <div className="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3 className="text-xl font-semibold text-red-600">
-            Her Cihazda Uyumlu
-          </h3>
-          <p className="mt-2 text-gray-700">
-            Bilgisayar, tablet ya da telefon fark etmez. Her yerde öğrenmeye
-            devam et.
-          </p>
-        </div>
+      <section className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-6xl">
+        {/* Özellik kutuları */}
+        {boxData.map((feature, i) => (
+          <div
+            key={i}
+            className="bg-white shadow-md rounded-xl p-4 text-center"
+          >
+            <h3 className={`text-lg font-semibold ${feature.color}`}>
+              {feature.title}
+            </h3>
+            <p className="mt-2 text-gray-700 text-sm">{feature.desc}</p>
+          </div>
+        ))}
       </section>
 
-      <div className="mt-12 flex gap-4">
+      <div className="mt-6 flex gap-4">
         <a
           href="/auth"
-          className="px-6 py-3 bg-blue-500 text-white rounded-full text-lg hover:bg-blue-600 transition"
+          className="px-5 py-2 bg-blue-500 text-white rounded-full text-base hover:bg-blue-600 transition"
         >
           Hemen Başla
         </a>
       </div>
 
-      <footer className="mt-16 text-sm text-gray-600">
-        © {new Date().getFullYear()} KartUygulama. Tüm hakları saklıdır.
+      <footer className="mt-6 text-xs text-gray-600 text-center">
+        © {new Date().getFullYear()} KartUygulaması. Tüm hakları saklıdır.
       </footer>
     </div>
   );

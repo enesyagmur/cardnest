@@ -5,24 +5,10 @@ import {
   AiOutlinePlayCircle,
 } from "react-icons/ai";
 import { FaLayerGroup, FaUserCircle } from "react-icons/fa";
-import { logout } from "../services/firebaseAuthService";
-import { useNavigate } from "react-router-dom";
+import LogoutButton from "./authComponents/LogoutButton";
 
 export default function Header({ page, setPage, userName }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-
-  const navigate = useNavigate();
-
-  const onLogout = async () => {
-    try {
-      await logout();
-      console.log("Header | Çıkış işlemi başarılı");
-      navigate("/");
-    } catch (err) {
-      console.error("Header | Çıkış işlemi başarısız: ", err.message, err.code);
-      throw err;
-    }
-  };
 
   const buttonStyles = {
     collectionForm:
@@ -116,17 +102,7 @@ export default function Header({ page, setPage, userName }) {
             aria-orientation="vertical"
             aria-labelledby="user-menu-button"
           >
-            <button
-              onClick={() => {
-                setUserMenuOpen(false);
-                onLogout();
-              }}
-              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 focus:outline-none text-sm"
-              role="menuitem"
-              type="button"
-            >
-              Çıkış Yap
-            </button>
+            <LogoutButton />
           </div>
         )}
       </div>

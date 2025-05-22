@@ -2,8 +2,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../../utils/validationAuthSchemas";
-import { registerUser } from "../../services/firebaseAuthService";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { registerThunk } from "../../features/auth/authThunks";
 
 const RegisterForm = ({ setShowRegister }) => {
   const {
@@ -23,15 +24,12 @@ const RegisterForm = ({ setShowRegister }) => {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
     try {
-      const userCredential = await registerUser(
-        data.userName,
-        data.email,
-        data.password
-      );
-      if (userCredential.user) {
+      const user = await dispatch(registerThunk(data));
+      if (user) {
         reset();
         navigate("/home");
       }

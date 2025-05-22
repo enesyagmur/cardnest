@@ -1,12 +1,12 @@
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   getAuth,
-  updateProfile,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
-import app, { db } from "./firebaseConfig";
-import { FirebaseError } from "firebase/app";
+import app, { db } from "../../firebase/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 
 const auth = getAuth(app);
@@ -97,4 +97,14 @@ export const logout = async () => {
     );
     throw err;
   }
+};
+
+/**
+ * Kullanıcının tüm oturum değişikliklerini dinler ve tetiklenir
+ * @param {function(firebase.User | null):void}
+ * @returns {firebase.Unsubscribe}
+ */
+
+export const observeAuthState = (callback) => {
+  return onAuthStateChanged(auth, callback);
 };
