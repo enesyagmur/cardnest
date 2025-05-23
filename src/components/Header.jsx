@@ -29,7 +29,6 @@ export default function Header({ page, setPage }) {
 
   return (
     <header className="w-full md:w-11/12 rounded-b-xl bg-gradient-to-br from-blue-50 via-green-50 to-pink-50 shadow-sm py-2 md:py-3 mx-auto flex items-center justify-between px-3 sm:px-5">
-      {/* Sol: Logo ve Proje İsmi */}
       <div className="flex items-center gap-1 sm:gap-2 cursor-pointer select-none">
         <FaLayerGroup className="text-xl sm:text-2xl text-purple-500" />
         <span className="font-semibold text-base sm:text-lg md:text-xl text-gray-700 tracking-wide">
@@ -37,7 +36,6 @@ export default function Header({ page, setPage }) {
         </span>
       </div>
 
-      {/* Orta: Sayfa Geçiş Butonları */}
       <nav className="flex justify-center flex-wrap gap-2 sm:gap-3 px-2 sm:px-4 flex-1 max-w-lg">
         <button
           className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md font-medium text-xs sm:text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
@@ -82,7 +80,6 @@ export default function Header({ page, setPage }) {
         </button>
       </nav>
 
-      {/* Sağ: Kullanıcı Alanı */}
       <div className="relative">
         <button
           onClick={() => setUserMenuOpen((prev) => !prev)}

@@ -5,6 +5,7 @@ import {
   deleteCardFromCollection,
   deleteCollectionFromList,
   getCollectionsByUserId,
+  updateCardInCollection,
 } from "./collectionsServices";
 
 export const fetchCollections = createAsyncThunk(
@@ -74,6 +75,24 @@ export const cardDelete = createAsyncThunk(
       return result;
     } catch (err) {
       console.error("Thunk | deleteCard hatası:", err);
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+export const cardUpdate = createAsyncThunk(
+  "collection/cardUpdate",
+  async ({ userId, colId, cardId, values }, thunkAPI) => {
+    try {
+      const result = await updateCardInCollection(
+        userId,
+        colId,
+        cardId,
+        values
+      );
+      return result;
+    } catch (err) {
+      console.error("Thunk | cardUpdate hatası:", err);
       return thunkAPI.rejectWithValue(err.message);
     }
   }

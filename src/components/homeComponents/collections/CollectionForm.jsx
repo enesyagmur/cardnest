@@ -40,16 +40,15 @@ const CollectionForm = () => {
   };
 
   return (
-    <div className="w-full min-h-[590px] bg-white rounded-2xl shadow-lg p-10">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-700">
-        Yeni Koleksiyon Oluştur
-      </h2>
-
-      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+    <div className="w-full min-h-[590px] flex items-center justify-center bg-gradient-to-tl  from-white to-blue-50 rounded-2xl shadow-lg p-10">
+      <form
+        className="space-y-6 w-full h-full "
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div>
           <label
             htmlFor="title"
-            className="block mb-2 text-base font-medium text-gray-800"
+            className="block mb-2 text-base font-medium text-gray-800 "
           >
             Koleksiyon Başlığı
           </label>
@@ -89,7 +88,7 @@ const CollectionForm = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full  bg-purple-500 hover:bg-blue-600  text-white font-semibold py-3 rounded-lg shadow-md transition-colors duration-300"
+          className="w-full bg-blue-100 text-blue-600 border-2 border-blue-600  hover:bg-blue-600 hover:text-white font-semibold py-3 rounded-lg shadow-md transition-colors duration-300"
         >
           Koleksiyonu Oluştur
         </button>

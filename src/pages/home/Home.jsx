@@ -8,7 +8,6 @@ import CollectionForm from "../../components/homeComponents/collections/Collecti
 
 function Home() {
   const [page, setPage] = useState("collectionForm");
-  const [collectionForPractice, setCollectionForPractice] = useState({});
 
   return (
     <div
@@ -19,15 +18,8 @@ function Home() {
 
       <main className="w-full min-h-[590px] md:w-11/12 flex items-center justify-center py-2">
         {page === "collectionForm" && <CollectionForm />}
-        {page === "collectionList" && (
-          <CollectionList
-            setPage={setPage}
-            setCollectionForPractice={setCollectionForPractice}
-          />
-        )}
-        {page === "practice" && (
-          <Practice collection={collectionForPractice} setPage={setPage} />
-        )}
+        {page === "collectionList" && <CollectionList setPage={setPage} />}
+        {page === "practice" && <Practice setPage={setPage} />}
       </main>
 
       <Footer />

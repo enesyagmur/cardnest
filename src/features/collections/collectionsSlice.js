@@ -3,6 +3,7 @@ import {
   addCollection,
   addnewCard,
   cardDelete,
+  cardUpdate,
   deleteCollection,
   fetchCollections,
 } from "./collectionsThunks";
@@ -99,6 +100,46 @@ const collectionsSlice = createSlice({
         }
       })
       .addCase(cardDelete.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      //updateCard
+      .addCase(cardUpdate.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(cardUpdate.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const { colId, cardId, updatedTime, values } = action.payload;
+
+        const colIndex = state.collections.findIndex((col) => col.id === colId);
+        if (colIndex !== -1) {
+          const collection = state.collections[colIndex];
+
+          const cardIndex = collection.cards.findIndex(
+            (card) => card.id === cardId
+          );
+          if (cardIndex !== -1) {
+            const updatedCard = {
+              ...collection.cards[cardIndex],
+              ...values,
+              updatedAt: updatedTime,
+            };
+
+            const updatedCards = [...collection.cards];
+            updatedCards[cardIndex] = updatedCard;
+
+            const updatedCollection = {
+              ...collection,
+              cards: updatedCards,
+            };
+
+            state.collections[colIndex] = updatedCollection;
+          }
+        }
+      })
+      .addCase(cardUpdate.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

@@ -207,3 +207,55 @@ export const deleteCardFromCollection = async (userId, colId, cardId) => {
     throw err;
   }
 };
+
+export const updateCardInCollection = async (userId, colId, cardId, values) => {
+  if (!userId || !colId || !cardId) {
+    throw new Error("Kullanıcı ID, Koleksiyon ID ve Kart ID gerekli.");
+  }
+
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (!userDocSnap.exists()) {
+      throw new Error("Service | Kullanıcı belgesi bulunamadı.");
+    }
+
+    const userData = userDocSnap.data();
+    const userCollectionList = userData.collectionList || [];
+
+    const colIndex = userCollectionList.findIndex((col) => col.id === colId);
+    if (colIndex === -1) {
+      throw new Error("Service | Koleksiyon bulunamadı.");
+    }
+
+    const currentCollection = userCollectionList[colIndex];
+
+    const cardIndex = currentCollection.cards.findIndex(
+      (card) => card.id === cardId
+    );
+    if (cardIndex === -1) {
+      throw new Error("Service | Kart bulunamadı.");
+    }
+
+    const currentCard = currentCollection.cards[cardIndex];
+
+    const updatedTime = new Date().toISOString();
+
+    const updatedCard = {
+      ...currentCard,
+      ...values,
+      updatedAt: updatedTime,
+    };
+
+    const updatedCollections = [...userCollectionList];
+    updatedCollections[colIndex].cards[cardIndex] = updatedCard;
+    await updateDoc(userDocRef, {
+      collectionList: updatedCollections,
+    });
+    return { colId, cardId, updatedTime, values };
+  } catch (err) {
+    console.error("Service | Kart güncellenirken hata:", err);
+    throw err;
+  }
+};

@@ -11,7 +11,7 @@ const PracticeCard = ({ card }) => {
           key={index}
           className="p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow duration-300"
         >
-          {/* dibamik render  */}
+          {/* dinamik render  */}
           {item.type === "paragraph" && <ParagraphInPracticeItem item={item} />}
           {item.type === "description" && (
             <DescriptionInPracticeItem item={item} />
