@@ -27,7 +27,7 @@ const CollectionForm = () => {
       const newCol = {
         title: data.title,
         description: data.description,
-        cards: data.cards,
+        cards: [],
       };
       const returnCol = await dispatch(addCollection(newCol)).unwrap;
       if (returnCol) {

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  addCardToCollection,
   addCollectionTolist,
   deleteCollectionFromList,
   getCollectionsByUserId,
@@ -49,6 +50,20 @@ export const deleteCollection = createAsyncThunk(
       return deleteCollectionId;
     } catch (err) {
       console.error("deleteCollection thunk hatası:", err);
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+export const addnewCard = createAsyncThunk(
+  "collection/addNewCard",
+  async ({ userId, colId, newCardData }, thunkAPI) => {
+    try {
+      const result = await addCardToCollection(userId, colId, newCardData);
+
+      return result;
+    } catch (err) {
+      console.error("addNewCard thunk hatası:", err);
       return thunkAPI.rejectWithValue(err.message);
     }
   }

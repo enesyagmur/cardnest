@@ -1,16 +1,6 @@
 export const initialState = {
   front: "",
   back: [],
-  difficulty: "medium",
-  createdAt: null,
-  updatedAt: null,
-  stats: {
-    totalAttempts: 0,
-    correctAttempts: 0,
-    incorrectAttempts: 0,
-    successRate: 0,
-  },
-  isArchived: false,
 };
 
 export const cardReducer = (state, action) => {
@@ -123,7 +113,7 @@ export const cardReducer = (state, action) => {
       return {
         ...state,
         back: state.back.map((item) =>
-          item.id === action.payload.index
+          item.id === action.payload.id
             ? { ...item, listTitle: action.payload.value }
             : item
         ),
@@ -154,16 +144,6 @@ export const cardReducer = (state, action) => {
       return {
         front: "",
         back: [],
-        difficulty: "medium",
-        createdAt: null,
-        updatedAt: null,
-        stats: {
-          totalAttempts: 0,
-          correctAttempts: 0,
-          incorrectAttempts: 0,
-          successRate: 0,
-        },
-        isArchived: false,
       };
 
     default:

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addCollection,
+  addnewCard,
   deleteCollection,
   fetchCollections,
 } from "./collectionsThunks";
@@ -17,7 +18,7 @@ const collectionsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      //fetch
+      //fetch collections
       .addCase(fetchCollections.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -31,7 +32,7 @@ const collectionsSlice = createSlice({
         state.error = action.payload;
       })
 
-      //add
+      //add collection
       .addCase(addCollection.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -45,7 +46,7 @@ const collectionsSlice = createSlice({
         state.error = action.payload;
       })
 
-      //delete
+      //collection delete
       .addCase(deleteCollection.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -57,6 +58,25 @@ const collectionsSlice = createSlice({
         );
       })
       .addCase(deleteCollection.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      //add card
+      .addCase(addnewCard.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(addnewCard.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const { colId, card } = action.payload;
+
+        const colIndex = state.collections.findIndex((col) => col.id === colId);
+        if (colIndex !== -1) {
+          state.collections[colIndex].cards.push(card);
+        }
+      })
+      .addCase(addnewCard.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

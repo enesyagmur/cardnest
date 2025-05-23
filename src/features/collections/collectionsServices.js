@@ -8,12 +8,6 @@ import {
 import { db } from "../../firebase/firebaseConfig";
 import { v4 as uuidv4 } from "uuid";
 
-/**
- * Belirli bir kullanıcının tüm koleksiyonlarını çeker
- * @returns {Promise<Array>} kullanıcının koleksiyon dizisi
- * @throws {FirebaseError} veri çekme sırasında hata oluşursa
- */
-
 export const getCollectionsByUserId = async (userId) => {
   if (!userId) {
     throw new Error("Kullanıcı ID si boş olamaz");
@@ -33,16 +27,6 @@ export const getCollectionsByUserId = async (userId) => {
     return err;
   }
 };
-
-/**
- * Belirli bir kullanıcının collectionList ine yeni bir koleksiyon ekler
- * @param {string} userId kullanıcının id si
- * @param {string} newCollectionTitle koleksiyon başlığı
- * @param {string} newCollectionDescription koleksiyon açıklaması
- * @param {Array} newCollectionCards koleksiyon kart listesi
- * @returns {Promise<object>} eklenen koleksiyon id si oluşturma zmanı ile birlikte
- * @throws {FirebaseError} ekleme sırasında hata oluşursa
- */
 
 export const addCollectionTolist = async (
   userId,
@@ -78,14 +62,6 @@ export const addCollectionTolist = async (
     throw err;
   }
 };
-
-/**
- * Belirli bir kullanıcının koleksiyon listesinden eleman silme
- * @param {string} userId kullanıcı id
- * @param {string} colId silinecek koleksiyon id
- * @returns {Promise<string>} silinen koleksiyon id
- * @throws {FirebaseErro} silme sırasında hata oluşuursa
- */
 
 export const deleteCollectionFromList = async (userId, colId) => {
   if (!userId) {
@@ -123,6 +99,67 @@ export const deleteCollectionFromList = async (userId, colId) => {
     return collectionToRemove.id;
   } catch (err) {
     console.error("Koleksiyon silinirken hata oluştu:", err.message, err.code);
+    throw err;
+  }
+};
+
+export const addCardToCollection = async (userId, colId, newCardData) => {
+  if (!userId) throw new Error("Kullanıcı ID'si boş olamaz.");
+  if (!colId) throw new Error("Koleksiyon ID'si boş olamaz.");
+
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (!userDocSnap.exists()) {
+      throw new Error("Kullanıcı belgesi bulunamadı.");
+    }
+
+    const userData = userDocSnap.data();
+    const userCollections = userData.collectionList || [];
+
+    const collectionIndex = userCollections.findIndex(
+      (col) => col.id === colId
+    );
+    if (collectionIndex === -1) {
+      throw new Error("Koleksiyon bulunamadı.");
+    }
+
+    const newCard = {
+      id: uuidv4(),
+      front: newCardData.front,
+      back: newCardData.back,
+      difficulty: "medium",
+      createdAt: new Date().toISOString(),
+      updatedAt: null,
+      stats: {
+        totalAttempts: 0,
+        correctAttempts: 0,
+        incorrectAttempts: 0,
+        successRate: 0,
+      },
+      isArchived: false,
+    };
+
+    const updatedCollections = [...userCollections];
+
+    const currentCollection = updatedCollections[collectionIndex];
+    const existingCards = Array.isArray(currentCollection.cards)
+      ? currentCollection.cards
+      : [];
+
+    updatedCollections[collectionIndex] = {
+      ...currentCollection,
+      cards: [...existingCards, newCard],
+    };
+
+    await updateDoc(userDocRef, {
+      collectionList: updatedCollections,
+    });
+
+    return { colId, card: newCard };
+  } catch (err) {
+    console.error("Karta ekleme hatası:", err);
     throw err;
   }
 };

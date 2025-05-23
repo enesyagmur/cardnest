@@ -70,8 +70,6 @@ export default function CollectionList({ setPage, setCollectionForPractice }) {
                 key={col.id}
                 className="w-full md:w-96 h-44 bg-gradient-to-br  from-white to-blue-50 border border-gray-200 rounded-2xl p-4 sm:p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between min-h-[240px]"
               >
-                {console.log(col.id)}
-
                 <div>
                   <div className="flex justify-between items-start mb-3">
                     <div>
