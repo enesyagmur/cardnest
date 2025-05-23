@@ -163,3 +163,47 @@ export const addCardToCollection = async (userId, colId, newCardData) => {
     throw err;
   }
 };
+
+export const deleteCardFromCollection = async (userId, colId, cardId) => {
+  if (!userId) throw new Error("Kullanıcı ID'si boş olamaz.");
+  if (!colId) throw new Error("Koleksiyon ID'si boş olamaz.");
+  if (!cardId) throw new Error("Kart ID'si boş olamaz.");
+
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (!userDocSnap.exists()) {
+      throw new Error("Service | Kullanıcı belgesi bulunamadı.");
+    }
+
+    const userData = userDocSnap.data();
+    const userCollections = userData.collectionList || [];
+
+    const colIndex = userCollections.findIndex((col) => col.id === colId);
+    if (colIndex === -1) {
+      throw new Error("Service | Koleksiyon bulunamadı.");
+    }
+
+    const updatedCollections = [...userCollections];
+    const currentCollection = updatedCollections[colIndex];
+
+    const updatedCards = (currentCollection.cards || []).filter(
+      (card) => card.id !== cardId
+    );
+
+    updatedCollections[colIndex] = {
+      ...currentCollection,
+      cards: updatedCards,
+    };
+
+    updateDoc(userDocRef, {
+      collectionList: updatedCollections,
+    });
+
+    return { colId, cardId };
+  } catch (err) {
+    console.error("Service | Kart silinirken hata oluştu:", err);
+    throw err;
+  }
+};

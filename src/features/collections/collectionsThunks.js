@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   addCardToCollection,
   addCollectionTolist,
+  deleteCardFromCollection,
   deleteCollectionFromList,
   getCollectionsByUserId,
 } from "./collectionsServices";
@@ -32,7 +33,7 @@ export const addCollection = createAsyncThunk(
       );
       return newCollection;
     } catch (err) {
-      console.error("addNewCollection thunk hatası:", err);
+      console.error("Thunk | addNewCollection hatası:", err);
       return thunkAPI.rejectWithValue(err.message);
     }
   }
@@ -40,16 +41,12 @@ export const addCollection = createAsyncThunk(
 
 export const deleteCollection = createAsyncThunk(
   "collections/deleteCollection",
-  async (idies, thunkAPI) => {
+  async ({ userId, colId }, thunkAPI) => {
     try {
-      const idList = { userId: idies.userId, colId: idies.colId };
-      const deleteCollectionId = await deleteCollectionFromList(
-        idList.userId,
-        idList.colId
-      );
+      const deleteCollectionId = await deleteCollectionFromList(userId, colId);
       return deleteCollectionId;
     } catch (err) {
-      console.error("deleteCollection thunk hatası:", err);
+      console.error("Thunk | deleteCollection hatası:", err);
       return thunkAPI.rejectWithValue(err.message);
     }
   }
@@ -63,7 +60,20 @@ export const addnewCard = createAsyncThunk(
 
       return result;
     } catch (err) {
-      console.error("addNewCard thunk hatası:", err);
+      console.error("Thunk | addNewCard  hatası:", err);
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+export const cardDelete = createAsyncThunk(
+  "collection/cardDelete",
+  async ({ userId, colId, cardId }, thunkAPI) => {
+    try {
+      const result = await deleteCardFromCollection(userId, colId, cardId);
+      return result;
+    } catch (err) {
+      console.error("Thunk | deleteCard hatası:", err);
       return thunkAPI.rejectWithValue(err.message);
     }
   }

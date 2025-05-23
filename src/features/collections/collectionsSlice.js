@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addCollection,
   addnewCard,
+  cardDelete,
   deleteCollection,
   fetchCollections,
 } from "./collectionsThunks";
@@ -77,6 +78,27 @@ const collectionsSlice = createSlice({
         }
       })
       .addCase(addnewCard.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      //delete card
+      .addCase(cardDelete.pending, (state) => {
+        state.isLoading = true;
+        state.error = false;
+      })
+      .addCase(cardDelete.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const { colId, cardId } = action.payload;
+        const colIndex = state.collections.findIndex((col) => col.id === colId);
+        if (colIndex !== -1) {
+          const updatedCards = state.collections[colIndex].cards.filter(
+            (card) => card.id !== cardId
+          );
+          state.collections[colIndex].cards = updatedCards;
+        }
+      })
+      .addCase(cardDelete.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

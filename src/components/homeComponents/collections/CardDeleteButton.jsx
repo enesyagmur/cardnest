@@ -1,23 +1,26 @@
 import { FiXCircle } from "react-icons/fi";
-import { getCollectionList } from "../../../lib/getCollectionList";
+import { cardDelete } from "../../../features/collections/collectionsThunks";
+import { useDispatch, useSelector } from "react-redux";
+import NotifyCustom from "../../../utils/NotifyCustom";
 
 const CardDeleteButton = ({ selectedCollectionId, cardId }) => {
-  const handleDeleteCard = () => {
-    const data = getCollectionList();
-    if (!data) {
-      console.error("Silmek için veri getirilemedi");
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  const handleDeleteCard = async () => {
+    try {
+      const result = await dispatch(
+        cardDelete({
+          userId: user.uid,
+          colId: selectedCollectionId,
+          cardId: cardId,
+        })
+      ).unwrap();
+      NotifyCustom("success", "Kart silindi");
+      return result;
+    } catch (err) {
+      NotifyCustom("error", `Kart silme başarısız: ${err}`);
+      console.error(err);
     }
-
-    const newData = data.map((collection) =>
-      collection.id === selectedCollectionId
-        ? {
-            ...collection,
-            cards: collection.cards.filter((card) => card.id !== cardId),
-          }
-        : collection
-    );
-
-    localStorage.setItem("collectionList", JSON.stringify(newData));
   };
 
   return (
