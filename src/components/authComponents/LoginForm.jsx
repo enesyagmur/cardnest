@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginThunk } from "../../features/auth/authThunks";
 import NotifyCustom from "../../utils/NotifyCustom";
-import { fetchCollections } from "../../features/collections/collectionsThunks";
 
 const LoginForm = ({ setShowRegister }) => {
   const dispatch = useDispatch();
@@ -33,10 +32,6 @@ const LoginForm = ({ setShowRegister }) => {
         loginThunk({ email: data.email, password: data.password })
       ).unwrap();
       if (userCredential.user) {
-        const userId = userCredential.user.uid;
-
-        await dispatch(fetchCollections(userId)).unwrap();
-
         reset();
         navigate("/home");
       }

@@ -94,7 +94,7 @@ const CollectionForm = ({ setFormMode, formMode }) => {
     <div className="w-full sm:w-7/12 bg-white border border-gray-200 p-8 rounded-xl shadow-lg">
       <h4
         className={`text-2xl font-bold mb-6 ${
-          formMode === "update" ? "text-blue-600" : "text-green-600"
+          formMode === "update" ? "text-blue-400" : "text-green-400"
         }`}
       >
         {formMode === "update"

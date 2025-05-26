@@ -1,11 +1,15 @@
-import PracticeItem from "../../components/practiceComponents/practice/PracticeItem";
-import EmptyPractice from "../../components/practiceComponents/practice/EmptyPractice";
+import PracticeItem from "../../components/practiceComponents/PracticeItem";
+import EmptyPractice from "../../components/practiceComponents/EmptyPractice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import NotifyCustom from "../../utils/NotifyCustom";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import PracticeCollections from "../../components/practiceComponents/PracticeCollections";
 
-export default function Practice({ setPage }) {
-  const collection = useSelector((state) => state.practiceCollection.col);
+export default function Practice() {
+  const collection = useSelector((state) => state.selectCollection.col);
+  const collections = useSelector((state) => state.collections.collections);
   const [rnd, setRnd] = useState(0);
 
   const createRandomNumber = () => {
@@ -57,16 +61,28 @@ export default function Practice({ setPage }) {
   };
 
   return (
-    <div className="w-full min-h-[590px] flex items-center justify-center bg-gradient-to-br from-white to-pink-50 p-10 rounded-3xl shadow-sm ">
-      {collection.title ? (
-        <PracticeItem
-          collectionId={collection.id}
-          card={collection.cards[rnd]}
-          createRandomNumber={createRandomNumber}
-        />
-      ) : (
-        <EmptyPractice setPage={setPage} />
-      )}
+    <div className="flex flex-col items-center justify-between min-h-screen bg-gradient-to-br from-blue-200 via-green-200 to-pink-200">
+      <Header />
+      <div className="w-11/12 min-h-[590px] bg-gray-100 flex items-center justify-center rounded-3xl shadow-sm ">
+        {collection?.title && collection.cards?.length > 0 && (
+          <PracticeItem
+            collectionId={collection.id}
+            card={collection.cards[rnd]}
+            createRandomNumber={createRandomNumber}
+          />
+        )}
+
+        {(!collection?.id || !collection?.cards?.length) &&
+          collections?.length > 0 && (
+            <PracticeCollections collections={collections} />
+          )}
+
+        {(!collection?.id || !collection?.cards?.length) &&
+          (!collections?.length || collections?.length === 0) && (
+            <EmptyPractice />
+          )}
+      </div>
+      <Footer />
     </div>
   );
 }

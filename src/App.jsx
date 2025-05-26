@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import LandingPage from "./pages/landing/LandingPage";
 import Auth from "./pages/auth/Auth";
+import Practice from "./pages/practice/Practice";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -48,6 +49,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/practice"
+            element={
+              <PrivateRoute>
+                <Practice />
               </PrivateRoute>
             }
           />

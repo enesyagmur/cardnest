@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { FiMoreVertical } from "react-icons/fi";
 import Modal from "../../Modal";
 import NotifyCustom from "../../../utils/NotifyCustom";
+import { useNavigate } from "react-router-dom";
 
 export default function CollectionList({ setFormMode, collections }) {
   const { user } = useSelector((state) => state.auth);
@@ -14,6 +15,7 @@ export default function CollectionList({ setFormMode, collections }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (answer === true && modalOpen === false && openDropdownId) {
@@ -36,6 +38,7 @@ export default function CollectionList({ setFormMode, collections }) {
 
   const handleMoveToPractice = (col) => {
     dispatch(setCollection(col));
+    navigate("/practice");
   };
 
   const handleSelectCollectionForUpdate = (col) => {

@@ -1,17 +1,16 @@
-import { FaRegNewspaper, FaRegListAlt, FaListUl } from "react-icons/fa";
 import ParagraphInPracticeItem from "./ParagraphInPracticeItem";
 import DescriptionInPracticeItem from "./DescriptionInPracticeItem";
 import ListInPracticeItem from "./ListInPracticeItem";
 
 const PracticeCard = ({ card }) => {
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
+    <div className="w-full min-h-[430px] flex flex-col items-start justify-evenly overflow-y-auto p-6  rounded-xl shadow-md ">
       {card.back.map((item, index) => (
         <div
           key={index}
-          className="p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow duration-300"
+          className="w-full p-4 border border-gray-200 bg-white rounded-lg "
         >
-          {/* dinamik render  */}
+          {/* Dinamik içerik türüne göre uygun bileşeni göster */}
           {item.type === "paragraph" && <ParagraphInPracticeItem item={item} />}
           {item.type === "description" && (
             <DescriptionInPracticeItem item={item} />
