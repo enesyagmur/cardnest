@@ -6,6 +6,7 @@ import {
   cardUpdate,
   deleteCollection,
   fetchCollections,
+  updateCollection,
 } from "./collectionsThunks";
 
 const initialState = {
@@ -44,6 +45,31 @@ const collectionsSlice = createSlice({
         state.collections = [...state.collections, action.payload];
       })
       .addCase(addCollection.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      //collectionUpdate
+      .addCase(updateCollection.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateCollection.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const { userId, colId, values } = action.payload;
+
+        const colIndex = state.collections.findIndex((col) => col.id === colId);
+        if (colIndex !== -1) {
+          const currentCollection = state.collections[colIndex];
+          const newCollection = {
+            ...currentCollection,
+            ...values,
+          };
+
+          state.collections[colIndex] = newCollection;
+        }
+      })
+      .addCase(updateCollection.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })

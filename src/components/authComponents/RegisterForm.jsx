@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerThunk } from "../../features/auth/authThunks";
 import NotifyCustom from "../../utils/NotifyCustom";
+import { fetchCollections } from "../../features/collections/collectionsThunks";
 
 const RegisterForm = ({ setShowRegister }) => {
   const {
@@ -32,6 +33,7 @@ const RegisterForm = ({ setShowRegister }) => {
       const user = await dispatch(registerThunk(data));
       if (user) {
         reset();
+        dispatch(fetchCollections(user.uid));
         navigate("/home");
       }
     } catch (err) {

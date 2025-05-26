@@ -1,5 +1,4 @@
 import DeleteCardFormItem from "./DeleteCardFormItem";
-import { GoDotFill } from "react-icons/go";
 import { GoDot } from "react-icons/go";
 import DeleteListItem from "./DeleteListItem";
 import { FiPlus } from "react-icons/fi";
@@ -78,20 +77,20 @@ const CardFormItem = ({ item, id, dispatch }) => {
 
       {item.listArray && item.listArray.length > 0 && (
         <div className="space-y-2 pl-7">
-          {item.listArray.map((listDot, dotIndex) => (
-            <div key={dotIndex} className="flex items-center gap-2">
+          {item.listArray.map((listDot) => (
+            <div key={listDot.id} className="flex items-center gap-2">
               <GoDot className="text-gray-400 flex-shrink-0" size={16} />
               <input
                 type="text"
                 className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-purple-500"
                 placeholder="Madde giriniz"
-                value={listDot || ""}
+                value={listDot.value || ""}
                 onChange={(e) =>
                   dispatch({
                     type: "SET_LISTARRAY_ITEM",
                     payload: {
                       listId: id,
-                      dotIndex: dotIndex,
+                      dotId: listDot.id,
                       value: e.target.value,
                     },
                   })
@@ -99,7 +98,7 @@ const CardFormItem = ({ item, id, dispatch }) => {
               />
               <DeleteListItem
                 listId={id}
-                dotIndex={dotIndex}
+                dotId={listDot.id}
                 dispatch={dispatch}
               />
             </div>

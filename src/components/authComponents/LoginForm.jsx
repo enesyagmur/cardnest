@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginThunk } from "../../features/auth/authThunks";
 import NotifyCustom from "../../utils/NotifyCustom";
+import { fetchCollections } from "../../features/collections/collectionsThunks";
 
 const LoginForm = ({ setShowRegister }) => {
   const dispatch = useDispatch();
@@ -28,15 +29,19 @@ const LoginForm = ({ setShowRegister }) => {
 
   const onSubmit = async (data) => {
     try {
-      const user = await dispatch(
+      const userCredential = await dispatch(
         loginThunk({ email: data.email, password: data.password })
       ).unwrap();
-      if (user) {
+      if (userCredential.user) {
+        const userId = userCredential.user.uid;
+
+        await dispatch(fetchCollections(userId)).unwrap();
+
         reset();
         navigate("/home");
       }
     } catch (err) {
-      NotifyCustom("error", err);
+      NotifyCustom("error", err || "Bir hata oluştu");
     }
   };
 

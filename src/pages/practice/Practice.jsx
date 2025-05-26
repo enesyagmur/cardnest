@@ -1,8 +1,8 @@
-import PracticeItem from "./PracticeItem";
-import EmptyPractice from "./EmptyPractice";
+import PracticeItem from "../../components/practiceComponents/practice/PracticeItem";
+import EmptyPractice from "../../components/practiceComponents/practice/EmptyPractice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import NotifyCustom from "../../../utils/NotifyCustom";
+import NotifyCustom from "../../utils/NotifyCustom";
 
 export default function Practice({ setPage }) {
   const collection = useSelector((state) => state.practiceCollection.col);

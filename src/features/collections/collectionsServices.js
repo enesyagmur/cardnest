@@ -103,6 +103,48 @@ export const deleteCollectionFromList = async (userId, colId) => {
   }
 };
 
+export const updateCollectionFromList = async (userId, colId, values) => {
+  if (!userId || !colId) {
+    throw new Error("Kullanıcı Id ve Koleksiyon Id boş bırakılamaz");
+  }
+
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (!userDocSnap.exists()) {
+      throw new Error("Kullanıcı Bilgisi Bulunamadı");
+    }
+
+    const userData = userDocSnap.data();
+    const collectionList = userData.collectionList || [];
+
+    const colIndex = collectionList.findIndex((col) => col.id === colId);
+    if (colIndex === -1) {
+      throw new Error("Koleksiyon Bulunamadı");
+    }
+
+    const currentCollection = collectionList[colIndex];
+
+    const updatedCurrentCollection = {
+      ...currentCollection,
+      ...values,
+    };
+
+    const updatedCollectionList = [...collectionList];
+    updatedCollectionList[colIndex] = updatedCurrentCollection;
+
+    await updateDoc(userDocRef, {
+      collectionList: updatedCollectionList,
+    });
+
+    return { userId, colId, values };
+  } catch (err) {
+    console.error("Service | koleksiyon güncellenirken hata:", err);
+    throw err;
+  }
+};
+
 export const addCardToCollection = async (userId, colId, newCardData) => {
   if (!userId) throw new Error("Kullanıcı ID'si boş olamaz.");
   if (!colId) throw new Error("Koleksiyon ID'si boş olamaz.");

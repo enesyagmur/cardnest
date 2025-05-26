@@ -1,17 +1,92 @@
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { AiOutlineClose } from "react-icons/ai";
 import NotifyCustom from "../../../utils/NotifyCustom";
-import { addnewCard } from "../../../features/collections/collectionsThunks";
+import {
+  addnewCard,
+  cardUpdate,
+} from "../../../features/collections/collectionsThunks";
 import { cardReducer, initialState } from "../../../reducers/cardReducer";
 import CardFormItem from "./CardFormItem";
 
-const CardForm = ({ collection, setShowCardForm }) => {
+const CardForm = ({ collection, formMode, setFormMode }) => {
   const [state, dispatch] = useReducer(cardReducer, initialState);
   const user = useSelector((state) => state.auth.user);
+  const card = useSelector((state) => state.selectCard.card);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const reduxDispatch = useDispatch();
+
+  useEffect(() => {
+    if (formMode === "update" && card) {
+      dispatch({ type: "CARD_CLONE", payload: card });
+      console.log(card);
+    }
+  }, [card]);
+
+  useEffect(() => {
+    if (formMode === "create") {
+      dispatch({ type: "RESET_STATE" });
+    }
+  }, [formMode]);
+
+  const HandleAddCard = async () => {
+    try {
+      const newCardData = {
+        front: state.front,
+        back: state.back,
+      };
+
+      await reduxDispatch(
+        addnewCard({ userId: user.uid, colId: collection.id, newCardData })
+      ).unwrap();
+
+      NotifyCustom("success", "Kart başarıyla eklendi.");
+      dispatch({ type: "RESET_STATE" });
+
+      setFormMode("create");
+    } catch (error) {
+      NotifyCustom(
+        "error",
+        `Kart eklenirken hata:`,
+        error?.message || "Bilinmeyen hata"
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const HandleUpdateCard = async () => {
+    try {
+      const values = {
+        front: state.front,
+        back: state.back,
+        createdAt: state.createdAt,
+        difficulty: state.difficulty,
+        id: state.id,
+        isArchived: state.isArchived,
+        stats: state.stats,
+      };
+
+      await reduxDispatch(
+        cardUpdate({
+          userId: user.uid,
+          colId: collection.id,
+          cardId: card.id,
+          values,
+        })
+      ).unwrap();
+
+      NotifyCustom("success", "Kart başarıyla güncellendi.");
+    } catch (error) {
+      NotifyCustom(
+        "error",
+        `Kart güncellenirken hata:`,
+        error?.message || "Bilinmeyen hata"
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +103,9 @@ const CardForm = ({ collection, setShowCardForm }) => {
       if (item.type === "paragraph") {
         return item.paragraphTitle.trim() || item.paragraphContent.trim();
       } else if (item.type === "list") {
-        return item.listTitle.trim() || item.listItems.some((li) => li.trim());
+        return (
+          item.listTitle.trim() || item.listArray.some((li) => li.value.trim())
+        );
       } else if (item.type === "description") {
         return item.description.trim();
       }
@@ -45,42 +122,26 @@ const CardForm = ({ collection, setShowCardForm }) => {
       return;
     }
 
-    try {
-      const newCardData = {
-        front: state.front,
-        back: state.back,
-      };
-
-      await reduxDispatch(
-        addnewCard({ userId: user.uid, colId: collection.id, newCardData })
-      );
-
-      NotifyCustom("success", "Kart başarıyla eklendi.");
-      setShowCardForm(false);
-    } catch (error) {
-      NotifyCustom("error", `Kart eklenirken hata: ${error.message}`);
-    } finally {
-      setIsSubmitting(false);
+    if (formMode === "create") {
+      HandleAddCard();
+    } else if (formMode === "update") {
+      HandleUpdateCard();
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full bg-gradient-to-bl from-white to-blue-50 border border-gray-200 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 space-y-6"
+      className={`w-full sm:w-7/12 min-h-[580px] overflow-y-auto border rounded-lg p-6 shadow-md  transition-all duration-300 space-y-6 
+      bg-gray-50`}
     >
       <div className="relative">
-        <h2 className="text-lg sm:text-2xl font-bold text-blue-700">
-          Yeni Kart Oluştur
-        </h2>
-        <button
-          type="button"
-          className="absolute top-0 right-0 mt-1 mr-1 text-gray-400 hover:text-red-500 text-xl"
-          aria-label="Formu kapat"
-          onClick={() => setShowCardForm(false)}
+        <h2
+          className={`text-lg sm:text-2xl font-bold 
+          ${formMode === "create" ? "text-green-400" : "text-blue-400"}`}
         >
-          <AiOutlineClose />
-        </button>
+          {formMode === "create" ? "Yeni Kart Oluştur" : "Kartı Güncelle"}
+        </h2>
       </div>
 
       <label className="block">
@@ -141,9 +202,20 @@ const CardForm = ({ collection, setShowCardForm }) => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-yellow-200 hover:bg-yellow-300 text-yellow-800 font-semibold py-2.5 rounded-md transition"
+        className={`w-full py-2.5 rounded-md font-semibold transition
+          ${
+            formMode === "update"
+              ? "text-pink-600 border border-pink-600 hover:bg-pink-600 hover:text-white"
+              : "text-yellow-600 border border-yellow-500 hover:bg-yellow-400 hover:text-white"
+          }`}
       >
-        {isSubmitting ? "Oluşturuluyor..." : "Oluştur"}
+        {isSubmitting
+          ? formMode === "create"
+            ? "Oluşturuluyor..."
+            : "Güncelleniyor..."
+          : formMode === "create"
+          ? "Oluştur"
+          : "Güncelle"}
       </button>
     </form>
   );

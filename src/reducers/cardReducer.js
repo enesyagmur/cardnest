@@ -87,8 +87,8 @@ export const cardReducer = (state, action) => {
             ? {
                 ...item,
                 listArray: Array.isArray(item.listArray)
-                  ? [...item.listArray, ""]
-                  : [""],
+                  ? [...item.listArray, { id: Date.now(), value: "" }]
+                  : [{ id: Date.now(), value: "" }],
               }
             : item
         ),
@@ -98,11 +98,11 @@ export const cardReducer = (state, action) => {
       return {
         ...state,
         back: state.back.map((list) =>
-          list.id === action.payload.listIndex
+          list.id === action.payload.listId
             ? {
                 ...list,
                 listArray: list.listArray.filter(
-                  (dot, index) => index !== action.payload.dotIndex
+                  (dot) => dot.id !== action.payload.dotId
                 ),
               }
             : list
@@ -126,8 +126,10 @@ export const cardReducer = (state, action) => {
           list.id === action.payload.listId
             ? {
                 ...list,
-                listArray: list.listArray.map((dot, index) =>
-                  index === action.payload.dotIndex ? action.payload.value : dot
+                listArray: list.listArray.map((dot) =>
+                  dot.id === action.payload.dotId
+                    ? { ...dot, value: action.payload.value }
+                    : dot
                 ),
               }
             : list
@@ -145,6 +147,9 @@ export const cardReducer = (state, action) => {
         front: "",
         back: [],
       };
+
+    case "CARD_CLONE":
+      return action.payload;
 
     default:
       return state;

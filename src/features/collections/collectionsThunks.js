@@ -6,6 +6,7 @@ import {
   deleteCollectionFromList,
   getCollectionsByUserId,
   updateCardInCollection,
+  updateCollectionFromList,
 } from "./collectionsServices";
 
 export const fetchCollections = createAsyncThunk(
@@ -24,8 +25,7 @@ export const addCollection = createAsyncThunk(
   "collections/addCollection",
   async (newCollectionData, thunkAPI) => {
     try {
-      const userId = thunkAPI.getState().auth.user.uid;
-      const { title, description, cards } = newCollectionData;
+      const { userId, title, description, cards } = newCollectionData;
       const newCollection = await addCollectionTolist(
         userId,
         title,
@@ -48,6 +48,19 @@ export const deleteCollection = createAsyncThunk(
       return deleteCollectionId;
     } catch (err) {
       console.error("Thunk | deleteCollection hatası:", err);
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+export const updateCollection = createAsyncThunk(
+  "collections/updateCollection",
+  async ({ userId, colId, values }, thunkAPI) => {
+    try {
+      const result = await updateCollectionFromList(userId, colId, values);
+      return result;
+    } catch (err) {
+      console.error("Thunk | updateCollection hatası:", err);
       return thunkAPI.rejectWithValue(err.message);
     }
   }
