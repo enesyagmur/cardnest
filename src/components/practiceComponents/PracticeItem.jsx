@@ -5,7 +5,7 @@ import NotifyCustom from "../../utils/NotifyCustom";
 import { cardUpdate } from "../../features/collections/collectionsThunks";
 import { FaSmile, FaMeh, FaFrown } from "react-icons/fa";
 import { FiArrowLeft } from "react-icons/fi";
-import { setCollection } from "../../features/selectCollectionSlice";
+import { setCollectionId } from "../../features/collections/collectionsSlice";
 
 export default function PracticeItem({
   collectionId,
@@ -62,7 +62,7 @@ export default function PracticeItem({
 
       <div className="w-full flex relative">
         <button
-          onClick={() => dispatch(setCollection({}))}
+          onClick={() => dispatch(setCollectionId(""))}
           className="flex items-center gap-2 absolute  left-[-2] md:left-0 text-sm px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all shadow-sm"
         >
           <FiArrowLeft className="w-4 h-4" />

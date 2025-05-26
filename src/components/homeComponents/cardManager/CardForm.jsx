@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NotifyCustom from "../../../utils/NotifyCustom";
+import { setCollectionId } from "../../../features/collections/collectionsSlice";
 import {
   addnewCard,
   cardUpdate,
@@ -19,7 +20,6 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
   useEffect(() => {
     if (formMode === "update" && card) {
       dispatch({ type: "CARD_CLONE", payload: card });
-      console.log(card);
     }
   }, [card]);
 
@@ -44,6 +44,8 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
       dispatch({ type: "RESET_STATE" });
 
       setFormMode("create");
+
+      setCollectionId(collection.id);
     } catch (error) {
       NotifyCustom(
         "error",
@@ -202,12 +204,7 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className={`w-full py-2.5 rounded-md font-semibold transition
-          ${
-            formMode === "update"
-              ? "text-pink-600 border border-pink-600 hover:bg-pink-600 hover:text-white"
-              : "text-yellow-600 border border-yellow-500 hover:bg-yellow-400 hover:text-white"
-          }`}
+        className={`w-full text-center px-4 py-3 font-semibold rounded-md border transition duration-300  text-pink-600 border-pink-600 hover:bg-pink-600 hover:text-white`}
       >
         {isSubmitting
           ? formMode === "create"

@@ -1,14 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setCollection } from "../../features/selectCollectionSlice";
 import { useNavigate } from "react-router-dom";
+import { setCollectionId } from "../../features/collections/collectionsSlice";
 
 const PracticeCollections = ({ collections }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSelect = (collection) => {
-    dispatch(setCollection(collection));
+  const handleSelect = (id) => {
+    dispatch(setCollectionId(id));
     navigate("/practice");
   };
 
@@ -23,7 +23,7 @@ const PracticeCollections = ({ collections }) => {
         {collections.map((collection) => (
           <div
             key={collection.id}
-            onClick={() => handleSelect(collection)}
+            onClick={() => handleSelect(collection.id)}
             className="cursor-pointer border border-gray-200 shadow-sm hover:border-pink-300 hover:shadow-sm transition-all duration-200 bg-white rounded-xl p-5"
           >
             <div>

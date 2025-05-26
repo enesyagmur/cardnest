@@ -12,7 +12,14 @@ import { useEffect } from "react";
 const CollectionForm = ({ setFormMode, formMode }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-  const collection = useSelector((state) => state.selectCollection.col);
+  const collections = useSelector((state) => state.collections.collections);
+  const selectedCollectionId = useSelector(
+    (state) => state.collections.selectedCollectionId
+  );
+
+  const selectedCollection = collections.find(
+    (col) => col.id === selectedCollectionId
+  );
 
   const {
     register,
@@ -25,13 +32,13 @@ const CollectionForm = ({ setFormMode, formMode }) => {
   });
 
   useEffect(() => {
-    if (formMode === "update" && collection) {
+    if (formMode === "update" && selectedCollection) {
       reset({
-        title: collection.title || "",
-        description: collection.description || "",
+        title: selectedCollection.title || "",
+        description: selectedCollection.description || "",
       });
     }
-  }, [formMode, collection, reset]);
+  }, [formMode, selectedCollection, reset]);
 
   const collectionCreate = async (data) => {
     const newColData = {
@@ -58,21 +65,23 @@ const CollectionForm = ({ setFormMode, formMode }) => {
   const collectionUpdate = async (data) => {
     const newData = {
       userId: user.uid,
-      colId: collection.id,
+      colId: selectedCollection.id,
       values: {
         title: data.title,
         description: data.description,
       },
     };
     try {
-      const _result = await dispatch(updateCollection(newData)).unwrap();
+      await dispatch(updateCollection(newData)).unwrap();
 
       NotifyCustom("success", `Koleksiyon güncellendi`);
+
+      setFormMode("create");
+
       reset({
         title: "",
         description: "",
       });
-      setFormMode("create");
     } catch (err) {
       NotifyCustom(
         "error",
@@ -138,12 +147,7 @@ const CollectionForm = ({ setFormMode, formMode }) => {
         <div className="flex justify-end">
           <button
             type="submit"
-            className={`w-full text-center px-4 py-3 font-semibold rounded-md border transition duration-300
-          ${
-            formMode === "update"
-              ? "text-pink-600 border-pink-600 hover:bg-pink-600 hover:text-white"
-              : "text-yellow-600 border-yellow-500 hover:bg-yellow-400 hover:text-white"
-          }`}
+            className={`w-full text-center px-4 py-3 font-semibold rounded-md border transition duration-300         text-pink-600 border-pink-600 hover:bg-pink-600 hover:text-white`}
           >
             {formMode === "update" ? "Güncelle" : "Oluştur"}
           </button>

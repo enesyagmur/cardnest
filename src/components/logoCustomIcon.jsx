@@ -2,7 +2,7 @@ import React from "react";
 
 const LogoCustomIcon = () => {
   return (
-    <div className="relative w-[6vw] min-w-[12px] max-w-[20px] aspect-square shadow-sm">
+    <div className="relative w-[6vw] min-w-[12px] max-w-[16px] aspect-square shadow-sm">
       {/* Alt katman */}
       <div
         className="absolute bg-pink-300 rotate-45"

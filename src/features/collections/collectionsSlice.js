@@ -13,12 +13,17 @@ const initialState = {
   collections: [],
   isLoading: false,
   error: null,
+  selectedCollectionId: "",
 };
 
 const collectionsSlice = createSlice({
   name: "collections",
   initialState,
-  reducers: {},
+  reducers: {
+    setCollectionId: (state, action) => {
+      state.selectedCollectionId = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       //fetch collections
@@ -172,5 +177,5 @@ const collectionsSlice = createSlice({
   },
 });
 
-export const { reducer } = collectionsSlice;
+export const { setCollectionId } = collectionsSlice.actions;
 export default collectionsSlice.reducer;

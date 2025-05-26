@@ -6,14 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerThunk } from "../../features/auth/authThunks";
 import NotifyCustom from "../../utils/NotifyCustom";
-import { fetchCollections } from "../../features/collections/collectionsThunks";
 
 const RegisterForm = ({ setShowRegister }) => {
   const {
-    register, // inputları alıp güncelleme fonksiyonu
+    register,
     handleSubmit,
-    reset, // form submit durumundan sonra çalışmasını istediğimiz fonksiyonu sarmalayan fonksiyon
-    formState: { errors, isSubmitting }, // hataları ve işlemin devam edip etmediğini kontrol etmemizi sağlayan value ler
+    reset,
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(registerSchema),
     mode: "onBlur",
@@ -33,7 +32,7 @@ const RegisterForm = ({ setShowRegister }) => {
       const user = await dispatch(registerThunk(data));
       if (user) {
         reset();
-        dispatch(fetchCollections(user.uid));
+
         navigate("/home");
       }
     } catch (err) {

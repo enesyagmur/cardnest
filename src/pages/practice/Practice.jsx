@@ -8,18 +8,29 @@ import Footer from "../../components/Footer";
 import PracticeCollections from "../../components/practiceComponents/PracticeCollections";
 
 export default function Practice() {
-  const collection = useSelector((state) => state.selectCollection.col);
   const collections = useSelector((state) => state.collections.collections);
+  const selectedCollectionId = useSelector(
+    (state) => state.collections.selectedCollectionId
+  );
+
+  const selectedCollection = collections.find(
+    (col) => col.id === selectedCollectionId
+  );
+
   const [rnd, setRnd] = useState(0);
 
   const createRandomNumber = () => {
-    if (!collection.cards.length) return;
+    if (!selectedCollection.cards.length) return;
 
-    const hardCards = collection.cards.filter((c) => c.difficulty === "hard");
-    const mediumCards = collection.cards.filter(
+    const hardCards = selectedCollection.cards.filter(
+      (c) => c.difficulty === "hard"
+    );
+    const mediumCards = selectedCollection.cards.filter(
       (c) => c.difficulty === "medium"
     );
-    const easyCards = collection.cards.filter((c) => c.difficulty === "easy");
+    const easyCards = selectedCollection.cards.filter(
+      (c) => c.difficulty === "easy"
+    );
 
     const baseWeights = {
       hard: 0.6,
@@ -55,7 +66,9 @@ export default function Practice() {
 
     const randomIndex = Math.floor(Math.random() * selectedGroup.length);
     const card = selectedGroup[randomIndex];
-    const originalIndex = collection.cards.findIndex((c) => c.id === card.id);
+    const originalIndex = selectedCollection.cards.findIndex(
+      (c) => c.id === card.id
+    );
 
     setRnd(originalIndex);
   };
@@ -64,20 +77,20 @@ export default function Practice() {
     <div className="flex flex-col items-center justify-between min-h-screen bg-gradient-to-br from-blue-200 via-green-200 to-pink-200">
       <Header />
       <div className="w-11/12 min-h-[590px] bg-gray-100 flex items-center justify-center rounded-3xl shadow-sm ">
-        {collection?.title && collection.cards?.length > 0 && (
+        {selectedCollection?.title && selectedCollection.cards?.length > 0 && (
           <PracticeItem
-            collectionId={collection.id}
-            card={collection.cards[rnd]}
+            collectionId={selectedCollection.id}
+            card={selectedCollection.cards[rnd]}
             createRandomNumber={createRandomNumber}
           />
         )}
 
-        {(!collection?.id || !collection?.cards?.length) &&
+        {(!selectedCollection?.id || !selectedCollection?.cards?.length) &&
           collections?.length > 0 && (
             <PracticeCollections collections={collections} />
           )}
 
-        {(!collection?.id || !collection?.cards?.length) &&
+        {(!selectedCollection?.id || !selectedCollection?.cards?.length) &&
           (!collections?.length || collections?.length === 0) && (
             <EmptyPractice />
           )}

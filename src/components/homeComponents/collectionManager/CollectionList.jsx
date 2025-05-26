@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCollection } from "../../../features/collections/collectionsThunks";
-import { setCollection } from "../../../features/selectCollectionSlice";
+import { setCollectionId } from "../../../features/collections/collectionsSlice";
 import { setComponent } from "../../../features/selectComponentSlice";
 import { useEffect, useState } from "react";
 import { FiMoreVertical } from "react-icons/fi";
@@ -36,18 +36,18 @@ export default function CollectionList({ setFormMode, collections }) {
     }
   }, [answer, modalOpen]);
 
-  const handleMoveToPractice = (col) => {
-    dispatch(setCollection(col));
+  const handleMoveToPractice = (id) => {
+    dispatch(setCollectionId(id));
     navigate("/practice");
   };
 
-  const handleSelectCollectionForUpdate = (col) => {
-    dispatch(setCollection(col));
+  const handleSelectCollectionForUpdate = (id) => {
+    dispatch(setCollectionId(id));
     setFormMode("update");
   };
 
-  const handleMoveCardManager = (col) => {
-    dispatch(setCollection(col));
+  const handleMoveCardManager = (id) => {
+    dispatch(setCollectionId(id));
     dispatch(setComponent("cardManager"));
   };
 
@@ -99,14 +99,14 @@ export default function CollectionList({ setFormMode, collections }) {
                 {col.cards?.length > 0 && (
                   <button
                     className="px-3 py-1 border text-purple-700 bg-purple-100 hover:bg-purple-200 rounded"
-                    onClick={() => handleMoveToPractice(col)}
+                    onClick={() => handleMoveToPractice(col.id)}
                   >
                     Pratik Yap
                   </button>
                 )}
                 <button
                   className="px-3 py-1 border text-blue-700 bg-blue-100 hover:bg-blue-200 rounded"
-                  onClick={() => handleSelectCollectionForUpdate(col)}
+                  onClick={() => handleSelectCollectionForUpdate(col.id)}
                 >
                   Güncelle
                 </button>
@@ -118,7 +118,7 @@ export default function CollectionList({ setFormMode, collections }) {
                 </button>
                 <button
                   className="px-3 py-1 border text-green-700 bg-green-100 hover:bg-green-200 rounded"
-                  onClick={() => handleMoveCardManager(col)}
+                  onClick={() => handleMoveCardManager(col.id)}
                 >
                   Kartlar
                 </button>

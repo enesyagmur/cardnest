@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { logoutThunk } from "../../features/auth/authThunks";
 import NotifyCustom from "../../utils/NotifyCustom";
 import { FiLogOut } from "react-icons/fi";
-import { setCollection } from "../../features/selectCollectionSlice";
 import { setCard } from "../../features/selectCardSlice";
+import { setCollectionId } from "../../features/collections/collectionsSlice";
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const LogoutButton = () => {
     try {
       const resultAction = await dispatch(logoutThunk());
       if (logoutThunk.fulfilled.match(resultAction)) {
-        dispatch(setCollection({}));
+        dispatch(setCollectionId(""));
         dispatch(setCard({}));
 
         navigate("/");
