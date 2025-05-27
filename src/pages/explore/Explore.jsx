@@ -18,8 +18,6 @@ const Explore = () => {
   );
   const dispatch = useDispatch();
 
-  const tags = ["Hepsi", "İngilizce", "Tarih", "Bilim", "Teknoloji"];
-
   const takePublicCollections = async () => {
     try {
       await dispatch(fetchPublicCollections()).unwrap();
@@ -52,11 +50,7 @@ const Explore = () => {
               searchTerm={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <TagFilterBar
-              tags={tags}
-              selected={selectedTag}
-              onSelect={setSelectedTag}
-            />
+            <TagFilterBar selected={selectedTag} onSelect={setSelectedTag} />
             <div className="w-full flex flex-wrap justify-center gap-6 mt-4">
               {filteredCollections.map((collection, index) => (
                 <CollectionInExplore

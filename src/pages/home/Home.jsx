@@ -12,7 +12,7 @@ import Loading from "../../components/Loading";
 function Home() {
   const component = useSelector((state) => state.selectComponent.component);
   const user = useSelector((state) => state.auth.user);
-  const { collections, isLoading } = useSelector((state) => state.collections);
+  const { isLoading } = useSelector((state) => state.collections);
 
   const dispatch = useDispatch();
 

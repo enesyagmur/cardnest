@@ -65,6 +65,7 @@ export const addCollectionTolist = async (
         tags: newCollectionTags,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
+        creatorId: userId,
       });
 
       firestoreId = docRef.id;
@@ -160,6 +161,8 @@ export const updateCollectionFromList = async (userId, colId, values) => {
 
     const currentCollection = collectionList[colIndex];
 
+    const currentVisibility = currentCollection.visibility;
+
     const updatedCurrentCollection = {
       ...currentCollection,
       ...values,
@@ -172,7 +175,10 @@ export const updateCollectionFromList = async (userId, colId, values) => {
       collectionList: updatedCollectionList,
     });
 
-    if (updatedCurrentCollection.visibility === "public") {
+    if (currentVisibility === "public" && values.visibility === "private") {
+      const publicDocRef = doc(db, "publicCollections", colId);
+      await deleteDoc(publicDocRef);
+    } else if (values.visibility === "public") {
       const publicDocRef = doc(db, "publicCollections", colId);
       await setDoc(publicDocRef, {
         ...updatedCurrentCollection,

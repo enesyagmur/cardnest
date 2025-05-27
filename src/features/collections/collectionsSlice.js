@@ -26,6 +26,9 @@ const collectionsSlice = createSlice({
     setCollectionId: (state, action) => {
       state.selectedCollectionId = action.payload;
     },
+    clearCollections: (state) => {
+      state.collections = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -264,5 +267,5 @@ const collectionsSlice = createSlice({
   },
 });
 
-export const { setCollectionId } = collectionsSlice.actions;
+export const { setCollectionId, clearCollections } = collectionsSlice.actions;
 export default collectionsSlice.reducer;

@@ -5,7 +5,10 @@ import { logoutThunk } from "../../features/auth/authThunks";
 import NotifyCustom from "../../utils/NotifyCustom";
 import { FiLogOut } from "react-icons/fi";
 import { setCard } from "../../features/selectCardSlice";
-import { setCollectionId } from "../../features/collections/collectionsSlice";
+import {
+  setCollectionId,
+  clearCollections,
+} from "../../features/collections/collectionsSlice";
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
@@ -17,6 +20,7 @@ const LogoutButton = () => {
       if (logoutThunk.fulfilled.match(resultAction)) {
         dispatch(setCollectionId(""));
         dispatch(setCard({}));
+        dispatch(clearCollections());
 
         navigate("/");
       } else {
