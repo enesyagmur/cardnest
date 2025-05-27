@@ -9,11 +9,25 @@ const GoogleLoginButton = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      const _user = await dispatch(googleLoginThunk()).unwrap();
-      console.log("Google Button | Giriş başarılı");
-      navigate("/");
+      console.log("Google Button | Giriş işlemi başlatılıyor...");
+
+      const result = await dispatch(googleLoginThunk()).unwrap();
+
+      console.log("Google Button | Giriş başarılı", result);
+
+      if (result.user) {
+        navigate("/home");
+      }
     } catch (err) {
-      console.error("Google Button | Giriş başarısız: ", err);
+      console.error("Google Button | Giriş başarısız:", err);
+
+      if (err.includes("auth/argument-error")) {
+        console.error("Firebase yapılandırma hatası");
+      } else if (err.includes("auth/popup-closed-by-user")) {
+        console.error("Kullanıcı popup'ı kapattı");
+      } else if (err.includes("auth/popup-blocked")) {
+        console.error("Popup engellendi");
+      }
     }
   };
 

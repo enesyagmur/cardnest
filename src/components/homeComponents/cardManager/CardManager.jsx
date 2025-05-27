@@ -15,8 +15,6 @@ const CardManager = () => {
     (col) => col.id === selectedCollectionId
   );
 
-  console.log("id : ", selectedCollectionId);
-
   if (!selectedCollection || !selectedCollection.title) {
     return (
       <EmptyList

@@ -2,7 +2,6 @@ import CollectionList from "./CollectionList";
 import { useSelector } from "react-redux";
 import { FiPlus } from "react-icons/fi";
 import EmptyList from "../EmptList";
-import Loading from "../../Loading";
 
 const CollectionPanel = ({ formMode, setFormMode }) => {
   const { collections } = useSelector((state) => state.collections);

@@ -81,7 +81,7 @@ const LoginForm = ({ setShowRegister }) => {
       >
         {isSubmitting ? "Giriş yapılıyor..." : "Giriş Yap"}
       </button>
-      <GoogleLoginButton />
+
       <p className="text-center text-sm text-gray-600">
         Hesabın yok mu?{" "}
         <button

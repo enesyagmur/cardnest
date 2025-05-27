@@ -2,14 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addCollection,
   addnewCard,
+  addPublicCollection,
   cardDelete,
   cardUpdate,
   deleteCollection,
   fetchCollections,
+  fetchPublicCollections,
   updateCollection,
 } from "./collectionsThunks";
 
 const initialState = {
+  publicCollections: [],
   collections: [],
   isLoading: false,
   error: null,
@@ -39,8 +42,7 @@ const collectionsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-
-      //add collection
+      // add collection
       .addCase(addCollection.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -48,6 +50,13 @@ const collectionsSlice = createSlice({
       .addCase(addCollection.fulfilled, (state, action) => {
         state.isLoading = false;
         state.collections = [...state.collections, action.payload];
+
+        if (action.payload.visibility === "public") {
+          state.publicCollections = [
+            ...state.publicCollections,
+            action.payload,
+          ];
+        }
       })
       .addCase(addCollection.rejected, (state, action) => {
         state.isLoading = false;
@@ -63,15 +72,22 @@ const collectionsSlice = createSlice({
         state.isLoading = false;
         const { userId, colId, values } = action.payload;
 
-        const colIndex = state.collections.findIndex((col) => col.id === colId);
-        if (colIndex !== -1) {
-          const currentCollection = state.collections[colIndex];
-          const newCollection = {
-            ...currentCollection,
-            ...values,
-          };
+        const userColIndex = state.collections.findIndex(
+          (col) => col.id === colId
+        );
+        if (userColIndex !== -1) {
+          const currentCol = state.collections[userColIndex];
+          const updatedCol = { ...currentCol, ...values };
+          state.collections[userColIndex] = updatedCol;
 
-          state.collections[colIndex] = newCollection;
+          if (updatedCol.visibility === "public") {
+            const globalColIndex = state.publicCollections.findIndex(
+              (col) => col.id === colId && col.userId === userId
+            );
+            if (globalColIndex !== -1) {
+              state.publicCollections[globalColIndex] = updatedCol;
+            }
+          }
         }
       })
       .addCase(updateCollection.rejected, (state, action) => {
@@ -86,11 +102,49 @@ const collectionsSlice = createSlice({
       })
       .addCase(deleteCollection.fulfilled, (state, action) => {
         state.isLoading = false;
+
+        const deletedCol = action.payload;
+
         state.collections = state.collections.filter(
-          (col) => col.id !== action.payload
+          (col) => col.id !== deletedCol.id
         );
+
+        // Eğer visibility public ise publicCollections listesinden de çıkar
+        if (deletedCol.visibility === "public") {
+          state.publicCollections = state.publicCollections.filter(
+            (col) => col.id !== deletedCol.id
+          );
+        }
       })
       .addCase(deleteCollection.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // fetch Public koleksiyonlar
+      .addCase(fetchPublicCollections.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchPublicCollections.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.publicCollections = action.payload;
+      })
+      .addCase(fetchPublicCollections.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // create Public Collection
+      .addCase(addPublicCollection.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(addPublicCollection.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.collections = [...state.collections, action.payload];
+      })
+      .addCase(addPublicCollection.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
@@ -107,6 +161,17 @@ const collectionsSlice = createSlice({
         const colIndex = state.collections.findIndex((col) => col.id === colId);
         if (colIndex !== -1) {
           state.collections[colIndex].cards.push(card);
+        }
+        if (state.collections[colIndex].visibility === "public") {
+          const publicColIndex = state.publicCollections.findIndex(
+            (col) => col.id === colId
+          );
+          if (publicColIndex != -1) {
+            state.publicCollections[publicColIndex].cards = [
+              ...state.publicCollections[publicColIndex].cards,
+              card,
+            ];
+          }
         }
       })
       .addCase(addnewCard.rejected, (state, action) => {

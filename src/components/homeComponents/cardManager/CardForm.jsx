@@ -46,12 +46,8 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
       setFormMode("create");
 
       setCollectionId(collection.id);
-    } catch (error) {
-      NotifyCustom(
-        "error",
-        `Kart eklenirken hata:`,
-        error?.message || "Bilinmeyen hata"
-      );
+    } catch (err) {
+      NotifyCustom("error", `CardForm | Kart oluşturulurken hata: ${err}`);
     } finally {
       setIsSubmitting(false);
     }

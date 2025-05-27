@@ -31,7 +31,7 @@ export default function PracticeItem({
       try {
         await dispatch(cardUpdate({ userId, colId, cardId, values }));
       } catch (err) {
-        NotifyCustom("error", `Zorluk güncellenemedi hata: ${err}`);
+        NotifyCustom("error", `Practice | Zorluk güncellenemedi hata: ${err}`);
       }
     }
   };

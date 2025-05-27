@@ -8,6 +8,7 @@ import {
   updateCollection,
 } from "../../../features/collections/collectionsThunks";
 import { useEffect } from "react";
+import { FiGlobe, FiLock } from "react-icons/fi";
 
 const CollectionForm = ({ setFormMode, formMode }) => {
   const dispatch = useDispatch();
@@ -16,7 +17,6 @@ const CollectionForm = ({ setFormMode, formMode }) => {
   const selectedCollectionId = useSelector(
     (state) => state.collections.selectedCollectionId
   );
-
   const selectedCollection = collections.find(
     (col) => col.id === selectedCollectionId
   );
@@ -36,32 +36,11 @@ const CollectionForm = ({ setFormMode, formMode }) => {
       reset({
         title: selectedCollection.title || "",
         description: selectedCollection.description || "",
+        visibility: selectedCollection.visibility || "private",
+        tags: selectedCollection.tags || "",
       });
     }
   }, [formMode, selectedCollection, reset]);
-
-  const collectionCreate = async (data) => {
-    const newColData = {
-      userId: user.uid,
-      title: data.title,
-      description: data.description,
-      cards: [],
-    };
-    try {
-      const result = await dispatch(addCollection(newColData)).unwrap();
-      console.log("Yeni koleksiyon: ", result);
-
-      reset();
-      NotifyCustom("success", "Koleksiyon Oluşturuldu");
-    } catch (err) {
-      NotifyCustom(
-        "error",
-        "CollectionForm | Koleksiyon oluşturulurken hata: ",
-        err || "Bilinmeyen"
-      );
-    }
-  };
-
   const collectionUpdate = async (data) => {
     const newData = {
       userId: user.uid,
@@ -69,6 +48,8 @@ const CollectionForm = ({ setFormMode, formMode }) => {
       values: {
         title: data.title,
         description: data.description,
+        visibility: data.visibility,
+        tags: data.tags,
       },
     };
     try {
@@ -83,10 +64,30 @@ const CollectionForm = ({ setFormMode, formMode }) => {
         description: "",
       });
     } catch (err) {
+      NotifyCustom("error", `Koleksiyon güncellenmesinde sorun: ${err}`);
+    }
+  };
+
+  const collectionCreate = async (data) => {
+    const newColData = {
+      userId: user.uid,
+      creator: user.displayName,
+      title: data.title,
+      description: data.description,
+      visibility: data.visibility,
+      cards: [],
+      tags: data.tags || "",
+    };
+
+    try {
+      const _result = await dispatch(addCollection(newColData)).unwrap();
+
+      reset();
+      NotifyCustom("success", "Koleksiyon Oluşturuldu");
+    } catch (err) {
       NotifyCustom(
         "error",
-        "Koleksiyon güncellenmesinde sorun: ",
-        err || "Bilinmeyen hata"
+        `CollectionForm | Koleksiyon oluşturulurken hata: ${err}`
       );
     }
   };
@@ -131,11 +132,10 @@ const CollectionForm = ({ setFormMode, formMode }) => {
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Açıklama
           </label>
-
           <textarea
             placeholder="Açıklama girin"
             {...register("description")}
-            className="w-full p-3 border border-gray-300 rounded-md  h-28 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
+            className="w-full p-3 border border-gray-300 rounded-md h-28 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
           />
           {errors.description && (
             <p className="text-red-500 mt-1 text-sm">
@@ -144,10 +144,55 @@ const CollectionForm = ({ setFormMode, formMode }) => {
           )}
         </div>
 
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Görünürlük
+          </label>
+          <div className="flex items-center gap-6">
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="radio"
+                value="private"
+                defaultChecked
+                {...register("visibility")}
+                className="form-radio text-blue-500"
+              />
+              <FiLock className="text-gray-600" />
+              <span className="text-gray-700">Sadece Ben</span>
+            </label>
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="radio"
+                value="public"
+                {...register("visibility")}
+                className="form-radio text-blue-500"
+              />
+              <FiGlobe className="text-gray-600" />
+              <span className="text-gray-700">Herkese Açık</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label className=" flex text-sm font-semibold text-gray-700 mb-2">
+            Etiketler
+            <p className="text-gray-400 text-[12px] ml-1">
+              (opsiyoneldir. Belirtmek isterseniz, virgülle ayırarak girin.)
+            </p>
+          </label>
+          <input
+            type="text"
+            placeholder="ingilizce, kelime"
+            {...register("tags")}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
+          />
+        </div>
+
+        {/* Buton */}
         <div className="flex justify-end">
           <button
             type="submit"
-            className={`w-full text-center px-4 py-3 font-semibold rounded-md border transition duration-300         text-pink-600 border-pink-600 hover:bg-pink-600 hover:text-white`}
+            className={`w-full text-center px-4 py-3 font-semibold rounded-md border transition duration-300 text-pink-600 border-pink-600 hover:bg-pink-600 hover:text-white`}
           >
             {formMode === "update" ? "Güncelle" : "Oluştur"}
           </button>

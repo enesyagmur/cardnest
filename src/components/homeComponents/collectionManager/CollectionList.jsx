@@ -18,22 +18,25 @@ export default function CollectionList({ setFormMode, collections }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (answer === true && modalOpen === false && openDropdownId) {
+    const deleteCol = async () => {
       try {
-        const userId = user.uid;
-        const idies = { userId, colId: openDropdownId };
-        dispatch(deleteCollection(idies)).unwrap();
-        NotifyCustom("success", "Koleksiyon Silindi");
+        if (answer === true && modalOpen === false && openDropdownId) {
+          const userId = user.uid;
+          const idies = { userId, colId: openDropdownId };
+          await dispatch(deleteCollection(idies)).unwrap();
+          NotifyCustom("success", "Koleksiyon Silindi");
+        }
       } catch (err) {
         NotifyCustom(
           "error",
-          "Koleksiyon silinemedi: ",
-          err || "Bilinmeyen Hata"
+          `CollectionList| Koleksiyon silinirken hata: ${err}`
         );
       } finally {
         setAnswer(false);
       }
-    }
+    };
+
+    deleteCol();
   }, [answer, modalOpen]);
 
   const handleMoveToPractice = (id) => {

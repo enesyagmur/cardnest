@@ -9,6 +9,14 @@ const newFormSchema = yup.object().shape({
     .string()
     .min(10, "Açıklama en az 10 karakter olmalı")
     .max(50, "Açıklama en fazla 50 karakter içerebilir."),
+  visibility: yup
+    .string()
+    .oneOf(["public", "private"], "Geçersiz görünürlük seçimi")
+    .required("Görünürlük seçimi zorunludur"),
+  tags: yup
+    .string()
+    .optional()
+    .max(30, "Tags en fazla 30 karakter içerebilir."),
 });
 
 export default newFormSchema;

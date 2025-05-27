@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { HiOutlineGlobeAlt } from "react-icons/hi";
+import { FaGlobeEurope } from "react-icons/fa";
+
 import {
   AiFillEdit,
   AiOutlineUnorderedList,
@@ -26,12 +29,15 @@ export default function Header() {
       "text-green-400 hover:bg-green-100 focus:ring-green-300 focus:ring",
     practicePage:
       "text-pink-400 hover:bg-pink-100 focus:ring-pink-300 focus:ring",
+    explorePage:
+      "text-purple-400 hover:bg-purple-100 focus:ring-purple-300 focus:ring",
   };
 
   const activeButtonStyles = {
     collectionManager: "bg-blue-100 text-blue-800",
     cardManager: "bg-green-100 text-green-800",
     practicePage: "bg-pink-100 text-pink-800",
+    explorePage: "bg-purple-100 text-purple-800",
   };
 
   const dispatch = useDispatch();
@@ -47,7 +53,7 @@ export default function Header() {
 
       <nav className="flex justify-center flex-wrap gap-2 sm:gap-3 px-2 sm:px-4 flex-1 max-w-lg">
         <button
-          className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md font-medium text-xs sm:text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
+          className={`flex flex-1 items-center justify-center border border-blue-100 gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md font-medium text-xs sm:text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
             component === "collectionManager"
               ? activeButtonStyles.collectionManager
               : buttonStyles.collectionManager
@@ -64,7 +70,7 @@ export default function Header() {
         </button>
 
         <button
-          className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md font-medium text-xs sm:text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
+          className={`flex flex-1 items-center justify-center border border-green-100 gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md font-medium text-xs sm:text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
             component === "cardManager"
               ? activeButtonStyles.cardManager
               : buttonStyles.cardManager
@@ -81,7 +87,7 @@ export default function Header() {
         </button>
 
         <button
-          className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md font-medium text-xs sm:text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
+          className={`flex flex-1 items-center justify-center border border-pink-100 gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md font-medium text-xs sm:text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
             component === "cardManager"
               ? activeButtonStyles.practicePage
               : buttonStyles.practicePage
@@ -92,6 +98,19 @@ export default function Header() {
         >
           <MdOutlineQuiz className="text-xl md:text-sm sm:text-base" />
           <span className="hidden md:inline">Pratik</span>
+        </button>
+        <button
+          className={`flex flex-1 items-center justify-center border border-purple-100 gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md font-medium text-xs sm:text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
+            component === "explore"
+              ? activeButtonStyles.explorePage
+              : buttonStyles.explorePage
+          }`}
+          onClick={() => navigate("/explore")}
+          aria-label="Keşfet Sayfasına Git"
+          type="button"
+        >
+          <HiOutlineGlobeAlt className="text-xl md:text-sm sm:text-base" />
+          <span className="hidden md:inline">Keşfet</span>
         </button>
       </nav>
 

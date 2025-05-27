@@ -10,15 +10,6 @@ import { auth, db } from "../../firebase/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 import { GoogleAuthProvider } from "firebase/auth/web-extension";
 
-/**
- * Yeni bir kullanıcı kayıt eder
- * @param {string} userName kullanıcının ismi
- * @param {string} email kullanıcının mail adresi
- * @param {string} password kullanıcının şifresi
- * @returns {Promise<UserCredential>} başarılı kayıt sonrası dönüş
- * @throws {FirebaseError} hata oluşma durumunda
- */
-
 export const registerUser = async (userName, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -51,14 +42,6 @@ export const registerUser = async (userName, email, password) => {
   }
 };
 
-/**
- * Mail ve şifre ile giriş
- * @param {string} email kullanıcının mail adresi
- * @param {string} password kullanıcının şifresi
- * @returns {Promise<UserCredential>}  başarılı kayıt sonrası dönüş
- * @throws {FirebaseError} hata sonrası dönüş
- */
-
 export const loginUser = async (email, password) => {
   try {
     const userCredential = await signInWithEmailAndPassword(
@@ -78,12 +61,6 @@ export const loginUser = async (email, password) => {
   }
 };
 
-/**
- * Google ile giriş işlemi
- * @returns {Promise<UserCredential>} başarılı giriş sonrası
- * @throws {FirebaseError} hata sonrası
- */
-
 export const provider = new GoogleAuthProvider();
 
 export const signWithGoogle = async () => {
@@ -101,12 +78,6 @@ export const signWithGoogle = async () => {
   }
 };
 
-/**
- * Mevcut kullanıcının oturumunu kapattırır
- * @returns {Promise<void>} çıkış yamamlandığında
- * @throws {FirebaseError} çıkış işleminde hata olduğunda
- */
-
 export const logout = async () => {
   try {
     await signOut(auth);
@@ -120,12 +91,6 @@ export const logout = async () => {
     throw err;
   }
 };
-
-/**
- * Kullanıcının tüm oturum değişikliklerini dinler ve tetiklenir
- * @param {function(firebase.User | null):void}
- * @returns {firebase.Unsubscribe}
- */
 
 export const observeAuthState = (callback) => {
   return onAuthStateChanged(auth, callback);

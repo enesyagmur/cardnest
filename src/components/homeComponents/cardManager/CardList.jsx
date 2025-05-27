@@ -24,7 +24,7 @@ const CardList = ({ setFormMode, collection }) => {
       NotifyCustom("success", "Kart silindi");
       return result;
     } catch (err) {
-      NotifyCustom("error", `Kart silme başarısız: ${err}`);
+      NotifyCustom("error", `CardList | Kart silinirken hata: ${err}`);
       console.error(err);
     }
   };

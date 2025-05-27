@@ -13,6 +13,7 @@ import PublicRoute from "./components/route/PublicRoute";
 import Loading from "./components/Loading";
 import NotFound from "./pages/notFound/NotFound";
 import { Toaster } from "react-hot-toast";
+import Explore from "./pages/explore/Explore";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,6 +58,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Practice />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/explore"
+            element={
+              <PrivateRoute>
+                <Explore />
               </PrivateRoute>
             }
           />

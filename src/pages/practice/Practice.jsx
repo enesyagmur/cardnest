@@ -76,7 +76,7 @@ export default function Practice() {
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gradient-to-br from-blue-200 via-green-200 to-pink-200">
       <Header />
-      <div className="w-11/12 min-h-[590px] bg-gray-100 flex items-center justify-center rounded-3xl shadow-sm ">
+      <main className="w-11/12 min-h-[590px] bg-gray-100 flex items-center justify-center rounded-3xl shadow-sm ">
         {selectedCollection?.title && selectedCollection.cards?.length > 0 && (
           <PracticeItem
             collectionId={selectedCollection.id}
@@ -94,7 +94,7 @@ export default function Practice() {
           (!collections?.length || collections?.length === 0) && (
             <EmptyPractice />
           )}
-      </div>
+      </main>
       <Footer />
     </div>
   );

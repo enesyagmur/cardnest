@@ -5,6 +5,7 @@ import {
   deleteCardFromCollection,
   deleteCollectionFromList,
   getCollectionsByUserId,
+  getPublicCollections,
   updateCardInCollection,
   updateCollectionFromList,
 } from "./collectionsServices";
@@ -25,13 +26,19 @@ export const addCollection = createAsyncThunk(
   "collections/addCollection",
   async (newCollectionData, thunkAPI) => {
     try {
-      const { userId, title, description, cards } = newCollectionData;
+      const { userId, title, description, cards, visibility, creator, tags } =
+        newCollectionData;
+
       const newCollection = await addCollectionTolist(
         userId,
         title,
         description,
-        cards
+        cards,
+        visibility,
+        creator,
+        tags
       );
+
       return newCollection;
     } catch (err) {
       console.error("Thunk | addNewCollection hatası:", err);
@@ -39,16 +46,17 @@ export const addCollection = createAsyncThunk(
     }
   }
 );
-
 export const deleteCollection = createAsyncThunk(
   "collections/deleteCollection",
   async ({ userId, colId }, thunkAPI) => {
     try {
-      const deleteCollectionId = await deleteCollectionFromList(userId, colId);
-      return deleteCollectionId;
+      const deletedCollection = await deleteCollectionFromList(userId, colId);
+      return deletedCollection; // tüm obje dönecek
     } catch (err) {
       console.error("Thunk | deleteCollection hatası:", err);
-      return thunkAPI.rejectWithValue(err.message);
+      return thunkAPI.rejectWithValue(
+        err.message || "Koleksiyon silinirken hata oluştu."
+      );
     }
   }
 );
@@ -61,6 +69,42 @@ export const updateCollection = createAsyncThunk(
       return result;
     } catch (err) {
       console.error("Thunk | updateCollection hatası:", err);
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+export const fetchPublicCollections = createAsyncThunk(
+  "collections/fetchPublicCollections",
+  async (_, thunkAPI) => {
+    try {
+      const collections = await getPublicCollections();
+      return collections;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+export const addPublicCollection = createAsyncThunk(
+  "collections/addPublicCollection",
+  async (newCollectionData, thunkAPI) => {
+    try {
+      const { userId, creator, title, description, cards, tags } =
+        newCollectionData;
+
+      const newCollection = await createPublicCollection(
+        userId,
+        creator,
+        title,
+        description,
+        cards,
+        tags
+      );
+
+      return newCollection;
+    } catch (err) {
+      console.error("Thunk | addPublicCollectionThunk hatası:", err);
       return thunkAPI.rejectWithValue(err.message);
     }
   }
