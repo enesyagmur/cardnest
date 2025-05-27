@@ -320,6 +320,21 @@ export const deleteCardFromCollection = async (userId, colId, cardId) => {
       collectionList: updatedCollections,
     });
 
+    if (currentCollection.visibility === "public") {
+      const publicDocRef = doc(db, "publicCollections", colId);
+      const publicDocSnap = await getDoc(publicDocRef);
+      if (publicDocSnap.exists()) {
+        const publicColData = publicDocSnap.data();
+        const updatedPublicColCards = (
+          Array.isArray(publicColData.cards) ? publicColData.cards : []
+        ).filter((card) => card.id !== cardId);
+
+        await updateDoc(publicDocRef, {
+          cards: updatedPublicColCards,
+        });
+      }
+    }
+
     return { colId, cardId };
   } catch (err) {
     console.error("Service | Kart silinirken hata oluştu:", err);
@@ -328,9 +343,9 @@ export const deleteCardFromCollection = async (userId, colId, cardId) => {
 };
 
 export const updateCardInCollection = async (userId, colId, cardId, values) => {
-  if (!userId || !colId || !cardId) {
-    throw new Error("Kullanıcı ID, Koleksiyon ID ve Kart ID gerekli.");
-  }
+  if (!userId) throw new Error("Kullanıcı ID'si boş olamaz.");
+  if (!colId) throw new Error("Koleksiyon ID'si boş olamaz.");
+  if (!cardId) throw new Error("Kart ID'si boş olamaz.");
 
   try {
     const userDocRef = doc(db, "users", userId);
@@ -341,40 +356,53 @@ export const updateCardInCollection = async (userId, colId, cardId, values) => {
     }
 
     const userData = userDocSnap.data();
-    const userCollectionList = userData.collectionList || [];
+    const userCollections = userData.collectionList || [];
 
-    const colIndex = userCollectionList.findIndex((col) => col.id === colId);
+    const colIndex = userCollections.findIndex((col) => col.id === colId);
     if (colIndex === -1) {
       throw new Error("Service | Koleksiyon bulunamadı.");
     }
 
-    const currentCollection = userCollectionList[colIndex];
+    const updatedCollections = [...userCollections];
+    const currentCollection = updatedCollections[colIndex];
 
-    const cardIndex = currentCollection.cards.findIndex(
-      (card) => card.id === cardId
+    const updatedCards = (currentCollection.cards || []).map((card) =>
+      card.id === cardId ? { ...card, ...values } : card
     );
-    if (cardIndex === -1) {
-      throw new Error("Service | Kart bulunamadı.");
-    }
 
-    const currentCard = currentCollection.cards[cardIndex];
-
-    const updatedTime = new Date().toISOString();
-
-    const updatedCard = {
-      ...currentCard,
-      ...values,
-      updatedAt: updatedTime,
+    updatedCollections[colIndex] = {
+      ...currentCollection,
+      cards: updatedCards,
     };
 
-    const updatedCollections = [...userCollectionList];
-    updatedCollections[colIndex].cards[cardIndex] = updatedCard;
     await updateDoc(userDocRef, {
       collectionList: updatedCollections,
     });
-    return { colId, cardId, updatedTime, values };
+
+    if (currentCollection.visibility === "public") {
+      const publicDocRef = doc(db, "publicCollections", colId);
+      const publicDocSnap = await getDoc(publicDocRef);
+
+      if (publicDocSnap.exists()) {
+        const publicColData = publicDocSnap.data();
+        const updatedPublicCards = (
+          Array.isArray(publicColData.cards) ? publicColData.cards : []
+        ).map((card) => (card.id === cardId ? { ...card, ...values } : card));
+
+        await updateDoc(publicDocRef, {
+          cards: updatedPublicCards,
+        });
+      }
+    }
+
+    return {
+      colId,
+      cardId,
+      updatedCard: values,
+      visibility: currentCollection.visibility,
+    };
   } catch (err) {
-    console.error("Service | Kart güncellenirken hata:", err);
+    console.error("Service | Kart güncellenirken hata oluştu:", err);
     throw err;
   }
 };

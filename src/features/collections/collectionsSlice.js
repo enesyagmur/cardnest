@@ -207,8 +207,9 @@ const collectionsSlice = createSlice({
       })
       .addCase(cardUpdate.fulfilled, (state, action) => {
         state.isLoading = false;
-        const { colId, cardId, updatedTime, values } = action.payload;
+        const { colId, cardId, updatedCard, visibility } = action.payload;
 
+        // ÖZEL KOLEKSİYON GÜNCELLEME
         const colIndex = state.collections.findIndex((col) => col.id === colId);
         if (colIndex !== -1) {
           const collection = state.collections[colIndex];
@@ -217,21 +218,42 @@ const collectionsSlice = createSlice({
             (card) => card.id === cardId
           );
           if (cardIndex !== -1) {
-            const updatedCard = {
+            const updatedCards = [...collection.cards];
+            updatedCards[cardIndex] = {
               ...collection.cards[cardIndex],
-              ...values,
-              updatedAt: updatedTime,
+              ...updatedCard,
             };
 
-            const updatedCards = [...collection.cards];
-            updatedCards[cardIndex] = updatedCard;
-
-            const updatedCollection = {
+            state.collections[colIndex] = {
               ...collection,
               cards: updatedCards,
             };
+          }
+        }
 
-            state.collections[colIndex] = updatedCollection;
+        if (visibility === "public") {
+          const publicIndex = state.publicCollections.findIndex(
+            (col) => col.id === colId
+          );
+          if (publicIndex !== -1) {
+            const publicCollection = state.publicCollections[publicIndex];
+
+            const publicCardIndex = publicCollection.cards.findIndex(
+              (card) => card.id === cardId
+            );
+
+            if (publicCardIndex !== -1) {
+              const updatedPublicCards = [...publicCollection.cards];
+              updatedPublicCards[publicCardIndex] = {
+                ...publicCollection.cards[publicCardIndex],
+                ...updatedCard,
+              };
+
+              state.publicCollections[publicIndex] = {
+                ...publicCollection,
+                cards: updatedPublicCards,
+              };
+            }
           }
         }
       })

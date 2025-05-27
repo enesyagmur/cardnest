@@ -4,7 +4,7 @@ import Footer from "../../components/Footer";
 import CollectionManager from "../../components/homeComponents/collectionManager/CollectionManager";
 import CardManager from "../../components/homeComponents/cardManager/CardManager";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchCollections } from "../../features/collections/collectionsThunks";
 import NotifyCustom from "../../utils/NotifyCustom";
 import Loading from "../../components/Loading";
@@ -12,19 +12,15 @@ import Loading from "../../components/Loading";
 function Home() {
   const component = useSelector((state) => state.selectComponent.component);
   const user = useSelector((state) => state.auth.user);
-  const [isLoading, setİsloading] = useState(true);
+  const { collections, isLoading } = useSelector((state) => state.collections);
+
   const dispatch = useDispatch();
 
   const getCollections = async () => {
     try {
       await dispatch(fetchCollections(user.uid)).unwrap();
-      setİsloading(false);
     } catch (err) {
-      NotifyCustom(
-        "error",
-        "Koleksiyonlar getirilirken hata: ",
-        err?.message || "Bilinmiyor"
-      );
+      NotifyCustom("error", `Koleksiyonlar getirilirken hata: ${err?.message}`);
     }
   };
 
