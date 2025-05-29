@@ -8,6 +8,7 @@ import LogoutButton from "./authComponents/LogoutButton";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoCustomIcon from "./logoCustomIcon";
+import { BiLogOut } from "react-icons/bi";
 
 export default function Header() {
   const { displayName } = useSelector((state) => state.auth.user);
@@ -69,7 +70,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full md:w-11/12 mx-auto bg-white/90 backdrop-blur-md border border-white/20 shadow-xl rounded-2xl p-2">
+    <header className="w-full md:w-11/12 mx-auto bg-white/90 backdrop-blur-md  border border-white/20 shadow-xl rounded-2xl p-2">
       <div className="flex items-center justify-between">
         {/* Logo Section */}
         <div
@@ -159,37 +160,21 @@ export default function Header() {
               <FaUserCircle className="w-6 h-6 text-gray-400" />
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
             </div>
-            <div className="hidden sm:flex flex-col items-start">
-              <span className="text-sm font-medium text-gray-800 capitalize">
-                {displayName || "Kullanıcı"}
-              </span>
-              <span className="text-xs text-gray-500">Online</span>
-            </div>
-            <IoChevronDownOutline
-              className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
-                userMenuOpen ? "rotate-180" : ""
-              }`}
-            />
-          </button>
 
-          {/* Dropdown */}
-          {userMenuOpen && (
-            <>
-              <div
-                className="fixed inset-0 z-40"
-                onClick={() => setUserMenuOpen(false)}
-                aria-hidden="true"
-              ></div>
-              <div
-                className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 z-50 border border-gray-100 overflow-hidden"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="user-menu-button"
-              >
-                <LogoutButton />
+            {/* İçerik kısmı toggle edilecek */}
+            {userMenuOpen ? (
+              <LogoutButton />
+            ) : (
+              <div className="w-24 hidden sm:flex flex-col items-start">
+                <span className="text-sm font-medium text-gray-800 capitalize">
+                  {displayName || "Kullanıcı"}
+                </span>
+                <span className="text-xs text-gray-500">Online</span>
               </div>
-            </>
-          )}
+            )}
+
+            <BiLogOut className={`w-4 h-4 text-gray-400 hover:text-red-500`} />
+          </button>
         </div>
       </div>
     </header>

@@ -130,7 +130,7 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full md:w-7/12 bg-white/95 backdrop-blur-sm border border-gray-100 rounded-lg p-4 shadow-xl  overflow-y-auto transition-all duration-300"
+      className="w-full md:w-7/12 h-full bg-white/95 backdrop-blur-sm border border-gray-100 rounded-lg p-4 shadow-xl  overflow-y-auto transition-all duration-300"
     >
       {/* Header */}
       <div className="flex items-center space-x-3 pb-4 border-b border-gray-100">
@@ -233,7 +233,7 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full px-4 py-3 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:transform-none disabled:hover:shadow-lg"
+          className="w-full px-4 py-3  bg-white border border-pink-500 text-pink-400 hover:bg-pink-600 hover:text-white  font-semibold rounded-xl transition  shadow-lg "
         >
           {isSubmitting
             ? formMode === "create"

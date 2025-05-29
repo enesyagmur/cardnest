@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import CardPanel from "../../components/cardsComponent/CardPanel";
 import CardForm from "../../components/cardsComponent/CardForm";
 import EmptyList from "../../components/EmptyList";
+import CardTemplate from "../../components/cardsComponent/CardTemplate";
 
 const CardsPage = () => {
   const [formMode, setFormMode] = useState("create");
@@ -27,18 +28,21 @@ const CardsPage = () => {
     );
   } else if (selectedCollection.title) {
     return (
-      <div className="w-full h-full flex flex-col md:flex-row gap-2 p-4 bg-gray-100  rounded-xl overflow-y-auto">
+      <div className="w-full h-full flex flex-col-reverse md:flex-row gap-2 p-4 bg-gray-100  rounded-xl overflow-y-auto">
         <CardPanel
           formMode={formMode}
           setFormMode={setFormMode}
           collection={selectedCollection}
         />
-
-        <CardForm
-          formMode={formMode}
-          setFormMode={setFormMode}
-          collection={selectedCollection}
-        />
+        {formMode === "template" ? (
+          <CardTemplate />
+        ) : (
+          <CardForm
+            formMode={formMode}
+            setFormMode={setFormMode}
+            collection={selectedCollection}
+          />
+        )}
       </div>
     );
   }

@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 const CardPanel = ({ formMode, setFormMode, collection }) => {
   const navigate = useNavigate();
   return (
-    <div className="w-full md:w-5/12 h-full bg-white border rounded-lg shadow-sm p-4">
+    <div className="w-full md:w-5/12 h-full bg-white border rounded-lg shadow-sm p-2">
       {/* Header */}
-      <div className="flex items-center justify-between px-3 py-2 border border-gray-100 shadow-sm rounded-xl bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50">
+      <div className="flex items-center justify-between p-4 border border-gray-100 shadow-sm rounded-xl mb-2">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-blue-400 to-purple-400 rounded-lg shadow-sm">
             <span className="text-white text-base">📘</span>
@@ -32,16 +32,31 @@ const CardPanel = ({ formMode, setFormMode, collection }) => {
           <button
             onClick={() => setFormMode("create")}
             className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium transition shadow-sm ${
-              formMode === "update"
+              formMode !== "create"
                 ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600"
                 : "bg-gray-100 text-gray-400 cursor-not-allowed"
             }`}
             aria-label="Yeni Koleksiyon Ekle"
             title="Yeni Koleksiyon Ekle"
-            disabled={formMode !== "update"}
+            disabled={formMode === "create"}
           >
             <FiPlus size={16} />
-            Yeni Kart
+            Kart
+          </button>
+
+          <button
+            onClick={() => setFormMode("template")}
+            className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium transition shadow-sm ${
+              formMode !== "template"
+                ? "bg-gradient-to-r from-green-500 to-blue-500 text-white hover:from-green-600 hover:to-blue-600"
+                : "bg-gray-100 text-gray-400 cursor-not-allowed"
+            }`}
+            aria-label="Yeni Koleksiyon Ekle"
+            title="Yeni Koleksiyon Ekle"
+            disabled={formMode === "template"}
+          >
+            <FiPlus size={16} />
+            Template
           </button>
         </div>
       </div>

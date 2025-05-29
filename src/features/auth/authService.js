@@ -29,6 +29,7 @@ export const registerUser = async (userName, email, password) => {
       userId: user.uid,
       collectionList: [],
       createdAt: new Date(),
+      cardTemplates: [],
     });
     console.log("FirebaseAuthService | Kullanıcı firestore a eklendi");
     return userCredential;

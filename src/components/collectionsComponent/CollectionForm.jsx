@@ -8,15 +8,7 @@ import {
   updateCollection,
 } from "../../features/collections/collectionsThunks";
 import { useEffect } from "react";
-import {
-  FiLock,
-  FiGlobe,
-  FiTag,
-  FiEdit2,
-  FiInfo,
-  FiEdit3,
-  FiPlus,
-} from "react-icons/fi";
+import { FiLock, FiGlobe, FiTag, FiEdit3, FiPlus } from "react-icons/fi";
 
 const CollectionForm = ({ setFormMode, formMode }) => {
   const dispatch = useDispatch();
@@ -222,10 +214,10 @@ const CollectionForm = ({ setFormMode, formMode }) => {
         </div>
 
         {/* Submit Button */}
-        <div className="pt-2">
+        <div className="">
           <button
             type="submit"
-            className="w-full px-4 py-3 bg-white border border-pink-500 text-pink-400 hover:bg-pink-600 hover:text-white  font-semibold rounded-xl transition  shadow-lg  "
+            className="w-full px-4 py-3  bg-white border border-pink-500 text-pink-400 hover:bg-pink-600 hover:text-white  font-semibold rounded-xl transition  shadow-lg  "
           >
             {formMode === "update" ? "Güncelle" : "Oluştur"}
           </button>

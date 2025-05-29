@@ -9,6 +9,7 @@ import {
   setCollectionId,
   clearCollections,
 } from "../../features/collections/collectionsSlice";
+import { clearTemplates } from "../../features/templates/templatesSlice";
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const LogoutButton = () => {
         dispatch(setCollectionId(""));
         dispatch(setCard({}));
         dispatch(clearCollections());
+        dispatch(clearTemplates());
 
         navigate("/");
       } else {
@@ -36,12 +38,11 @@ const LogoutButton = () => {
       onClick={() => {
         onLogout();
       }}
-      className="flex items-center gap-2 w-full text-left px-4 py-2 text-red-600 bg-white hover:bg-red-50 hover:shadow-md shadow-sm rounded-md focus:outline-none text-sm transition duration-150"
+      className="w-24 h-full flex items-center justify-center px-4 py-2 text-red-600 bg-white hover:bg-red-50 hover:shadow-md shadow-sm rounded-md focus:outline-none text-sm transition duration-150"
       role="menuitem"
       type="button"
     >
-      <FiLogOut className="text-base" />
-      <span>Çıkış Yap</span>
+      <span>Çıkış</span>
     </button>
   );
 };
