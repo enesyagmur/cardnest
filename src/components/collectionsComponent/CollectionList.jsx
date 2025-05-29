@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCollection } from "../../../features/collections/collectionsThunks";
-import { setCollectionId } from "../../../features/collections/collectionsSlice";
-import { setComponent } from "../../../features/selectComponentSlice";
 import { useEffect, useState } from "react";
 import { FiMoreVertical } from "react-icons/fi";
-import Modal from "../../Modal";
-import NotifyCustom from "../../../utils/NotifyCustom";
 import { useNavigate } from "react-router-dom";
+import { deleteCollection } from "../../features/collections/collectionsThunks";
+import NotifyCustom from "../../utils/NotifyCustom";
+import { setCollectionId } from "../../features/collections/collectionsSlice";
+import Modal from "../Modal";
 
 export default function CollectionList({ setFormMode, collections }) {
   const { user } = useSelector((state) => state.auth);
@@ -49,9 +48,9 @@ export default function CollectionList({ setFormMode, collections }) {
     setFormMode("update");
   };
 
-  const handleMoveCardManager = (id) => {
+  const handleMoveCards = (id) => {
     dispatch(setCollectionId(id));
-    dispatch(setComponent("cardManager"));
+    navigate("/cards");
   };
 
   if (Array.isArray(collections) && collections.length > 0) {
@@ -121,7 +120,7 @@ export default function CollectionList({ setFormMode, collections }) {
                 </button>
                 <button
                   className="px-3 py-1 border text-green-700 bg-green-100 hover:bg-green-200 rounded"
-                  onClick={() => handleMoveCardManager(col.id)}
+                  onClick={() => handleMoveCards(col.id)}
                 >
                   Kartlar
                 </button>

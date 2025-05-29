@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import RegisterForm from "../../components/authComponents/RegisterForm";
 import LoginForm from "../../components/authComponents/LoginForm";
 
-const Auth = () => {
+const AuthPage = () => {
   const [showRegister, setShowRegister] = useState(false);
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#a3cef1] via-[#a8d5ba] to-[#ffb6b9]">
@@ -27,4 +27,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default AuthPage;

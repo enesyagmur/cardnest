@@ -6,13 +6,14 @@ const CollectionInExplore = ({
   description,
   cards,
   creator,
+  updatedAt,
   onClick,
 }) => {
   return (
     <div
       onClick={onClick}
-      className="cursor-pointer p-5 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 w-full md:w-5/12 mb-6 flex flex-col justify-between"
-      aria-label={`Koleksiyon: ${title}, kart sayısı: ${cards.length}, yaratan: ${creator}`}
+      className="group cursor-pointer p-6 bg-white rounded-2xl border border-gray-100 hover:border-purple-200 hover:shadow-xl transition-all duration-300 w-full md:w-5/12 mb-6 flex flex-col justify-between hover:-translate-y-1"
+      aria-label={`Koleksiyon: ${title}, kart sayısı: ${cards.length}, yaratan: ${creator}, güncellenme tarihi: ${updatedAt}`}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
@@ -21,20 +22,48 @@ const CollectionInExplore = ({
         }
       }}
     >
-      <div>
-        <h3 className="text-lg font-semibold mb-2 text-purple-400 capitalize ">
+      <div className="space-y-4">
+        {/* Başlık */}
+        <h3 className="text-xl font-bold capitalize text-gray-600 group-hover:text-purple-500 transition-colors duration-200 line-clamp-2">
           {title}
         </h3>
-        <p className="text-sm text-gray-600 mb-3">{description}</p>
-        <div className="flex items-center gap-6 text-sm text-gray-400 ">
-          <span className="flex items-center gap-1">
-            <BsFiles className="text-lg text-green-300" />
-            {cards.length}
-          </span>
-          <span className="flex items-center gap-1 ">
-            <MdPerson className="text-lg text-blue-300" />
-            {creator}
-          </span>
+
+        {/* Açıklama */}
+        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+          {description}
+        </p>
+
+        {/* İstatistikler ve Güncelleme */}
+        <div className="flex items-center justify-between pt-2">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-gray-500">
+              <div className="w-8 h-8 bg-purple-50 rounded-full flex items-center justify-center">
+                <BsFiles className="text-sm text-purple-500" />
+              </div>
+              <span className="text-sm font-medium">{cards.length} kart</span>
+            </div>
+
+            <div className="flex items-center gap-2 text-gray-500">
+              <div className="w-8 h-8 bg-gray-50 rounded-full flex items-center justify-center">
+                <MdPerson className="text-sm text-gray-600" />
+              </div>
+              <span className="text-sm font-medium capitalize">{creator}</span>
+            </div>
+          </div>
+
+          {/* Güncelleme tarihi */}
+          <div className="text-xs text-gray-400 flex items-center gap-1">
+            <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+            <span className="hidden sm:inline">
+              {new Date(updatedAt).toLocaleDateString("tr-TR")}
+            </span>
+            <span className="sm:hidden">
+              {new Date(updatedAt).toLocaleDateString("tr-TR", {
+                month: "short",
+                day: "numeric",
+              })}
+            </span>
+          </div>
         </div>
       </div>
     </div>

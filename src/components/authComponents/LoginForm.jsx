@@ -33,7 +33,7 @@ const LoginForm = ({ setShowRegister }) => {
       ).unwrap();
       if (userCredential.user) {
         reset();
-        navigate("/home");
+        navigate("/collections");
       }
     } catch (err) {
       NotifyCustom("error", err || "Bir hata oluştu");

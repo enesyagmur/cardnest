@@ -1,9 +1,9 @@
 // App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/home/Home";
+
 import LandingPage from "./pages/landing/LandingPage";
-import Auth from "./pages/auth/Auth";
-import Practice from "./pages/practice/Practice";
+import AuthPage from "./pages/auth/AuthPage";
+
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -13,7 +13,11 @@ import PublicRoute from "./components/route/PublicRoute";
 import Loading from "./components/Loading";
 import NotFound from "./pages/notFound/NotFound";
 import { Toaster } from "react-hot-toast";
-import Explore from "./pages/explore/Explore";
+import Layout from "./Layout";
+import CollectionsPage from "./pages/collections/CollectionsPage";
+import CardsPage from "./pages/cards/CardsPage";
+import PracticePage from "./pages/practice/PracticePage";
+import ExplorePage from "./pages/explore/ExplorePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,34 +50,23 @@ function App() {
             }
           />
           <Route
-            path="/home"
             element={
               <PrivateRoute>
-                <Home />
+                <Layout />
               </PrivateRoute>
             }
-          />
-          <Route
-            path="/practice"
-            element={
-              <PrivateRoute>
-                <Practice />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/explore"
-            element={
-              <PrivateRoute>
-                <Explore />
-              </PrivateRoute>
-            }
-          />
+          >
+            <Route path="/collections" element={<CollectionsPage />} />
+            <Route path="/cards" element={<CardsPage />} />
+            <Route path="/practice" element={<PracticePage />} />
+            <Route path="/explore" element={<ExplorePage />} />
+          </Route>
+
           <Route
             path="/auth"
             element={
               <PublicRoute>
-                <Auth />
+                <AuthPage />
               </PublicRoute>
             }
           />

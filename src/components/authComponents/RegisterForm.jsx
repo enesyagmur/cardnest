@@ -33,7 +33,7 @@ const RegisterForm = ({ setShowRegister }) => {
       if (user) {
         reset();
 
-        navigate("/home");
+        navigate("/collections");
       }
     } catch (err) {
       NotifyCustom("error", "Kayıt Başarısız: ", err);

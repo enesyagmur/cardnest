@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { cardDelete } from "../../../features/collections/collectionsThunks";
-import NotifyCustom from "../../../utils/NotifyCustom";
-import { setCard } from "../../../features/selectCardSlice";
+import { cardDelete } from "../../features/collections/collectionsThunks";
+import NotifyCustom from "../../utils/NotifyCustom";
+import { setCard } from "../../features/selectCardSlice";
 import { MdViewList } from "react-icons/md";
 import { FiMoreVertical } from "react-icons/fi";
 import { useState } from "react";
