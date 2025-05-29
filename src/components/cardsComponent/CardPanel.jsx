@@ -56,7 +56,7 @@ const CardPanel = ({ formMode, setFormMode, collection }) => {
             disabled={formMode === "template"}
           >
             <FiPlus size={16} />
-            Template
+            Şablon
           </button>
         </div>
       </div>

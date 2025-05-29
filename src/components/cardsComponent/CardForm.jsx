@@ -8,11 +8,15 @@ import NotifyCustom from "../../utils/NotifyCustom";
 import { setCollectionId } from "../../features/collections/collectionsSlice";
 import { cardReducer, initialState } from "../../reducers/cardReducer";
 import CardFormItem from "../cardsComponent/CardFormItem";
+import TemplateList from "./TemplateList";
 
 const CardForm = ({ collection, formMode, setFormMode }) => {
   const [state, dispatch] = useReducer(cardReducer, initialState);
   const user = useSelector((state) => state.auth.user);
   const card = useSelector((state) => state.selectCard.card);
+  const selectedTemplate = useSelector(
+    (state) => state.templates.selectedTemplate
+  );
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const reduxDispatch = useDispatch();
@@ -21,13 +25,21 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
     if (formMode === "update" && card) {
       dispatch({ type: "CARD_CLONE", payload: card });
     }
-  }, [card]);
+  }, [card, dispatch, formMode]);
 
   useEffect(() => {
     if (formMode === "create") {
       dispatch({ type: "RESET_STATE" });
     }
   }, [formMode]);
+
+  useEffect(() => {
+    if (selectedTemplate !== null && selectedTemplate.length > 0) {
+      dispatch({ type: "TAKE_TEMPLATE", payload: selectedTemplate });
+    } else {
+      dispatch({ type: "RESET_STATE" });
+    }
+  }, [selectedTemplate]);
 
   const HandleAddCard = async () => {
     try {
@@ -133,23 +145,29 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
       className="w-full md:w-7/12 h-full bg-white/95 backdrop-blur-sm border border-gray-100 rounded-lg p-4 shadow-xl  overflow-y-auto transition-all duration-300"
     >
       {/* Header */}
-      <div className="flex items-center space-x-3 pb-4 border-b border-gray-100">
+      <div className="flex items-center justify-between space-x-3 pb-4 border-b border-gray-100">
         <div
-          className={`flex items-center justify-center w-10 h-10 rounded-xl ${
-            formMode === "create"
-              ? "bg-gradient-to-r from-emerald-500 to-emerald-600"
-              : "bg-gradient-to-r from-blue-500 to-blue-600"
-          }`}
+          className={`flex items-center justify-start w-64 h-10 rounded-xl `}
         >
-          {formMode === "create" ? "✨" : "🔄"}
+          <span
+            className={` w-10 h-10 rounded-xl flex items-center justify-center ${
+              formMode === "create"
+                ? "bg-gradient-to-r from-emerald-500 to-emerald-600"
+                : "bg-gradient-to-r from-blue-500 to-blue-600"
+            }`}
+          >
+            {formMode === "create" ? "✨" : "🔄"}
+          </span>
+
+          <h2
+            className={`text-xl font-bold ml-2 ${
+              formMode === "create" ? "text-emerald-600" : "text-blue-600"
+            }`}
+          >
+            {formMode === "create" ? "Yeni Kart Oluştur" : "Kartı Güncelle"}
+          </h2>
         </div>
-        <h2
-          className={`text-xl font-bold ${
-            formMode === "create" ? "text-emerald-600" : "text-blue-600"
-          }`}
-        >
-          {formMode === "create" ? "Yeni Kart Oluştur" : "Kartı Güncelle"}
-        </h2>
+        {formMode === "create" && <TemplateList />}
       </div>
 
       {/* Title Input */}

@@ -148,6 +148,11 @@ export const cardReducer = (state, action) => {
         back: [],
       };
 
+    case "TAKE_TEMPLATE":
+      return {
+        ...state,
+        back: action.payload,
+      };
     case "CARD_CLONE":
       return action.payload;
 

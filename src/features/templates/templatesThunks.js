@@ -1,5 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { addTemplate } from "./templatesService";
+import { addTemplate, getTemplates } from "./templatesService";
+
+export const getTemplatesThunk = createAsyncThunk(
+  "templates/getTemplates",
+  async (userId, thunkAPI) => {
+    try {
+      const templates = await getTemplates(userId);
+      return templates;
+    } catch (err) {
+      thunkAPI.rejectWithValue(
+        err.message || "Thunk | Templates alınırken bilinmeyen bir hata oluştu"
+      );
+    }
+  }
+);
 
 export const addTemplateThunk = createAsyncThunk(
   "templates/addTemplate",

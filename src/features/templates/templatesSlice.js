@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addTemplateThunk } from "./templatesThunks";
+import { addTemplateThunk, getTemplatesThunk } from "./templatesThunks";
 
 const initialState = {
-  templates: [],
+  templates: null,
   isLoading: false,
   error: null,
+  selectedTemplate: null,
 };
 
 const templatesSlice = createSlice({
@@ -12,11 +13,29 @@ const templatesSlice = createSlice({
   initialState,
   reducers: {
     clearTemplates: (state) => {
-      state.templates = [];
+      state.templates = null;
+      state.selectedTemplate = null;
+    },
+    setTemplate: (state, action) => {
+      state.selectedTemplate = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
+
+      .addCase(getTemplatesThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getTemplatesThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.templates = action.payload;
+      })
+      .addCase(getTemplatesThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
       .addCase(addTemplateThunk.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -32,5 +51,5 @@ const templatesSlice = createSlice({
   },
 });
 
-export const { clearTemplates } = templatesSlice.actions;
+export const { clearTemplates, setTemplate } = templatesSlice.actions;
 export default templatesSlice.reducer;
