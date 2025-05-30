@@ -239,6 +239,7 @@ export const addCardToCollection = async (userId, colId, newCardData) => {
       difficulty: "medium",
       createdAt: new Date().toISOString(),
       updatedAt: null,
+      studyedAt: null,
       stats: {
         totalAttempts: 0,
         correctAttempts: 0,

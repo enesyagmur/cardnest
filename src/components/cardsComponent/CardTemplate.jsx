@@ -31,7 +31,7 @@ const CardTemplate = () => {
   return (
     <form
       onSubmit={handleAddTemplate}
-      className="w-full md:w-7/12 h-full bg-white/95 backdrop-blur-sm border border-gray-100 rounded-lg p-4 shadow-xl  overflow-y-auto transition-all duration-300"
+      className="w-full md:w-7/12 h-[590px] bg-white/95 backdrop-blur-sm border border-gray-100 rounded-lg p-4 shadow-xl  overflow-y-auto transition-all duration-300"
     >
       <div className="flex items-center space-x-3 pb-4 border-b border-gray-100">
         <div

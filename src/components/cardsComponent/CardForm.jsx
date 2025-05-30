@@ -55,6 +55,10 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
       NotifyCustom("success", "Kart başarıyla eklendi.");
       dispatch({ type: "RESET_STATE" });
 
+      if (selectedTemplate !== null) {
+        dispatch({ type: "TAKE_TEMPLATE", payload: selectedTemplate });
+      }
+
       setFormMode("create");
 
       setCollectionId(collection.id);
@@ -75,6 +79,7 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
         id: state.id,
         isArchived: state.isArchived,
         stats: state.stats,
+        updatedAt: new Date().toISOString(),
       };
 
       await reduxDispatch(

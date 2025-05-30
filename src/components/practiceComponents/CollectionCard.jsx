@@ -16,7 +16,7 @@ const CollectionCard = ({
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
             <FaBookOpen className="w-4 h-4 text-pink-400" />
-            <h2 className="text-lg font-semibold text-gray-900">
+            <h2 className="text-lg font-semibold text-gray-900 capitalize">
               {collection.title}
             </h2>
             {isFromFavorites && <FaHeart className="w-4 h-4 text-red-400" />}

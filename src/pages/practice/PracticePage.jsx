@@ -22,6 +22,7 @@ export default function PracticePage() {
   const createRandomNumber = () => {
     if (!selectedCollection.cards.length) return;
 
+    //zorluklarına göre filtreleyip kartları ayırrıyorum
     const hardCards = selectedCollection.cards.filter(
       (c) => c.difficulty === "hard"
     );
@@ -32,12 +33,14 @@ export default function PracticePage() {
       (c) => c.difficulty === "easy"
     );
 
+    //zorluklara ağırlık değeri veriyorum
     const baseWeights = {
       hard: 0.6,
       medium: 0.3,
       easy: 0.1,
     };
 
+    //ağırlıkları ile beraber barındırdıkları kart sayısına göre her zorluğun toplam yoğunluğunu buluyorum
     const weightedHard = baseWeights.hard * hardCards.length;
     const weightedMedium = baseWeights.medium * mediumCards.length;
     const weightedEasy = baseWeights.easy * easyCards.length;
@@ -49,6 +52,7 @@ export default function PracticePage() {
     }
     const rand = Math.random() * totalWeight;
 
+    //random değere göre grup seçiyorum
     let selectedGroup = [];
     if (rand < weightedHard && hardCards.length > 0) {
       selectedGroup = hardCards;
@@ -64,17 +68,23 @@ export default function PracticePage() {
       selectedGroup = easyCards;
     }
 
-    const randomIndex = Math.floor(Math.random() * selectedGroup.length);
-    const card = selectedGroup[randomIndex];
+    //seçilen gurupu son çalışma durumuna göre her seferinde sıralıyoruz
+    const sortedGroup = [...selectedGroup].sort((a, b) => {
+      const dateA = a.studyedAt ? new Date(a.studyedAt) : new Date(0); // eğer daha önce hiç çalışılmadıysa ya da studyedAt değeri yoksa
+      const dateB = b.studyedAt ? new Date(b.studyedAt) : new Date(0);
+      return dateA - dateB;
+    });
+
+    const card = sortedGroup[0]; // en eski çalışılan card ı alıyoruz
+
     const originalIndex = selectedCollection.cards.findIndex(
       (c) => c.id === card.id
     );
-
     setRnd(originalIndex);
   };
 
   return (
-    <main className="w-full bg-gray-100 h-full flex items-center justify-center rounded-3xl shadow-sm ">
+    <main className="w-full bg-gray-100 h-[590px] flex items-center justify-center rounded-xl shadow-sm ">
       {selectedCollection?.title && selectedCollection.cards?.length > 0 && (
         <PracticeItem
           collectionId={selectedCollection.id}
