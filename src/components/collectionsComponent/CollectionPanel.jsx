@@ -7,7 +7,7 @@ const CollectionPanel = ({ formMode, setFormMode }) => {
   const { collections } = useSelector((state) => state.collections);
 
   return (
-    <div className="w-full h-full md:w-5/12 bg-white/95 backdrop-blur-sm border border-gray-100 rounded-2xl shadow-lg p-6">
+    <div className="w-full h-[590px] md:w-5/12 bg-white/95 backdrop-blur-sm border border-gray-100 rounded-2xl shadow-lg p-6">
       {/* Header */}
       <div className="flex items-center justify-between bg-gradient-to-r from-gray-50 to-blue-50/30 border border-gray-200 shadow-sm rounded-xl px-4 py-3 mb-6">
         <div className="flex items-center gap-3">
@@ -21,7 +21,7 @@ const CollectionPanel = ({ formMode, setFormMode }) => {
 
         <button
           onClick={() => setFormMode("create")}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold  shadow-sm hover:shadow-md  ${
             formMode === "update"
               ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700"
               : "bg-gray-100 text-gray-400 cursor-not-allowed"

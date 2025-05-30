@@ -92,7 +92,7 @@ const CollectionForm = ({ setFormMode, formMode }) => {
     }
   };
 
-  const onSubmit = async (data) => {
+  const formOnSubmit = async (data) => {
     if (formMode === "create") {
       await collectionCreate(data);
     } else {
@@ -101,7 +101,7 @@ const CollectionForm = ({ setFormMode, formMode }) => {
   };
 
   return (
-    <div className="w-full md:w-7/12 bg-white/90 h-full backdrop-blur-sm border border-gray-100 p-6 rounded-lg shadow-xl">
+    <div className="w-full md:w-7/12 bg-white/90 h-[590px] backdrop-blur-sm border border-gray-100 p-6 rounded-lg shadow-xl">
       {/* Header with Icon */}
       <div className="flex items-center mb-4">
         <div
@@ -128,7 +128,7 @@ const CollectionForm = ({ setFormMode, formMode }) => {
         </h4>
       </div>
 
-      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+      <form className="space-y-4" onSubmit={handleSubmit(formOnSubmit)}>
         {/* Title Field */}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">
@@ -138,7 +138,7 @@ const CollectionForm = ({ setFormMode, formMode }) => {
             type="text"
             placeholder="Başlık girin"
             {...register("title")}
-            className="w-full px-4 py-2.5 bg-gray-50/70 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all text-gray-800 placeholder-gray-400"
+            className="w-full capitalize px-4 py-2.5 bg-gray-50/70 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500  text-gray-800 placeholder-gray-400"
           />
           {errors.title && (
             <p className="text-red-500 mt-1 text-sm">{errors.title.message}</p>
@@ -153,7 +153,7 @@ const CollectionForm = ({ setFormMode, formMode }) => {
           <textarea
             placeholder="Açıklama girin"
             {...register("description")}
-            className="w-full px-4 py-2.5 bg-gray-50/70 border border-gray-200 rounded-xl h-24 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all text-gray-800 placeholder-gray-400 resize-none"
+            className="w-full px-4 py-2.5 bg-gray-50/70 border border-gray-200 rounded-xl h-24 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500  text-gray-800 placeholder-gray-400 resize-none"
           />
           {errors.description && (
             <p className="text-red-500 mt-1 text-sm">
@@ -202,22 +202,27 @@ const CollectionForm = ({ setFormMode, formMode }) => {
           <label className="flex items-baseline text-sm font-medium text-gray-700">
             Etiketler
             <span className="text-xs text-gray-400 ml-2 font-normal">
-              (opsiyoneldir. Belirtmek isterseniz, virgülle ayırarak girin.)
+              (opsiyoneldir. Belirtmek isterseniz, virgülle ayırarak
+              girebilirsiniz.)
             </span>
           </label>
           <input
             type="text"
             placeholder="ingilizce, kelime"
             {...register("tags")}
-            className="w-full px-4 py-2.5 bg-gray-50/70 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all text-gray-800 placeholder-gray-400"
+            className="w-full px-4 py-2.5 bg-gray-50/70 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 
+             text-gray-800 placeholder-gray-400"
           />
+          {errors.tags && (
+            <p className="text-red-500 mt-1 text-sm">{errors.tags.message}</p>
+          )}
         </div>
 
         {/* Submit Button */}
         <div className="">
           <button
             type="submit"
-            className="w-full px-4 py-3  bg-white border border-pink-500 text-pink-400 hover:bg-pink-600 hover:text-white  font-semibold rounded-xl transition  shadow-lg  "
+            className="w-full px-4 py-3  bg-white border border-pink-500 text-pink-400 hover:bg-pink-600 hover:text-white  font-semibold rounded-xl  transition-colors duration-75  shadow-lg  "
           >
             {formMode === "update" ? "Güncelle" : "Oluştur"}
           </button>

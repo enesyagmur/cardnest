@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const CardPanel = ({ formMode, setFormMode, collection }) => {
   const navigate = useNavigate();
   return (
-    <div className="w-full md:w-5/12 h-full bg-white border rounded-lg shadow-sm p-2">
+    <div className="w-full md:w-5/12 h-[590px] bg-white border rounded-lg shadow-sm p-2">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border border-gray-100 shadow-sm rounded-xl mb-2">
         <div className="flex items-center gap-2">

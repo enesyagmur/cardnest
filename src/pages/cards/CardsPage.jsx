@@ -28,7 +28,7 @@ const CardsPage = () => {
     );
   } else if (selectedCollection.title) {
     return (
-      <div className="w-full h-full flex flex-col-reverse md:flex-row gap-2 p-4 bg-gray-100  rounded-xl overflow-y-auto">
+      <div className="w-full h-full flex flex-col md:flex-row gap-y-4 md:gap-x-2 my-4 bg-gray-300 md:bg-gray-100  rounded-xl overflow-y-auto">
         <CardPanel
           formMode={formMode}
           setFormMode={setFormMode}

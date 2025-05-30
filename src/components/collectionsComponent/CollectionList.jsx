@@ -28,7 +28,7 @@ export default function CollectionList({ setFormMode, collections }) {
       } catch (err) {
         NotifyCustom(
           "error",
-          `CollectionList| Koleksiyon silinirken hata: ${err}`
+          `CollectionList | Koleksiyon silinirken hata: ${err}`
         );
       } finally {
         setAnswer(false);
@@ -55,7 +55,7 @@ export default function CollectionList({ setFormMode, collections }) {
 
   if (Array.isArray(collections) && collections.length > 0) {
     return (
-      <div className=" space-y-4">
+      <div className=" space-y-4 w-full max-h-[440px] overflow-y-auto">
         {modalOpen && (
           <Modal
             setModalOpen={setModalOpen}
@@ -67,7 +67,7 @@ export default function CollectionList({ setFormMode, collections }) {
         {collections.map((col) => (
           <div
             key={col.id}
-            className={`relative w-full border rounded-xl p-4 transition duration-200 flex flex-col
+            className={`relative w-full border rounded-xl p-4 flex flex-col
             ${
               openDropdownId === col.id
                 ? "border-2 border-purple-300 shadow-md"
@@ -97,7 +97,7 @@ export default function CollectionList({ setFormMode, collections }) {
             </p>
 
             {openDropdownId === col.id && (
-              <div className="flex gap-3 text-xs font-semibold flex-wrap mt-2 transition-all">
+              <div className="flex gap-3 text-xs font-semibold flex-wrap mt-2 ">
                 {col.cards?.length > 0 && (
                   <button
                     className="px-3 py-1 border text-purple-700 bg-purple-100 hover:bg-purple-200 rounded"

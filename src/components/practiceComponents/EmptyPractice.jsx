@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const EmptyPractice = () => {
   const navigate = useNavigate();
   return (
-    <div className="w-11/12 min-h-[510px] flex flex-col items-center justify-center text-center p-8  bg-white border border-dashed border-pink-300 rounded-xl shadow-sm  ">
+    <div className="w-full h-[590px] flex flex-col items-center justify-center text-center p-8  bg-white border border-dashed border-pink-300 rounded-xl shadow-sm  ">
       <div className="text-purple-500 text-4xl mb-4">📂</div>
       <h2 className="text-xl font-semibold text-gray-800 mb-2">
         Henüz Bir Koleksiyon Oluşturulmadı

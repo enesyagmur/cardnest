@@ -24,9 +24,11 @@ const CollectionInExplore = ({
     >
       <div className="space-y-4">
         {/* Başlık */}
-        <h3 className="text-xl font-bold capitalize text-gray-600 group-hover:text-purple-500 transition-colors duration-200 line-clamp-2">
-          {title}
-        </h3>
+        <div className="w-full h-16 flex items-center justify-between">
+          <h3 className="text-xl font-bold capitalize text-gray-600 group-hover:text-purple-500 transition-colors duration-200 line-clamp-2">
+            {title}
+          </h3>
+        </div>
 
         {/* Açıklama */}
         <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">

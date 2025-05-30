@@ -4,10 +4,39 @@ import {
   IoArrowBackOutline,
   IoChevronDownOutline,
   IoChevronUpOutline,
+  IoSaveOutline,
 } from "react-icons/io5";
 import { BsCardText } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { addCollection } from "../../features/collections/collectionsThunks";
+import NotifyCustom from "../../utils/NotifyCustom";
 const CollectionDetail = ({ collection, onBack }) => {
   const [showCardBackId, setShowCardBackId] = useState("");
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  console.log(collection);
+
+  const cloneCollection = async () => {
+    const cloneData = {
+      userId: user.uid,
+      creator: user.displayName,
+      title: collection.title,
+      description: collection.description,
+      visibility: "private",
+      cards: collection.cards,
+      tags: collection.tags,
+    };
+
+    try {
+      const _result = await dispatch(addCollection(cloneData)).unwrap();
+      NotifyCustom("success", "Koleksiyonlarıma kayıt edildi");
+    } catch (err) {
+      NotifyCustom(
+        "error",
+        `CollectionDetail | Koleksiyon kaydedilirken hata: ${err}`
+      );
+    }
+  };
   return (
     <div className="w-full min-h-[590px] bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
       {/* Header Section */}
@@ -23,8 +52,19 @@ const CollectionDetail = ({ collection, onBack }) => {
           </button>
 
           <div className="flex items-center gap-2 text-sm text-gray-500">
-            <BsCardText className="w-4 h-4" />
-            <span>{collection.cards.length} kart</span>
+            {user.displayName !== collection.creator ? (
+              <button
+                onClick={cloneCollection}
+                className="flex items-center gap-2 px-4 py-2 bg-white text-gray-500 border border-green-500 font-medium text-sm rounded-lg hover:bg-green-600 hover:text-white active:bg-green-800 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              >
+                <IoSaveOutline className="mr-1" /> Kaydet
+              </button>
+            ) : (
+              <>
+                <BsCardText className="w-4 h-4" />
+                <span>{collection.cards.length} kart</span>
+              </>
+            )}
           </div>
         </div>
 

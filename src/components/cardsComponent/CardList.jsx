@@ -36,7 +36,7 @@ const CardList = ({ setFormMode, collection }) => {
 
   if (Array.isArray(collection.cards) && collection.cards.length > 0) {
     return (
-      <div className="space-y-4 max-h-[473px] overflow-y-auto">
+      <div className="space-y-4 h-[473px] overflow-y-auto">
         {collection.cards.map((card) => (
           <div
             key={card.id}

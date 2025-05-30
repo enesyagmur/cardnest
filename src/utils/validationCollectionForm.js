@@ -16,7 +16,7 @@ const newFormSchema = yup.object().shape({
   tags: yup
     .string()
     .optional()
-    .max(30, "Tags en fazla 30 karakter içerebilir."),
+    .max(50, "Tags en fazla 50 karakter içerebilir."),
 });
 
 export default newFormSchema;

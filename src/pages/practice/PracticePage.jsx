@@ -74,7 +74,7 @@ export default function PracticePage() {
   };
 
   return (
-    <main className="w-full  bg-gray-100 flex items-center justify-center rounded-3xl shadow-sm ">
+    <main className="w-full bg-gray-100 h-full flex items-center justify-center rounded-3xl shadow-sm ">
       {selectedCollection?.title && selectedCollection.cards?.length > 0 && (
         <PracticeItem
           collectionId={selectedCollection.id}

@@ -7,8 +7,8 @@ const Modal = ({ setModalOpen, question, setAnswer }) => {
   };
 
   return (
-    <div className=" fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white w-11/12 md:w-6/12 rounded-xl shadow-lg p-20">
+    <div className="w-full h-[590px] fixed inset-0 z-50 flex items-center justify-center rounded-lg bg-black bg-opacity-50">
+      <div className="bg-white w-11/12  rounded-xl shadow-lg p-20">
         <p className="text-xl font-bold text-center mb-3 text-red-400">
           {question}?
         </p>

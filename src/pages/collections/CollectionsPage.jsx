@@ -32,7 +32,7 @@ function CollectionsPage() {
     return <Loading />;
   } else {
     return (
-      <main className="w-full h-full flex flex-col md:flex-row gap-2 p-4 bg-gray-100  rounded-xl overflow-y-auto">
+      <main className="w-full h-full flex flex-col  p-2 md:flex-row gap-y-4 md:gap-x-2 my-4 bg-gray-300 md:bg-gray-100  rounded-xl overflow-y-auto">
         <CollectionPanel formMode={formMode} setFormMode={setFormMode} />
 
         <CollectionForm setFormMode={setFormMode} formMode={formMode} />

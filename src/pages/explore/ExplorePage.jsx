@@ -17,21 +17,22 @@ const ExplorePage = () => {
   );
   const dispatch = useDispatch();
 
-  const takePublicCollections = async () => {
-    try {
-      await dispatch(fetchPublicCollections()).unwrap();
-    } catch (err) {
-      NotifyCustom(
-        "error",
-        `Explore | Public koleksiyonlar getirilirken hata: ${err}`
-      );
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
+    const takePublicCollections = async () => {
+      try {
+        await dispatch(fetchPublicCollections()).unwrap();
+      } catch (err) {
+        NotifyCustom(
+          "error",
+          `Explore | Public koleksiyonlar getirilirken hata: ${err}`
+        );
+        console.log(err);
+      }
+    };
     takePublicCollections();
-  }, []);
+  }, [dispatch]);
+
+  console.log(publicCollections);
 
   const filteredCollections = publicCollections.filter(
     (collection) =>
@@ -40,7 +41,7 @@ const ExplorePage = () => {
   );
 
   return (
-    <main className="w-full h-full bg-gray-100 flex flex-col items-center justify-start rounded-3xl shadow-sm">
+    <main className="w-full px-2 md:pl-0  h-[590px] bg-gray-100 flex flex-col items-center justify-start rounded-xl shadow-sm">
       {!selectedCollection ? (
         <>
           <SearchBar
