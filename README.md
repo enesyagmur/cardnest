@@ -48,24 +48,27 @@ CardNest, kullanıcıların öğrenme süreçlerini kolaylaştıran bir bilgi ka
    npm run dev
    ```
 
-🖼️ Ekran Görüntüleri
-LandingPage
-(https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/landingScreenShot.png)
 
-Login
-https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/loginScreenShot.png
+## 🖼️ Ekran Görüntüleri
 
-CollectionsPage
-https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/collectionsScreenShot.png
+### Landing Page
+![Landing](https://raw.githubusercontent.com/enesyagmur/cardnest/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/landingScreenShot.png)
 
-CardsPage
-https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/cardsScreenShot.png
+### Login
+![Login](https://raw.githubusercontent.com/enesyagmur/cardnest/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/loginScreenShot.png)
 
-PracticePage
-https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/practiceScreenShot.png
+### Collections Page
+![Collections](https://raw.githubusercontent.com/enesyagmur/cardnest/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/collectionsScreenShot.png)
 
-ExplorePage
-https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/exploreScreenShot.png
+### Cards Page
+![Cards](https://raw.githubusercontent.com/enesyagmur/cardnest/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/cardsScreenShot.png)
+
+### Practice Page
+![Practice](https://raw.githubusercontent.com/enesyagmur/cardnest/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/practiceScreenShot.png)
+
+### Explore Page
+![Explore](https://raw.githubusercontent.com/enesyagmur/cardnest/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/exploreScreenShot.png)
+
 
 
 
