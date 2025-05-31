@@ -1,6 +1,6 @@
 # CardNest - Akıllı Öğrenme Kartları Uygulaması
 
-![CardNest Screenshot](https://cardnest-psi.vercel.app/screenshot.png) *(Örnek bir screenshot ekleyebilirsiniz)*
+![Landing](https://raw.githubusercontent.com/enesyagmur/cardnest/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/landingScreenShot.png)
 
 ## 🌐 Canlı Demo
 Uygulamayı hemen deneyin: [https://cardnest-psi.vercel.app/](https://cardnest-psi.vercel.app/)
@@ -51,8 +51,6 @@ CardNest, kullanıcıların öğrenme süreçlerini kolaylaştıran bir bilgi ka
 
 ## 🖼️ Ekran Görüntüleri
 
-### Landing Page
-![Landing](https://raw.githubusercontent.com/enesyagmur/cardnest/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/landingScreenShot.png)
 
 ### Login
 ![Login](https://raw.githubusercontent.com/enesyagmur/cardnest/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/loginScreenShot.png)
