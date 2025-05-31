@@ -16,7 +16,7 @@ const EmptyPractice = () => {
       <div className="flex gap-4">
         <button
           className="px-4 py-2 bg-pink-100  text-pink-800 border-2 border-pink-800 hover:bg-pink-800 rounded-lg hover:text-white transition"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/collections")}
         >
           Koleksiyon Oluştur
         </button>
