@@ -1,19 +1,74 @@
-# React + Vite
+# CardNest - Akıllı Öğrenme Kartları Uygulaması
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![CardNest Screenshot](https://cardnest-psi.vercel.app/screenshot.png) *(Örnek bir screenshot ekleyebilirsiniz)*
 
-Currently, two official plugins are available:
+## 🌐 Canlı Demo
+Uygulamayı hemen deneyin: [https://cardnest-psi.vercel.app/](https://cardnest-psi.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Proje Hakkında
 
-## Expanding the ESLint configuration
+CardNest, kullanıcıların öğrenme süreçlerini kolaylaştıran bir bilgi kartı (flashcard) yönetim sistemidir. Spaced Repetition algoritmasıyla kartlarınızı organize edebilir, tekrar sıklıklarını yönetebilir ve öğrenme veriminizi artırabilirsiniz.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Temel Özellikler:**
+- 🗂️ Koleksiyonlar halinde kart yönetimi
+- 📊 3 seviyeli kart sistemi 
+- ⏳ Akıllı tekrar algoritması
+- 🔍 Hızlı arama ve filtreleme
+- 📱 Tam duyarlı (responsive) tasarım
+
+## 🛠️ Teknoloji Yığını
+
+### Frontend
+- ⚛️ React 19 + Vite
+- 🔥 Firebase (Authentication, Firestore, Storage)
+- 🎨 TailwindCSS + React Icons
+- 🧭 React Router DOM v7
+- 🏗️ Redux Toolkit + Redux Thunk
+
+### Yardımcı Kütüphaneler
+- 📝 React Hook Form + Yup Validasyon
+- 🔔 React Hot Toast (Bildirimler)
+- 🆔 UUID (Benzersiz ID'ler)
+- 📅 Date-fns (Tarih işlemleri)
+
+## 🚀 Kurulum
+
+1. Depoyu klonlayın:
+   ```bash
+   git clone https://github.com/kullaniciadi/cardnest.git
+   cd cardnest
+   ```
+
+2. Firebase yapılandırması:
+   - `src/firebase/config.js` dosyasını kendi Firebase ayarlarınızla güncelleyin
+
+3. Bağımlılıkları yükleyin ve çalıştırın:
+   ```bash
+   npm install
+   npm run dev
+   ```
+
+🖼️ Ekran Görüntüleri
+LandingPage
+(https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/landingScreenShot.png)
+
+Login
+https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/loginScreenShot.png
+
+CollectionsPage
+https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/collectionsScreenShot.png
+
+CardsPage
+https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/cardsScreenShot.png
+
+PracticePage
+https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/practiceScreenShot.png
+
+ExplorePage
+https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/exploreScreenShot.png
 
 
-## 🎥 Tanıtım Videosu
-<a href="https://github.com/enesyagmur/cardnest/blob/main/src/assets/cardNest.mp4">
-  <img src="./src/assets/landingScreenShot.png" alt="CardNest Tanıtım Videosu" width="600">
-</a>
-*Videoyu izlemek için resme tıklayın*
+
+## 📜 Lisans
+
+MIT Lisansı - Detaylar için [LICENSE](LICENSE) dosyasına bakınız.
