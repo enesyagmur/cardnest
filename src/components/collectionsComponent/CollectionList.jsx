@@ -55,7 +55,7 @@ export default function CollectionList({ setFormMode, collections }) {
 
   if (Array.isArray(collections) && collections.length > 0) {
     return (
-      <div className=" space-y-4 w-full max-h-[430px] overflow-y-auto">
+      <div className=" space-y-4 w-full max-h-[440px] overflow-y-auto">
         {modalOpen && (
           <Modal
             setModalOpen={setModalOpen}

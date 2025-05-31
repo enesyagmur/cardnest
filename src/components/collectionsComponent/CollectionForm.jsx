@@ -101,7 +101,7 @@ const CollectionForm = ({ setFormMode, formMode }) => {
   };
 
   return (
-    <div className="w-full md:w-7/12 bg-white/90 h-[560px] backdrop-blur-sm border border-gray-100 p-6 rounded-lg shadow-xl">
+    <div className="w-full md:w-7/12 bg-white/90 h-[570px] backdrop-blur-sm border border-gray-100 p-6 rounded-lg shadow-xl">
       {/* Header with Icon */}
       <div className="flex items-center mb-4">
         <div
