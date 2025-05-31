@@ -14,19 +14,21 @@ function CollectionsPage() {
 
   const dispatch = useDispatch();
 
-  const getCollections = async () => {
-    try {
-      await dispatch(fetchCollections(user.uid)).unwrap();
-    } catch (err) {
-      NotifyCustom("error", `Koleksiyonlar getirilirken hata: ${err?.message}`);
-    }
-  };
-
   useEffect(() => {
+    const getCollections = async () => {
+      try {
+        await dispatch(fetchCollections(user.uid)).unwrap();
+      } catch (err) {
+        NotifyCustom(
+          "error",
+          `Koleksiyonlar getirilirken hata: ${err?.message}`
+        );
+      }
+    };
     if (collections.length === 0 && user.uid) {
       getCollections();
     }
-  }, [user?.uid]);
+  }, [user?.uid, dispatch, collections.length]);
 
   if (isLoading) {
     return <Loading />;
