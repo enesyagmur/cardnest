@@ -50,7 +50,7 @@ const TemplateList = () => {
     );
   }
 
-  if (templates !== null && templates.length !== 0) {
+  if (templates !== null && templates?.length !== 0) {
     return (
       <div className="flex relative right-0 items-center space-x-2 p-2  rounded-md bg-white shadow-sm max-w-xs">
         <LuLayoutTemplate className="text-purple-400 text-xl" />
