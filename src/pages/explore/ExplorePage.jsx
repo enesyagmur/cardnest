@@ -73,8 +73,8 @@ const ExplorePage = () => {
             />
 
             <div className="w-full flex flex-wrap justify-center gap-6 mt-4">
-              {publicCollections.length > 0 &&
-              filteredCollections.length === 0 ? (
+              {publicCollections?.length > 0 &&
+              filteredCollections?.length === 0 ? (
                 <NoCollectionsFound />
               ) : (
                 filteredCollections?.map((collection, index) => (
