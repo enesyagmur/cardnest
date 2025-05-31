@@ -2,7 +2,7 @@ import React from "react";
 
 const LogoCustomIcon = () => {
   return (
-    <div className="relative w-[10vw] min-w-[15px] max-w-[25px] aspect-square shadow-sm mb-2">
+    <div className="relative w-[10vw] min-w-[10px] max-w-[20px] aspect-square shadow-sm mb-2 ml-2">
       {/* Katman 1 - En alttaki */}
       <div
         className="absolute bg-pink-400 rotate-45"
@@ -19,7 +19,7 @@ const LogoCustomIcon = () => {
 
       {/* Katman 2 */}
       <div
-        className="absolute bg-purple-400 rotate-45"
+        className="absolute bg-green-400 rotate-45"
         style={{
           width: "90%",
           height: "90%",
@@ -47,7 +47,7 @@ const LogoCustomIcon = () => {
 
       {/* Katman 4 - En üstteki */}
       <div
-        className="absolute bg-green-400 rotate-45"
+        className="absolute bg-purple-400 rotate-45"
         style={{
           width: "70%",
           height: "70%",

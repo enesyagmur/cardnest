@@ -9,7 +9,7 @@ import CollectionForm from "../../components/collectionsComponent/CollectionForm
 
 function CollectionsPage() {
   const user = useSelector((state) => state.auth.user);
-  const { isLoading } = useSelector((state) => state.collections);
+  const { collections, isLoading } = useSelector((state) => state.collections);
   const [formMode, setFormMode] = useState("create");
 
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ function CollectionsPage() {
   };
 
   useEffect(() => {
-    if (user.uid) {
+    if (collections.length === 0 && user.uid) {
       getCollections();
     }
   }, [user?.uid]);
@@ -32,7 +32,7 @@ function CollectionsPage() {
     return <Loading />;
   } else {
     return (
-      <main className="w-full h-full flex flex-col  p-2 md:flex-row gap-y-4 md:gap-x-2 my-4 bg-gray-300 md:bg-gray-100  rounded-xl overflow-y-auto">
+      <main className="w-full h-full flex flex-col my-2   p-2 md:flex-row  md:gap-x-2  bg-gray-300 md:bg-gray-100  rounded-xl overflow-y-auto">
         <CollectionPanel formMode={formMode} setFormMode={setFormMode} />
 
         <CollectionForm setFormMode={setFormMode} formMode={formMode} />

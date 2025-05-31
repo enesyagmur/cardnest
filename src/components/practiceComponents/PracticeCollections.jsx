@@ -15,7 +15,7 @@ const PracticeCollections = ({ collections }) => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 py-6 max-h-[590px] flex flex-col">
+    <div className="w-full flex flex-col items-center justify-center  px-4 py-6 h-[590px] ">
       {/* Başlık */}
       <div className="text-center mb-6 flex-shrink-0">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
@@ -27,7 +27,7 @@ const PracticeCollections = ({ collections }) => {
       </div>
 
       {/* Koleksiyonlar */}
-      <div className="w-11/12 flex flex-col items-center justify-between overflow-y-auto overflow-x-hidden">
+      <div className="w-11/12 md:w-8/12 flex flex-col items-center justify-between overflow-y-auto overflow-x-hidden">
         {collections.length > 0 ? (
           <div className="mx-auto m-2 w-full pb-4">
             {collections.map((collection) => (

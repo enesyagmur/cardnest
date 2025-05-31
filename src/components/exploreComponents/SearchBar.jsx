@@ -1,5 +1,4 @@
 import { IoSearchOutline, IoCloseOutline } from "react-icons/io5";
-import { MdLocalOffer } from "react-icons/md";
 
 const SearchBar = ({ searchTerm, onChange, selected, onSelect }) => {
   const tags = [
@@ -8,7 +7,7 @@ const SearchBar = ({ searchTerm, onChange, selected, onSelect }) => {
     "Tıp",
     "Teknoloji",
     "Yazılım",
-    "İngilizce",
+    "ingilizce",
     "Tarih",
     "Edebiyat",
   ];
@@ -59,9 +58,6 @@ const SearchBar = ({ searchTerm, onChange, selected, onSelect }) => {
             onClick={() => onSelect(tag)}
           >
             {tag}
-            {selected === tag && (
-              <span className="ml-2 w-2 h-2 bg-white rounded-full inline-block"></span>
-            )}
           </button>
         ))}
       </div>

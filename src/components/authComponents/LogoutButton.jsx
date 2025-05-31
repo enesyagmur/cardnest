@@ -3,13 +3,14 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutThunk } from "../../features/auth/authThunks";
 import NotifyCustom from "../../utils/NotifyCustom";
-import { FiLogOut } from "react-icons/fi";
+
 import { setCard } from "../../features/selectCardSlice";
 import {
   setCollectionId,
   clearCollections,
 } from "../../features/collections/collectionsSlice";
 import { clearTemplates } from "../../features/templates/templatesSlice";
+import { BiLogOut } from "react-icons/bi";
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
@@ -38,11 +39,10 @@ const LogoutButton = () => {
       onClick={() => {
         onLogout();
       }}
-      className="w-24 h-full flex items-center justify-center px-4 py-2 text-red-600 bg-white hover:bg-red-50 hover:shadow-md shadow-sm rounded-md focus:outline-none text-sm transition duration-150"
-      role="menuitem"
+      className=" flex items-center justify-center px-4 py-2 text-red-400 text-xl hover:text-red-600 shadow-sm   hover:shadow-md rounded-md focus:outline-none transition duration-150"
       type="button"
     >
-      <span>Çıkış</span>
+      <BiLogOut />
     </button>
   );
 };

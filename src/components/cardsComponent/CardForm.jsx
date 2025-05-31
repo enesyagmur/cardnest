@@ -147,7 +147,7 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full md:w-7/12 h-[590px] bg-white/95 backdrop-blur-sm border border-gray-100 rounded-lg p-4 shadow-xl  overflow-y-auto"
+      className="w-full md:w-7/12 h-[580px] bg-white/95 backdrop-blur-sm border border-gray-100 rounded-lg p-4 shadow-xl  overflow-y-auto"
     >
       {/* Header */}
       <div className="flex items-center justify-between space-x-3 pb-4 border-b border-gray-100">

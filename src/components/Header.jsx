@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { HiOutlineGlobeAlt, HiOutlineCollection } from "react-icons/hi";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
@@ -8,11 +8,10 @@ import LogoutButton from "./authComponents/LogoutButton";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoCustomIcon from "./logoCustomIcon";
-import { BiLogOut } from "react-icons/bi";
 
 export default function Header() {
   const { displayName } = useSelector((state) => state.auth.user);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -146,35 +145,20 @@ export default function Header() {
           })}
         </nav>
 
-        {/* User Menu */}
-        <div className="relative">
-          <button
-            onClick={() => setUserMenuOpen((prev) => !prev)}
-            className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-20 transition-all duration-200 shadow-sm"
-            type="button"
-            aria-haspopup="true"
-            aria-expanded={userMenuOpen}
-            aria-label="Kullanıcı menüsü"
-          >
-            <div className="relative">
-              <FaUserCircle className="w-6 h-6 text-gray-400" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
-            </div>
+        <div className="relative flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-gray-700 shadow-sm">
+          <div className="relative">
+            <FaUserCircle className="w-6 h-6 text-gray-400" />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+          </div>
 
-            {/* İçerik kısmı toggle edilecek */}
-            {userMenuOpen ? (
-              <LogoutButton />
-            ) : (
-              <div className="w-24 hidden sm:flex flex-col items-start">
-                <span className="text-sm font-medium text-gray-800 capitalize">
-                  {displayName || "Kullanıcı"}
-                </span>
-                <span className="text-xs text-gray-500">Online</span>
-              </div>
-            )}
+          <div className="w-48 hidden sm:flex flex-col items-start">
+            <span className="text-sm font-medium text-gray-800 capitalize">
+              {displayName || "Kullanıcı"}
+            </span>
+            <span className="text-xs text-gray-500">Online</span>
+          </div>
 
-            <BiLogOut className={`w-4 h-4 text-gray-400 hover:text-red-500`} />
-          </button>
+          <LogoutButton />
         </div>
       </div>
     </header>

@@ -12,7 +12,7 @@ const CollectionInExplore = ({
   return (
     <div
       onClick={onClick}
-      className="group cursor-pointer p-6 bg-white rounded-2xl border border-gray-100 hover:border-purple-200 hover:shadow-xl transition-all duration-300 w-full md:w-5/12 mb-6 flex flex-col justify-between hover:-translate-y-1"
+      className="group cursor-pointer p-6 bg-white rounded-2xl border border-gray-100 hover:border-purple-200 hover:shadow-xl transition-all duration-200 w-full md:w-5/12  flex flex-col justify-between hover:-translate-y-1"
       aria-label={`Koleksiyon: ${title}, kart sayısı: ${cards.length}, yaratan: ${creator}, güncellenme tarihi: ${updatedAt}`}
       role="button"
       tabIndex={0}
@@ -24,14 +24,14 @@ const CollectionInExplore = ({
     >
       <div className="space-y-4">
         {/* Başlık */}
-        <div className="w-full h-16 flex items-center justify-between">
+        <div className="w-full h-8 flex items-center justify-between">
           <h3 className="text-xl font-bold capitalize text-gray-600 group-hover:text-purple-500 transition-colors duration-200 line-clamp-2">
             {title}
           </h3>
         </div>
 
         {/* Açıklama */}
-        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 capitalize">
           {description}
         </p>
 

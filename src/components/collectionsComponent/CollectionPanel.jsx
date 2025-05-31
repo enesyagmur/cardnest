@@ -7,7 +7,7 @@ const CollectionPanel = ({ formMode, setFormMode }) => {
   const { collections } = useSelector((state) => state.collections);
 
   return (
-    <div className="w-full h-[590px] md:w-5/12 bg-white/95 backdrop-blur-sm border border-gray-100 rounded-2xl shadow-lg p-6">
+    <div className="w-full h-[570px] md:w-5/12 bg-white/95 backdrop-blur-sm border border-gray-100 rounded-2xl shadow-lg p-6">
       {/* Header */}
       <div className="flex items-center justify-between bg-gradient-to-r from-gray-50 to-blue-50/30 border border-gray-200 shadow-sm rounded-xl px-4 py-3 mb-6">
         <div className="flex items-center gap-3">
@@ -49,7 +49,7 @@ const CollectionPanel = ({ formMode, setFormMode }) => {
             content={
               "Kart oluşturmak ve ardından pratik yapmak için önce bir koleksiyon eklemelisiniz"
             }
-            height={"h-full"}
+            height={"h-[480px]"}
           />
         )}
       </div>

@@ -101,7 +101,7 @@ const CollectionForm = ({ setFormMode, formMode }) => {
   };
 
   return (
-    <div className="w-full md:w-7/12 bg-white/90 h-[590px] backdrop-blur-sm border border-gray-100 p-6 rounded-lg shadow-xl">
+    <div className="w-full md:w-7/12 bg-white/90 h-[570px] backdrop-blur-sm border border-gray-100 p-6 rounded-lg shadow-xl">
       {/* Header with Icon */}
       <div className="flex items-center mb-4">
         <div
@@ -147,7 +147,7 @@ const CollectionForm = ({ setFormMode, formMode }) => {
 
         {/* Description Field */}
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700 capitalize">
             Açıklama
           </label>
           <textarea

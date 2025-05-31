@@ -1,34 +1,34 @@
 export default function LandingPage() {
   const boxData = [
     {
-      title: "Özgürce Koleksiyon Oluştur",
+      title: "Koleksiyonlarını Yönet",
       color: "text-blue-600",
-      desc: "Dilersen konuya göre koleksiyonlar oluştur. Tüm bilgilerin düzenli ve erişilebilir olsun.",
+      desc: "Koleksiyon oluştur, sil, güncelle. Bilgilerini düzenli ve erişilebilir tut.",
     },
     {
-      title: "Dinamik Kart Türleri",
+      title: "Dinamik Kart Oluşturma",
       color: "text-green-600",
-      desc: "Paragraf, açıklama, liste gibi farklı türlerde kartlar oluştur. Her öğrenme biçimine uygun!",
+      desc: "Paragraf, açıklama, liste gibi farklı türlerde kartlar oluştur. Dinamik form yapısıyla her ihtiyaca uygun!",
     },
     {
-      title: "Zorluk Seviyeli Tekrar",
+      title: "Hazır Kart Şablonları",
+      color: "text-orange-600",
+      desc: "Pratik kart oluşturma için hazır şablonlar oluştur ve kullan. Zaman kazandıran yapı seni bekliyor.",
+    },
+    {
+      title: "Akıllı Tekrar Algoritması",
       color: "text-purple-600",
-      desc: "Kolay, orta, zor gibi seviyelerle öğrenmeni kişiselleştir. Zor kartlar daha sık tekrar edilir.",
+      desc: "Zorluk seviyesi (kolay/orta/zor) ve son tekrar tarihine göre otomatik çalışma planı.",
     },
     {
-      title: "Akıllı Zaman Yönetimi",
+      title: "Topluluk Koleksiyonları",
       color: "text-pink-600",
-      desc: "Bildiklerin daha az tekrar edilir. Zaman kazanır, odaklanırsın.",
+      desc: "Diğer kullanıcıların koleksiyonlarını keşfet, filtrele ve beğendiklerini kendi koleksiyonlarına ekle.",
     },
     {
-      title: "Sade ve Kullanıcı Dostu",
+      title: "Modern ve Uyumlu Tasarım",
       color: "text-yellow-600",
-      desc: "Modern tasarım, kolay kullanım. Karmaşadan uzak bir deneyim seni bekliyor.",
-    },
-    {
-      title: "Her Cihazda Uyumlu",
-      color: "text-red-600",
-      desc: "Bilgisayar, tablet ya da telefon fark etmez. Her yerde öğren!",
+      desc: "Karmaşadan uzak sade bir arayüz. Her cihazda rahat kullanım!",
     },
   ];
 
