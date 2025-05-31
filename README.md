@@ -12,4 +12,8 @@ Currently, two official plugins are available:
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
 
-https://github.com/enesyagmur/cardnest/blob/6cf23e91e8ec5ba43dfe2c600102065c4ce84f14/src/assets/cardNest.mp4
+## 🎥 Tanıtım Videosu
+<a href="https://github.com/enesyagmur/cardnest/blob/main/src/assets/cardNest.mp4">
+  <img src="./src/assets/landingScreenShot.png" alt="CardNest Tanıtım Videosu" width="600">
+</a>
+*Videoyu izlemek için resme tıklayın*
