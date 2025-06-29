@@ -3,8 +3,6 @@ import EmptyPractice from "../../components/practiceComponents/EmptyPractice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import NotifyCustom from "../../utils/NotifyCustom";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import PracticeCollections from "../../components/practiceComponents/PracticeCollections";
 
 export default function PracticePage() {
@@ -16,6 +14,8 @@ export default function PracticePage() {
   const selectedCollection = collections.find(
     (col) => col.id === selectedCollectionId
   );
+
+  console.log(selectedCollection);
 
   const [rnd, setRnd] = useState(0);
 
@@ -35,8 +35,8 @@ export default function PracticePage() {
 
     //zorluklara ağırlık değeri veriyorum
     const baseWeights = {
-      hard: 0.6,
-      medium: 0.3,
+      hard: 0.5,
+      medium: 0.4,
       easy: 0.1,
     };
 

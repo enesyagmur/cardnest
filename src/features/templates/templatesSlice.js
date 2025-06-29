@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addTemplateThunk, getTemplatesThunk } from "./templatesThunks";
+import {
+  addTemplateThunk,
+  deleteTemplateThunk,
+  getTemplatesThunk,
+} from "./templatesThunks";
 
 const initialState = {
   templates: null,
@@ -45,6 +49,22 @@ const templatesSlice = createSlice({
         state.templates.push(action.pending);
       })
       .addCase(addTemplateThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || "Bilinmeyen Sorun";
+      })
+
+      //delete
+      .addCase(deleteTemplateThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteTemplateThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.templates = state.templates.filter(
+          (template) => template.id !== action.payload
+        );
+      })
+      .addCase(deleteTemplateThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload || "Bilinmeyen Sorun";
       });

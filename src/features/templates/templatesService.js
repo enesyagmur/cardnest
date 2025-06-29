@@ -50,3 +50,44 @@ export const addTemplate = async (userId, template) => {
     cardTemplates: arrayUnion(newTemplate),
   });
 };
+
+export const deleteTemplate = async (userId, templateId) => {
+  try {
+    if (!userId) {
+      throw new Error("Service | Template silinirken sorun: userId eksik");
+    }
+    if (!templateId) {
+      throw new Error("Service | Template silinirken sorun: templateId eksik");
+    }
+
+    const userDocRef = doc(db, "users", userId);
+    const userSnapShot = await getDoc(userDocRef);
+
+    if (!userSnapShot.exists()) {
+      throw new Error("Service | Kullanıcı bulunamadı");
+    }
+
+    const userData = userSnapShot.data();
+    const currentTemplates = userData.cardTemplates || [];
+
+    // Template'in var olup olmadığını kontrol et
+    const templateExists = currentTemplates.some(
+      (template) => template.id === templateId
+    );
+    if (!templateExists) {
+      throw new Error("Service | Silinecek template bulunamadı");
+    }
+
+    const newTemplates = currentTemplates.filter(
+      (template) => template.id !== templateId
+    );
+
+    await updateDoc(userDocRef, {
+      cardTemplates: newTemplates,
+    });
+
+    return templateId;
+  } catch (err) {
+    throw new Error(`Service | Template silinirken sorun: ${err.message}`);
+  }
+};

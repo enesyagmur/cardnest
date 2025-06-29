@@ -27,9 +27,7 @@ export const registerUser = async (userName, email, password) => {
     //kullanıcıyı firestore a kayıt etme
     await setDoc(doc(db, "users", user.uid), {
       userId: user.uid,
-      collectionList: [],
-      createdAt: new Date(),
-      cardTemplates: [],
+      createdAt: new Date.toISOString(),
     });
     console.log("FirebaseAuthService | Kullanıcı firestore a eklendi");
     return userCredential;
@@ -50,7 +48,6 @@ export const loginUser = async (email, password) => {
       email,
       password
     );
-    console.log("FirebaseAuthService | Giriş başarılı");
     return userCredential;
   } catch (err) {
     console.error(

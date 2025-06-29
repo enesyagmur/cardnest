@@ -7,6 +7,9 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
+  orderBy,
+  query,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -195,7 +198,13 @@ export const updateCollectionFromList = async (userId, colId, values) => {
 export const getPublicCollections = async () => {
   try {
     const publicColRef = collection(db, "publicCollections");
-    const querySnapshot = await getDocs(publicColRef);
+    const publicQuery = query(
+      publicColRef,
+      orderBy("updatedAt", "desc"),
+      limit(4)
+    );
+
+    const querySnapshot = await getDocs(publicQuery);
 
     const collections = querySnapshot.docs.map((doc) => ({
       id: doc.id,

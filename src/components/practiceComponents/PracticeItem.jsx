@@ -98,6 +98,7 @@ export default function PracticeItem({
           <h2 className="text-xl md:text-2xl font-bold text-gray-800 leading-relaxed md:mr-12">
             {!loading ? card.front : "Algoritma, yeni soruyu getiriyor..."}
           </h2>
+
           <div
             className={`flex items-center gap-2 px-3 py-1.5 ${difficultyConfig.bgColor} rounded-full`}
           >
