@@ -13,6 +13,7 @@ import { GoVerified } from "react-icons/go";
 import {
   updateEmailService,
   updateNameService,
+  updatePasswordService,
   updateProfilePhotoService,
 } from "../../features/auth/authService";
 import NotifyCustom from "../../utils/NotifyCustom";
@@ -23,6 +24,8 @@ const Profile = () => {
   const [photo, setPhoto] = useState();
   const [newName, setNewName] = useState("");
   const [email, setEmail] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   const handleUpdatePhoto = async () => {
     try {
@@ -45,6 +48,7 @@ const Profile = () => {
 
       await updateNameService(newName);
       NotifyCustom("success", "Kullanıcı ismi güncellendi");
+      setNewName("");
     } catch (err) {
       throw new Error(err);
     }
@@ -58,6 +62,7 @@ const Profile = () => {
 
       await updateEmailService(email);
       NotifyCustom("success", "Kullanıcı maili güncellendi");
+      setEmail("");
     } catch (err) {
       throw new Error(err);
     }
@@ -76,6 +81,20 @@ const Profile = () => {
       }
     } catch (err) {
       NotifyCustom("error", `Doğrulama maili gönderilemedi, ${err}`);
+    }
+  };
+
+  const handleUpdatePassword = async () => {
+    try {
+      if (newPassword === "" || currentPassword === "") {
+        NotifyCustom("error", "Şifre alanları boş olamaz!");
+      }
+      await updatePasswordService(currentPassword, newPassword);
+      NotifyCustom("success", "Şifre güncellendi");
+      setCurrentPassword("");
+      setNewPassword("");
+    } catch (err) {
+      NotifyCustom("error", `${err}`);
     }
   };
 
@@ -168,6 +187,7 @@ const Profile = () => {
                   <input
                     type="text"
                     placeholder="Yeni isim giriniz"
+                    value={newName}
                     onChange={(e) => setNewName(e.target.value)}
                     className="flex-1 px-3 py-2 capitalize rounded-md border border-purple-100 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-purple-300 focus:border-transparent transition-all duration-300 text-sm"
                   />
@@ -195,6 +215,7 @@ const Profile = () => {
                   <input
                     type="email"
                     placeholder="Yeni email giriniz"
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="flex-1 px-3 py-2 rounded-md border border-blue-100 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent transition-all duration-300 text-sm"
                   />
@@ -223,16 +244,23 @@ const Profile = () => {
                     <input
                       type="password"
                       className="flex-1 px-3 py-2 rounded-md border border-green-100 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-green-300 focus:border-transparent transition-all duration-300 text-sm"
-                      placeholder="Yeni şifre giriniz"
+                      placeholder="Mevcut şifrenizi giriniz"
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      value={currentPassword}
                     />
                     <input
                       type="password"
                       className="flex-1 px-3 py-2 ml-2 rounded-md border border-green-100 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-green-300 focus:border-transparent transition-all duration-300 text-sm"
-                      placeholder="Şifreyi tekrar giriniz"
+                      placeholder="Yeni şifrenizi giriniz"
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      value={newPassword}
                     />
                   </div>
 
-                  <button className="flex items-center gap-1 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-1 focus:ring-green-300 text-sm">
+                  <button
+                    onClick={handleUpdatePassword}
+                    className="flex items-center gap-1 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-1 focus:ring-green-300 text-sm"
+                  >
                     <FiEdit2 className="w-3 h-3" />
                     <span>Güncelle</span>
                   </button>

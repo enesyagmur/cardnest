@@ -1,10 +1,13 @@
 import {
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
   onAuthStateChanged,
+  reauthenticateWithCredential,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   updateEmail,
+  updatePassword,
   updateProfile,
 } from "firebase/auth";
 import { auth, db, storage } from "../../firebase/firebaseConfig";
@@ -153,5 +156,25 @@ export const updateEmailService = async (email) => {
     await updateEmail(auth.currentUser, email);
   } catch (err) {
     throw new Error(`SERVICE | email güncellenirken sorun: ${err}`);
+  }
+};
+
+export const updatePasswordService = async (currentPassword, newPassword) => {
+  try {
+    if (!auth.currentUser) {
+      throw new Error(
+        "SERVICE | Şifre güncelleme işleminde sorun : Kullanıcı oturumu bulunamadı"
+      );
+    }
+
+    const credential = EmailAuthProvider.credential(
+      auth.currentUser.email,
+      currentPassword
+    );
+    await reauthenticateWithCredential(auth.currentUser, credential);
+
+    await updatePassword(auth.currentUser, newPassword);
+  } catch (err) {
+    throw new Error(`SERVICE | Şifre güncellenirken sorun: ${err}`);
   }
 };
