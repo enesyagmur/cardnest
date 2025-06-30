@@ -18,6 +18,7 @@ import CollectionsPage from "./pages/collections/CollectionsPage";
 import CardsPage from "./pages/cards/CardsPage";
 import PracticePage from "./pages/practice/PracticePage";
 import ExplorePage from "./pages/explore/ExplorePage";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ function App() {
             <Route path="/cards" element={<CardsPage />} />
             <Route path="/practice" element={<PracticePage />} />
             <Route path="/explore" element={<ExplorePage />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
 
           <Route

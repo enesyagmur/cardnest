@@ -72,7 +72,7 @@ const ExplorePage = () => {
               onSelect={setSelectedTag}
             />
 
-            <div className="w-full flex flex-wrap justify-center gap-6 mt-4">
+            <div className="w-full flex flex-wrap justify-center gap-6 mt-4 pb-4">
               {publicCollections?.length > 0 &&
               filteredCollections?.length === 0 ? (
                 <NoCollectionsFound />

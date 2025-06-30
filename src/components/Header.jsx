@@ -146,12 +146,18 @@ export default function Header() {
         </nav>
 
         <div className="relative flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-gray-700 shadow-sm">
-          <div className="relative">
+          <div
+            className="relative cursor-pointer"
+            onClick={() => navigate("/profile")}
+          >
             <FaUserCircle className="w-6 h-6 text-gray-400" />
             <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
           </div>
 
-          <div className="w-48 hidden sm:flex flex-col items-start">
+          <div
+            className="w-48 hidden sm:flex flex-col items-start cursor-pointer"
+            onClick={() => navigate("/profile")}
+          >
             <span className="text-sm font-medium text-gray-800 capitalize">
               {displayName || "Kullanıcı"}
             </span>
