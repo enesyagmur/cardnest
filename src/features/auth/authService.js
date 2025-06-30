@@ -94,10 +94,17 @@ export const logout = async () => {
 export const observeAuthState = (callback) => {
   return onAuthStateChanged(auth, callback);
 };
+
 export const updateProfilePhotoService = async (photo) => {
   try {
     if (!photo) {
       throw new Error("SERVICE | Resim güncellenirken sorun: resim eksik");
+    }
+
+    if (!auth.currentUser) {
+      throw new Error(
+        "SERVICE | Resim güncellenirken sorun: Kullanıcı Bulunamadı"
+      );
     }
 
     const photoRef = ref(storage, `profilePhotos/${auth.currentUser.uid}`);
@@ -108,5 +115,23 @@ export const updateProfilePhotoService = async (photo) => {
     await updateProfile(auth.currentUser, { photoURL });
   } catch (err) {
     throw new Error(`SERVICE | Resim güncellenirken sorun: ${err}`);
+  }
+};
+
+export const updateNameService = async (name) => {
+  try {
+    if (!name) {
+      throw new Error("SERVICE | İsim güncellenirken sorun: name eksik");
+    }
+
+    if (!auth.currentUser) {
+      throw new Error(
+        "SERVICE | isim güncellenirken sorun: Kullanıcı Bulunamadı"
+      );
+    }
+
+    await updateProfile(auth.currentUser, { displayName: name });
+  } catch (err) {
+    throw new Error(`SERVICE | isim güncellenirken sorun: ${err}`);
   }
 };
