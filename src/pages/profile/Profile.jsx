@@ -3,7 +3,6 @@ import {
   FiEdit2,
   FiTrash2,
   FiUser,
-  FiMail,
   FiLock,
   FiCamera,
   FiUpload,
@@ -11,7 +10,6 @@ import {
 import { GoVerified } from "react-icons/go";
 
 import {
-  updateEmailService,
   updateNameService,
   updatePasswordService,
   updateProfilePhotoService,
@@ -23,7 +21,6 @@ import { sendEmailVerification } from "firebase/auth";
 const Profile = () => {
   const [photo, setPhoto] = useState();
   const [newName, setNewName] = useState("");
-  const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -49,20 +46,6 @@ const Profile = () => {
       await updateNameService(newName);
       NotifyCustom("success", "Kullanıcı ismi güncellendi");
       setNewName("");
-    } catch (err) {
-      throw new Error(err);
-    }
-  };
-
-  const handleUpdateEmail = async () => {
-    try {
-      if (!email) {
-        NotifyCustom("error", "Mail boş bırakılamaz");
-      }
-
-      await updateEmailService(email);
-      NotifyCustom("success", "Kullanıcı maili güncellendi");
-      setEmail("");
     } catch (err) {
       throw new Error(err);
     }
@@ -201,34 +184,6 @@ const Profile = () => {
                 </div>
               </div>
 
-              {/* Email Update */}
-              <div className="bg-white rounded-lg p-4 shadow-sm border border-blue-100">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-7 h-7 bg-gradient-to-br from-blue-200 to-indigo-200 rounded-md flex items-center justify-center">
-                    <FiMail className="w-3 h-3 text-blue-600" />
-                  </div>
-                  <label className="block text-lg font-medium text-gray-600">
-                    Email
-                  </label>
-                </div>
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    placeholder="Yeni email giriniz"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 px-3 py-2 rounded-md border border-blue-100 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent transition-all duration-300 text-sm"
-                  />
-                  <button
-                    onClick={handleUpdateEmail}
-                    className="flex items-center gap-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-1 focus:ring-blue-300 text-sm"
-                  >
-                    <FiEdit2 className="w-3 h-3" />
-                    <span>Güncelle</span>
-                  </button>
-                </div>
-              </div>
-
               {/* Password Update */}
               <div className="bg-white rounded-lg p-4 shadow-sm border border-green-100">
                 <div className="flex items-center gap-3 mb-2">
@@ -272,7 +227,7 @@ const Profile = () => {
             <div className="mt-4 pt-4 border-t border-gray-200">
               <button
                 type="button"
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red-300"
+                className="w-full flex items-center text-red-500 border border-red-500 justify-center gap-2 bg-white bg-gradient-to-r  hover:from-red-500 hover:to-pink-600 hover:text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red-300"
               >
                 <FiTrash2 className="w-4 h-4" />
                 <span className="text-sm">Hesabımı Sil</span>

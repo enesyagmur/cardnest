@@ -6,7 +6,6 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  updateEmail,
   updatePassword,
   updateProfile,
 } from "firebase/auth";
@@ -138,24 +137,6 @@ export const updateNameService = async (name) => {
     await updateProfile(auth.currentUser, { displayName: name });
   } catch (err) {
     throw new Error(`SERVICE | isim güncellenirken sorun: ${err}`);
-  }
-};
-
-export const updateEmailService = async (email) => {
-  try {
-    if (!email) {
-      throw new Error("SERVICE | email güncellenirken sorun: email eksik");
-    }
-
-    if (!auth.currentUser) {
-      throw new Error(
-        "SERVICE | email güncellenirken sorun: Kullanıcı Bulunamadı"
-      );
-    }
-
-    await updateEmail(auth.currentUser, email);
-  } catch (err) {
-    throw new Error(`SERVICE | email güncellenirken sorun: ${err}`);
   }
 };
 
