@@ -6,9 +6,10 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { auth, db } from "../../firebase/firebaseConfig";
+import { auth, db, storage } from "../../firebase/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 import { GoogleAuthProvider } from "firebase/auth/web-extension";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export const registerUser = async (userName, email, password) => {
   try {
@@ -92,4 +93,20 @@ export const logout = async () => {
 
 export const observeAuthState = (callback) => {
   return onAuthStateChanged(auth, callback);
+};
+export const updateProfilePhotoService = async (photo) => {
+  try {
+    if (!photo) {
+      throw new Error("SERVICE | Resim güncellenirken sorun: resim eksik");
+    }
+
+    const photoRef = ref(storage, `profilePhotos/${auth.currentUser.uid}`);
+    await uploadBytes(photoRef, photo);
+
+    const photoURL = await getDownloadURL(photoRef);
+
+    await updateProfile(auth.currentUser, { photoURL });
+  } catch (err) {
+    throw new Error(`SERVICE | Resim güncellenirken sorun: ${err}`);
+  }
 };

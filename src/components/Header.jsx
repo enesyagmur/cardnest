@@ -3,14 +3,13 @@ import { HiOutlineGlobeAlt, HiOutlineCollection } from "react-icons/hi";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { MdOutlineQuiz } from "react-icons/md";
-import { IoChevronDownOutline } from "react-icons/io5";
 import LogoutButton from "./authComponents/LogoutButton";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoCustomIcon from "./logoCustomIcon";
 
 export default function Header() {
-  const { displayName } = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -150,7 +149,16 @@ export default function Header() {
             className="relative cursor-pointer"
             onClick={() => navigate("/profile")}
           >
-            <FaUserCircle className="w-6 h-6 text-gray-400" />
+            {user.photoURL ? (
+              <img
+                src={user.photoURL}
+                alt="profile"
+                className="w-6 h-6 rounded-full"
+              />
+            ) : (
+              <FaUserCircle className="w-6 h-6 text-gray-400" />
+            )}
+
             <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
           </div>
 
@@ -159,7 +167,7 @@ export default function Header() {
             onClick={() => navigate("/profile")}
           >
             <span className="text-sm font-medium text-gray-800 capitalize">
-              {displayName || "Kullanıcı"}
+              {user.displayName || "Kullanıcı"}
             </span>
             <span className="text-xs text-gray-500">Online</span>
           </div>
