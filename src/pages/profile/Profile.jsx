@@ -8,17 +8,21 @@ import {
   FiCamera,
   FiUpload,
 } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { GoVerified } from "react-icons/go";
+
 import {
+  updateEmailService,
   updateNameService,
   updateProfilePhotoService,
 } from "../../features/auth/authService";
 import NotifyCustom from "../../utils/NotifyCustom";
+import { auth } from "../../firebase/firebaseConfig";
+import { sendEmailVerification } from "firebase/auth";
 
 const Profile = () => {
-  const user = useSelector((state) => state.auth.user);
   const [photo, setPhoto] = useState();
   const [newName, setNewName] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleUpdatePhoto = async () => {
     try {
@@ -46,6 +50,35 @@ const Profile = () => {
     }
   };
 
+  const handleUpdateEmail = async () => {
+    try {
+      if (!email) {
+        NotifyCustom("error", "Mail boş bırakılamaz");
+      }
+
+      await updateEmailService(email);
+      NotifyCustom("success", "Kullanıcı maili güncellendi");
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  const handleSendVerification = async () => {
+    try {
+      if (auth.currentUser && !auth.currentUser.emailVerified) {
+        await sendEmailVerification(auth.currentUser);
+        NotifyCustom(
+          "success",
+          "Doğrulama maili gönderildi. Lütfen e-postanı kontrol et."
+        );
+      } else {
+        NotifyCustom("info", "Email zaten doğrulanmış.");
+      }
+    } catch (err) {
+      NotifyCustom("error", `Doğrulama maili gönderilemedi, ${err}`);
+    }
+  };
+
   return (
     <div className="w-full lg:h-[590px] flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 p-4 sm:p-6">
       <div className="w-full  h-full bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden">
@@ -55,9 +88,9 @@ const Profile = () => {
             <div className="flex flex-col items-center">
               <div className="relative group mb-4">
                 <div className="w-32 h-32 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-200 via-pink-200 to-blue-200 p-1 shadow-lg cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
-                  {user.photoURL ? (
+                  {auth.currentUser.photoURL ? (
                     <img
-                      src={user.photoURL}
+                      src={auth.currentUser.photoURL}
                       alt="Profile"
                       className="w-full h-full rounded-full object-cover"
                     />
@@ -93,11 +126,26 @@ const Profile = () => {
               <div className="w-full space-y-3 text-center">
                 <div className="p-3 bg-purple-50 rounded-lg">
                   <h2 className="text-xl font-bold text-gray-800 truncate capitalize">
-                    {user.displayName || "Kullanıcı Adı"}
+                    {auth.currentUser.displayName || "Kullanıcı Adı"}
                   </h2>
                 </div>
-                <div className="p-3 bg-blue-50 rounded-lg">
-                  <p className="text-gray-600 truncate">{user.email}</p>
+                <div className="flex items-center justify-center p-3 bg-blue-50 rounded-lg">
+                  {auth.currentUser.emailVerified ? (
+                    <GoVerified
+                      className="text-green-500"
+                      title="Email Doğrulandı"
+                    />
+                  ) : (
+                    <GoVerified
+                      className="cursor-pointer text-gray-400 hover:text-gray-600"
+                      title="Email Doğrula"
+                      onClick={handleSendVerification}
+                    />
+                  )}
+
+                  <p className="text-gray-600 truncate ml-2">
+                    {auth.currentUser.email}
+                  </p>
                 </div>
               </div>
             </div>
@@ -147,9 +195,13 @@ const Profile = () => {
                   <input
                     type="email"
                     placeholder="Yeni email giriniz"
+                    onChange={(e) => setEmail(e.target.value)}
                     className="flex-1 px-3 py-2 rounded-md border border-blue-100 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent transition-all duration-300 text-sm"
                   />
-                  <button className="flex items-center gap-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-1 focus:ring-blue-300 text-sm">
+                  <button
+                    onClick={handleUpdateEmail}
+                    className="flex items-center gap-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-1 focus:ring-blue-300 text-sm"
+                  >
                     <FiEdit2 className="w-3 h-3" />
                     <span>Güncelle</span>
                   </button>
