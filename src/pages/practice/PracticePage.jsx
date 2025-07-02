@@ -10,19 +10,18 @@ export default function PracticePage() {
   const selectedCollectionId = useSelector(
     (state) => state.collections.selectedCollectionId
   );
+  const [practiceCardCount, setPracticeCardCount] = useState(0);
 
   const selectedCollection = collections.find(
     (col) => col.id === selectedCollectionId
   );
 
-  console.log(selectedCollection);
-
   const [rnd, setRnd] = useState(0);
 
   const createRandomNumber = () => {
     if (!selectedCollection.cards.length) return;
+    setPracticeCardCount(practiceCardCount + 1);
 
-    //zorluklarına göre filtreleyip kartları ayırrıyorum
     const hardCards = selectedCollection.cards.filter(
       (c) => c.difficulty === "hard"
     );
@@ -33,52 +32,42 @@ export default function PracticePage() {
       (c) => c.difficulty === "easy"
     );
 
-    //zorluklara ağırlık değeri veriyorum
-    const baseWeights = {
-      hard: 0.5,
-      medium: 0.4,
-      easy: 0.1,
-    };
-
-    //ağırlıkları ile beraber barındırdıkları kart sayısına göre her zorluğun toplam yoğunluğunu buluyorum
-    const weightedHard = baseWeights.hard * hardCards.length;
-    const weightedMedium = baseWeights.medium * mediumCards.length;
-    const weightedEasy = baseWeights.easy * easyCards.length;
-
-    const totalWeight = weightedHard + weightedMedium + weightedEasy;
-    if (totalWeight === 0) {
-      NotifyCustom("error", "Kart Bulunamadı");
+    // Kart grubu yoksa hata göster
+    if (!hardCards.length && !mediumCards.length && !easyCards.length) {
+      NotifyCustom("error", "Kart bulunamadı");
       return;
     }
-    const rand = Math.random() * totalWeight;
 
-    //random değere göre grup seçiyorum
+    // Zorluklara göre sabit oranla grup seç (hızlı ve dengeli)
+    const randomValue = Math.random();
     let selectedGroup = [];
-    if (rand < weightedHard && hardCards.length > 0) {
+
+    if (randomValue < 0.3 && hardCards.length) {
       selectedGroup = hardCards;
-    } else if (rand < weightedHard + weightedMedium && mediumCards.length > 0) {
+    } else if (randomValue < 0.7 && mediumCards.length) {
       selectedGroup = mediumCards;
-    } else if (easyCards.length > 0) {
+    } else if (easyCards.length) {
       selectedGroup = easyCards;
-    } else if (hardCards.length > 0) {
-      selectedGroup = hardCards;
-    } else if (mediumCards.length > 0) {
+    } else if (mediumCards.length) {
       selectedGroup = mediumCards;
     } else {
-      selectedGroup = easyCards;
+      selectedGroup = hardCards;
     }
 
-    //seçilen gurupu son çalışma durumuna göre her seferinde sıralıyoruz
-    const sortedGroup = [...selectedGroup].sort((a, b) => {
-      const dateA = a.studyedAt ? new Date(a.studyedAt) : new Date(0); // eğer daha önce hiç çalışılmadıysa ya da studyedAt değeri yoksa
+    // Seçilen grubu önce rastgele karıştır, sonra tarihe göre biraz sıralı hale getir
+    const shuffledGroup = [...selectedGroup].sort(() => Math.random() - 0.5);
+
+    // Hafifçe tarihe öncelik ver (ilk 3 taneden en eskiyi al örneğin)
+    const topFew = shuffledGroup.slice(0, 3).sort((a, b) => {
+      const dateA = a.studyedAt ? new Date(a.studyedAt) : new Date(0);
       const dateB = b.studyedAt ? new Date(b.studyedAt) : new Date(0);
       return dateA - dateB;
     });
 
-    const card = sortedGroup[0]; // en eski çalışılan card ı alıyoruz
+    const selectedCard = topFew[0]; // hem biraz random hem az çalışılmış
 
     const originalIndex = selectedCollection.cards.findIndex(
-      (c) => c.id === card.id
+      (c) => c.id === selectedCard.id
     );
     setRnd(originalIndex);
   };
@@ -90,6 +79,8 @@ export default function PracticePage() {
           collectionId={selectedCollection.id}
           card={selectedCollection.cards[rnd]}
           createRandomNumber={createRandomNumber}
+          practiceCardCount={practiceCardCount}
+          totalCards={selectedCollection.cards.length}
         />
       )}
 
