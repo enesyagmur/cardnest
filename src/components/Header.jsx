@@ -144,35 +144,36 @@ export default function Header() {
           })}
         </nav>
 
-        <div className="relative flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-gray-700 shadow-sm">
+        <div className="relative flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2 sm:px-4 sm:py-2.5 text-gray-700 shadow-sm hover:bg-gray-50 transition-colors duration-200">
           <div
-            className="relative cursor-pointer"
+            className="relative cursor-pointer flex-shrink-0"
             onClick={() => navigate("/profile")}
           >
             {user.photoURL ? (
               <img
                 src={user.photoURL}
                 alt="profile"
-                className="w-6 h-6 rounded-full"
+                className="w-6 h-6 rounded-full object-cover"
               />
             ) : (
               <FaUserCircle className="w-6 h-6 text-gray-400" />
             )}
-
             <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
           </div>
 
           <div
-            className="w-48 hidden sm:flex flex-col items-start cursor-pointer"
+            className="hidden sm:flex flex-col items-start cursor-pointer min-w-0"
             onClick={() => navigate("/profile")}
           >
-            <span className="text-sm font-medium text-gray-800 capitalize">
+            <span className="text-sm font-medium text-gray-800 truncate w-full capitalize">
               {user.displayName || "Kullanıcı"}
             </span>
             <span className="text-xs text-gray-500">Online</span>
           </div>
 
-          <LogoutButton />
+          <div className="ml-auto">
+            <LogoutButton />
+          </div>
         </div>
       </div>
     </header>
