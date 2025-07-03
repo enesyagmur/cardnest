@@ -11,8 +11,7 @@ export default function PracticeItem({
   collectionId,
   card,
   createRandomNumber,
-  currentPracticeCardCount,
-  totalPracticeCount,
+
   onBackToCollections,
 }) {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -95,8 +94,6 @@ export default function PracticeItem({
 
   const difficultyConfig = getDifficultyConfig(card.difficulty);
   const DifficultyIcon = difficultyConfig.icon;
-  const progressPercentage =
-    (currentPracticeCardCount / totalPracticeCount) * 100;
 
   return (
     <div className="relative w-full min-h-[590px] max-h-[590px] flex flex-col bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
@@ -149,34 +146,6 @@ export default function PracticeItem({
           {/* Right: Progress - Smaller */}
           <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1 rounded-lg shadow-sm">
             {/* Sol taraf: Sayı bilgisi */}
-            <div className="text-xs font-bold text-gray-800">
-              {currentPracticeCardCount}/{totalPracticeCount}
-            </div>
-
-            {/* Sağ taraf: Yüzdelik daire */}
-            <div className="w-6 h-6 relative">
-              <svg className="w-6 h-6 transform -rotate-90" viewBox="0 0 36 36">
-                <path
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="#e5e7eb"
-                  strokeWidth="3"
-                />
-                <path
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="#8b5cf6"
-                  strokeWidth="3"
-                  strokeDasharray={`${progressPercentage}, 100`}
-                  className="transition-all duration-500 ease-out"
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-[10px] font-bold text-purple-600">
-                  {Math.round(progressPercentage)}%
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

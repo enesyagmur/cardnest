@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addCollection,
   addnewCard,
-  addPublicCollection,
   cardDelete,
   cardUpdate,
   deleteCollection,
@@ -134,20 +133,6 @@ const collectionsSlice = createSlice({
         state.publicCollections = action.payload;
       })
       .addCase(fetchPublicCollections.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
-      // create Public Collection
-      .addCase(addPublicCollection.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(addPublicCollection.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.collections = [...state.collections, action.payload];
-      })
-      .addCase(addPublicCollection.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })

@@ -1,110 +1,151 @@
 import PracticeItem from "../../components/practiceComponents/PracticeItem";
 import EmptyPractice from "../../components/practiceComponents/EmptyPractice";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useReducer, useState, useEffect } from "react";
 import NotifyCustom from "../../utils/NotifyCustom";
 import PracticeCollections from "../../components/practiceComponents/PracticeCollections";
 import { setCollectionId } from "../../features/collections/collectionsSlice";
+import { practiceReducer, initialState } from "../../reducers/practiceReducer";
 
 export default function PracticePage() {
   const collections = useSelector((state) => state.collections.collections);
   const selectedCollectionId = useSelector(
     (state) => state.collections.selectedCollectionId
   );
-  const [usedCardIds, setUsedCardIds] = useState([]);
   const [rnd, setRnd] = useState(0);
+  const [state, dispatchReducer] = useReducer(practiceReducer, initialState);
+  const { usedCards, lastShownCards, sessionRound, noMoreCardsForRound } =
+    state;
   const dispatch = useDispatch();
 
   const selectedCollection = collections.find(
     (col) => col.id === selectedCollectionId
   );
 
-  const totalPracticeCount = selectedCollection?.cards?.length || 0;
-  const currentPracticeCardCount = usedCardIds.length;
+  useEffect(() => {
+    if (
+      selectedCollectionId &&
+      selectedCollection?.cards?.length > 0 &&
+      !noMoreCardsForRound
+    ) {
+      createRandomNumber();
+    }
+  }, [selectedCollectionId, sessionRound, noMoreCardsForRound]);
+
+  const getAvailableCards = () => {
+    if (!selectedCollection?.cards) return [];
+
+    return selectedCollection.cards.filter(
+      (card) =>
+        !usedCards.includes(card.id) && !lastShownCards.includes(card.id)
+    );
+  };
+
+  const getCardPriority = (card) => {
+    const difficultyWeight = {
+      hard: 3,
+      medium: 2,
+      easy: 1,
+    };
+
+    const lastReviewDate = card.studyedAt ? new Date(card.studyedAt) : null;
+    const now = new Date();
+
+    let daysSinceLastReview = 100;
+    if (lastReviewDate && lastReviewDate <= now) {
+      daysSinceLastReview = (now - lastReviewDate) / (1000 * 60 * 60 * 24);
+    } else if (lastReviewDate && lastReviewDate > now) {
+      daysSinceLastReview = -100;
+    }
+
+    const randomFactor = Math.random() * 0.2;
+
+    return (
+      difficultyWeight[card.difficulty] * 100 +
+      daysSinceLastReview * 10 +
+      randomFactor
+    );
+  };
+
+  const selectNextCard = () => {
+    const availableCards = getAvailableCards();
+
+    if (availableCards.length === 0) {
+      if (usedCards.length > 0) {
+        NotifyCustom(
+          "info",
+          "Bu turdaki tüm kartları bitirdiniz, yeni tura geçiliyor!"
+        );
+        dispatchReducer({ type: "NEXT_ROUND" });
+        return null;
+      } else {
+        NotifyCustom(
+          "info",
+          "Bu koleksiyon için gösterilebilecek kart kalmadı!"
+        );
+        dispatchReducer({ type: "NO_MORE_CARDS_FOR_ROUND" });
+        return null;
+      }
+    }
+
+    const sortedCards = [...availableCards].sort((a, b) => {
+      return getCardPriority(b) - getCardPriority(a);
+    });
+
+    const topCandidates = sortedCards.slice(0, Math.min(3, sortedCards.length));
+    const selectedCard =
+      topCandidates[Math.floor(Math.random() * topCandidates.length)];
+
+    return selectedCard;
+  };
 
   const createRandomNumber = () => {
     if (!selectedCollection?.cards?.length) return;
 
-    const availableCards = selectedCollection.cards.filter(
-      (card) => !usedCardIds.includes(card.id)
-    );
+    const selectedCard = selectNextCard();
 
-    if (!availableCards.length) {
-      NotifyCustom("Success", "Tüm kartları bitirdiniz!");
-      dispatch(setCollectionId(""));
-      setUsedCardIds([]);
-      return;
-    }
+    if (!selectedCard) return;
 
-    const hardCards = availableCards.filter((c) => c.difficulty === "hard");
-    const mediumCards = availableCards.filter((c) => c.difficulty === "medium");
-    const easyCards = availableCards.filter((c) => c.difficulty === "easy");
+    dispatchReducer({ type: "ADD_USED_CARD", payload: selectedCard.id });
 
-    if (!hardCards.length && !mediumCards.length && !easyCards.length) {
-      NotifyCustom("error", "Kart bulunamadı");
-      return;
-    }
-
-    const randomValue = Math.random();
-    let selectedGroup = [];
-
-    if (randomValue < 0.3 && hardCards.length) {
-      selectedGroup = hardCards;
-    } else if (randomValue < 0.7 && mediumCards.length) {
-      selectedGroup = mediumCards;
-    } else if (easyCards.length) {
-      selectedGroup = easyCards;
-    } else if (mediumCards.length) {
-      selectedGroup = mediumCards;
-    } else {
-      selectedGroup = hardCards;
-    }
-
-    const shuffledGroup = [...selectedGroup].sort(() => Math.random() - 0.5);
-    const topFew = shuffledGroup.slice(0, 3).sort((a, b) => {
-      const dateA = a.studyedAt ? new Date(a.studyedAt) : new Date(0);
-      const dateB = b.studyedAt ? new Date(b.studyedAt) : new Date(0);
-      return dateA - dateB;
-    });
-
-    const selectedCard = topFew[0];
     const originalIndex = selectedCollection.cards.findIndex(
       (c) => c.id === selectedCard.id
     );
-
     setRnd(originalIndex);
-    setUsedCardIds((prev) => [...prev, selectedCard.id]);
   };
 
   const handleBackToCollections = () => {
-    setUsedCardIds([]);
+    dispatchReducer({ type: "RESET_SESSION" });
     dispatch(setCollectionId(""));
   };
+
+  // rnd için güvenli index
+  const validRnd =
+    rnd >= 0 && rnd < (selectedCollection?.cards?.length || 0) ? rnd : 0;
 
   return (
     <main className="w-full bg-gray-100 h-[590px] flex items-center justify-center rounded-xl shadow-sm">
       {selectedCollection?.title &&
         selectedCollection.cards?.length > 0 &&
-        selectedCollection.cards[rnd] && (
+        selectedCollection.cards[validRnd] &&
+        !noMoreCardsForRound && (
           <PracticeItem
             collectionId={selectedCollection.id}
-            card={selectedCollection.cards[rnd]}
+            card={selectedCollection.cards[validRnd]}
             createRandomNumber={createRandomNumber}
-            totalPracticeCount={totalPracticeCount}
-            currentPracticeCardCount={currentPracticeCardCount}
             onBackToCollections={handleBackToCollections}
           />
         )}
 
-      {(!selectedCollection?.id || !selectedCollection?.cards?.length) &&
+      {(noMoreCardsForRound ||
+        !selectedCollection?.id ||
+        !selectedCollection?.cards?.length) &&
         collections?.length > 0 && (
           <PracticeCollections collections={collections} />
         )}
 
       {(!selectedCollection?.id || !selectedCollection?.cards?.length) &&
-        (!collections?.length || collections?.length === 0) && (
-          <EmptyPractice />
-        )}
+        !collections?.length && <EmptyPractice />}
     </main>
   );
 }
