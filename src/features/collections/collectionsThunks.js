@@ -86,30 +86,6 @@ export const fetchPublicCollections = createAsyncThunk(
   }
 );
 
-export const addPublicCollection = createAsyncThunk(
-  "collections/addPublicCollection",
-  async (newCollectionData, thunkAPI) => {
-    try {
-      const { userId, creator, title, description, cards, tags } =
-        newCollectionData;
-
-      const newCollection = await createPublicCollection(
-        userId,
-        creator,
-        title,
-        description,
-        cards,
-        tags
-      );
-
-      return newCollection;
-    } catch (err) {
-      console.error("Thunk | addPublicCollectionThunk hatası:", err);
-      return thunkAPI.rejectWithValue(err.message);
-    }
-  }
-);
-
 export const addnewCard = createAsyncThunk(
   "collection/addNewCard",
   async ({ userId, colId, newCardData }, thunkAPI) => {

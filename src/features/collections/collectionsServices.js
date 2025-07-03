@@ -206,10 +206,12 @@ export const getPublicCollections = async () => {
 
     const querySnapshot = await getDocs(publicQuery);
 
-    const collections = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const collections = querySnapshot.docs
+      .map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      .filter((col) => Array.isArray(col.cards) && col.cards.length > 0);
 
     return collections;
   } catch (error) {
