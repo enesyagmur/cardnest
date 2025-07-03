@@ -3,21 +3,28 @@ import PracticeCard from "./PracticeCard";
 import { useDispatch, useSelector } from "react-redux";
 import NotifyCustom from "../../utils/NotifyCustom";
 import { cardUpdate } from "../../features/collections/collectionsThunks";
-import { FaSmile, FaMeh, FaFrown, FaEye } from "react-icons/fa";
-import { FiArrowLeft } from "react-icons/fi";
-import { setCollectionId } from "../../features/collections/collectionsSlice";
+import { HiOutlineArrowLeft } from "react-icons/hi";
+import { BiHappy, BiMeh, BiSad } from "react-icons/bi";
+import { AiOutlineEye } from "react-icons/ai";
 
 export default function PracticeItem({
   collectionId,
   card,
   createRandomNumber,
-  practiceCardCount,
-  totalCards,
+  currentPracticeCardCount,
+  totalPracticeCount,
+  onBackToCollections,
 }) {
   const [showAnswer, setShowAnswer] = useState(false);
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+
+  if (!card) {
+    return (
+      <div className="text-center text-gray-500 py-8">Kart bulunamadı</div>
+    );
+  }
 
   const handleSelectedDifficulty = async (selectedDifficulty) => {
     setLoading(true);
@@ -53,34 +60,34 @@ export default function PracticeItem({
     switch (difficulty) {
       case "easy":
         return {
-          icon: FaSmile,
-          color: "text-green-500",
-          bgColor: "bg-green-50",
-          borderColor: "border-green-200",
+          icon: BiHappy,
+          color: "text-emerald-600",
+          bgColor: "bg-emerald-50",
+          borderColor: "border-emerald-200",
           label: "Kolay",
         };
       case "medium":
         return {
-          icon: FaMeh,
-          color: "text-yellow-500",
-          bgColor: "bg-yellow-50",
-          borderColor: "border-yellow-200",
+          icon: BiMeh,
+          color: "text-amber-600",
+          bgColor: "bg-amber-50",
+          borderColor: "border-amber-200",
           label: "Normal",
         };
       case "hard":
         return {
-          icon: FaFrown,
-          color: "text-red-500",
-          bgColor: "bg-red-50",
-          borderColor: "border-red-200",
+          icon: BiSad,
+          color: "text-rose-600",
+          bgColor: "bg-rose-50",
+          borderColor: "border-rose-200",
           label: "Zor",
         };
       default:
         return {
-          icon: FaMeh,
-          color: "text-gray-500",
-          bgColor: "bg-gray-50",
-          borderColor: "border-gray-200",
+          icon: BiMeh,
+          color: "text-slate-600",
+          bgColor: "bg-slate-50",
+          borderColor: "border-slate-200",
           label: "Bilinmiyor",
         };
     }
@@ -88,87 +95,86 @@ export default function PracticeItem({
 
   const difficultyConfig = getDifficultyConfig(card.difficulty);
   const DifficultyIcon = difficultyConfig.icon;
-  const progressPercentage = (practiceCardCount / totalCards) * 100;
+  const progressPercentage =
+    (currentPracticeCardCount / totalPracticeCount) * 100;
 
   return (
-    <div className="relative w-full min-h-[590px] max-h-[590px] flex flex-col bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden">
-      {/* Compact Header - Single Row */}
-      <div className="flex-shrink-0 px-4 py-3 bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-200">
-        <div className="flex items-center justify-between gap-4">
-          {/* Left: Back Button */}
-          <button
-            onClick={() => dispatch(setCollectionId(""))}
-            className="flex items-center gap-2 text-sm px-3 py-2 bg-white/80 text-gray-700 rounded-lg hover:bg-white hover:shadow-sm transition-all duration-200 flex-shrink-0"
-          >
-            <FiArrowLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">Koleksiyonlar</span>
-          </button>
-
-          {/* Center: Question */}
-          <div className="flex-1 min-w-0 mx-4">
-            <div className="bg-white/80 backdrop-blur-sm rounded-lg px-4 py-2 border border-gray-200">
-              <h2 className="text-lg md:text-xl font-bold text-gray-800 text-center truncate">
-                {!loading ? (
-                  card.front
-                ) : (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
-                    <span className="text-sm">Yeni soru getiriliyor...</span>
-                  </div>
-                )}
-              </h2>
+    <div className="relative w-full min-h-[590px] max-h-[590px] flex flex-col bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+      {/* Header Section - Minimized */}
+      <div className="flex-shrink-0 px-3 py-2 bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 border-b border-gray-200">
+        {/* First Row: Question/Front - Reduced padding */}
+        <div className="mb-2">
+          <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 border border-gray-200 shadow-sm">
+            <div className="text-center">
+              {!loading ? (
+                <h2 className="text-base md:text-lg font-bold text-gray-800 leading-tight break-words">
+                  {card.front}
+                </h2>
+              ) : (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-500"></div>
+                  <span className="text-sm text-gray-600">
+                    Yeni soru getiriliyor...
+                  </span>
+                </div>
+              )}
             </div>
           </div>
+        </div>
 
-          {/* Right: Difficulty + Progress */}
-          <div className="flex items-center gap-3 flex-shrink-0">
-            {/* Difficulty Badge */}
+        {/* Second Row: Controls - Reduced padding and size */}
+        <div className="flex items-center justify-between gap-2 flex-wrap">
+          {/* Left: Back Button - Smaller */}
+          <button
+            onClick={onBackToCollections}
+            className="flex items-center gap-1 text-xs px-2 py-1 bg-white/80 hover:bg-gray-100 text-gray-700 rounded-lg  hover:shadow-sm transition-all duration-200 border border-gray-200 flex-shrink-0"
+          >
+            <HiOutlineArrowLeft className="w-3 h-6" />
+            <span className="hidden sm:inline ">Koleksiyonlar</span>
+            <span className="sm:hidden">Geri</span>
+          </button>
+
+          {/* Center: Difficulty Badge - Smaller */}
+          <div className="flex-1 flex justify-center min-w-0">
             <div
-              className={`flex items-center gap-2 px-3 py-1.5 ${difficultyConfig.bgColor} ${difficultyConfig.borderColor} border rounded-full`}
+              className={`flex items-center gap-1 px-2 py-1 ${difficultyConfig.bgColor} ${difficultyConfig.borderColor} border rounded-lg shadow-sm`}
             >
-              <DifficultyIcon className={`w-4 h-4 ${difficultyConfig.color}`} />
-              <span className={`text-sm font-medium ${difficultyConfig.color}`}>
+              <DifficultyIcon className={`w-3 h-3 ${difficultyConfig.color}`} />
+              <span className={`text-xs font-medium ${difficultyConfig.color}`}>
                 {difficultyConfig.label}
               </span>
             </div>
+          </div>
 
-            {/* Progress Indicator */}
-            <div className="bg-white/90 backdrop-blur-sm border border-gray-200 px-3 py-2 rounded-lg shadow-sm">
-              <div className="flex items-center gap-2">
-                <div className="text-right">
-                  <div className="text-sm font-bold text-gray-800">
-                    {practiceCardCount}/{totalCards}
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    %{Math.round(progressPercentage)}
-                  </div>
-                </div>
-                <div className="w-8 h-8 relative">
-                  <svg
-                    className="w-8 h-8 transform -rotate-90"
-                    viewBox="0 0 36 36"
-                  >
-                    <path
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      fill="none"
-                      stroke="#e5e7eb"
-                      strokeWidth="3"
-                    />
-                    <path
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      fill="none"
-                      stroke="#3b82f6"
-                      strokeWidth="3"
-                      strokeDasharray={`${progressPercentage}, 100`}
-                      className="transition-all duration-500 ease-out"
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-xs font-bold text-blue-600">
-                      {Math.round(progressPercentage)}
-                    </span>
-                  </div>
-                </div>
+          {/* Right: Progress - Smaller */}
+          <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1 rounded-lg shadow-sm">
+            {/* Sol taraf: Sayı bilgisi */}
+            <div className="text-xs font-bold text-gray-800">
+              {currentPracticeCardCount}/{totalPracticeCount}
+            </div>
+
+            {/* Sağ taraf: Yüzdelik daire */}
+            <div className="w-6 h-6 relative">
+              <svg className="w-6 h-6 transform -rotate-90" viewBox="0 0 36 36">
+                <path
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#e5e7eb"
+                  strokeWidth="3"
+                />
+                <path
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#8b5cf6"
+                  strokeWidth="3"
+                  strokeDasharray={`${progressPercentage}, 100`}
+                  className="transition-all duration-500 ease-out"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-[10px] font-bold text-purple-600">
+                  {Math.round(progressPercentage)}%
+                </span>
               </div>
             </div>
           </div>
@@ -183,44 +189,45 @@ export default function PracticeItem({
             </div>
           )}
 
-          <div className="flex-shrink-0 p-6 bg-gray-50 border-t border-gray-100">
+          {/* Bottom section - Minimized */}
+          <div className="flex-shrink-0 p-3 bg-gradient-to-br from-gray-50 to-purple-50 border-t border-gray-100">
             {!showAnswer ? (
               <div className="text-center">
                 <button
                   onClick={() => setShowAnswer(true)}
-                  className="inline-flex items-center gap-2 md:px-8 px-4 md:py-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium rounded-xl hover:from-blue-600 hover:to-purple-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                 >
-                  <FaEye className="w-5 h-5" />
-                  <span className="text-lg">Cevabı Göster</span>
+                  <AiOutlineEye className="w-4 h-4" />
+                  <span className="text-base">Cevabı Göster</span>
                 </button>
               </div>
             ) : (
               <div>
                 <div className="text-center">
-                  <p className="text-base font-semibold text-gray-700 mb-4">
+                  <p className="text-sm font-semibold text-gray-700 mb-3">
                     Bu kartı ne kadar zor buldun?
                   </p>
-                  <div className="flex gap-3 justify-center flex-wrap">
+                  <div className="flex gap-2 justify-center flex-wrap">
                     <button
                       onClick={() => handleSelectedDifficulty("easy")}
-                      className="flex items-center gap-2 px-6 py-3 bg-green-100 text-green-700 font-semibold rounded-xl hover:bg-green-200 transition-all duration-200 hover:scale-105 shadow-sm hover:shadow-md"
+                      className="flex items-center gap-1 px-4 py-2 bg-emerald-100 text-emerald-700 font-semibold rounded-xl hover:bg-emerald-200 transition-all duration-200 hover:scale-105 shadow-sm hover:shadow-md border border-emerald-200"
                     >
-                      <FaSmile className="w-5 h-5" />
-                      <span>Kolay</span>
+                      <BiHappy className="w-4 h-4" />
+                      <span className="text-sm">Kolay</span>
                     </button>
                     <button
                       onClick={() => handleSelectedDifficulty("medium")}
-                      className="flex items-center gap-2 px-6 py-3 bg-yellow-100 text-yellow-700 font-semibold rounded-xl hover:bg-yellow-200 transition-all duration-200 hover:scale-105 shadow-sm hover:shadow-md"
+                      className="flex items-center gap-1 px-4 py-2 bg-amber-100 text-amber-700 font-semibold rounded-xl hover:bg-amber-200 transition-all duration-200 hover:scale-105 shadow-sm hover:shadow-md border border-amber-200"
                     >
-                      <FaMeh className="w-5 h-5" />
-                      <span>Normal</span>
+                      <BiMeh className="w-4 h-4" />
+                      <span className="text-sm">Normal</span>
                     </button>
                     <button
                       onClick={() => handleSelectedDifficulty("hard")}
-                      className="flex items-center gap-2 px-6 py-3 bg-red-100 text-red-700 font-semibold rounded-xl hover:bg-red-200 transition-all duration-200 hover:scale-105 shadow-sm hover:shadow-md"
+                      className="flex items-center gap-1 px-4 py-2 bg-rose-100 text-rose-700 font-semibold rounded-xl hover:bg-rose-200 transition-all duration-200 hover:scale-105 shadow-sm hover:shadow-md border border-rose-200"
                     >
-                      <FaFrown className="w-5 h-5" />
-                      <span>Zor</span>
+                      <BiSad className="w-4 h-4" />
+                      <span className="text-sm">Zor</span>
                     </button>
                   </div>
                 </div>

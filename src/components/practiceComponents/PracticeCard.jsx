@@ -4,7 +4,7 @@ import ListInPracticeItem from "./ListInPracticeItem";
 
 const PracticeCard = ({ card }) => {
   return (
-    <div className="w-full  min-h-[200px] max-h-[490px] flex flex-col items-start justify-evenly overflow-y-auto p-2 ">
+    <div className="w-full min-h-[200px] max-h-[490px] flex flex-col items-start justify-evenly  p-2 ">
       {card.back.map((item, index) => (
         <div
           key={index}

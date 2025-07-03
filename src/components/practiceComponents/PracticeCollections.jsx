@@ -1,16 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { setCollectionId } from "../../features/collections/collectionsSlice";
 import { FaUser } from "react-icons/fa";
 import CollectionCard from "./CollectionCard";
+import { useNavigate } from "react-router-dom";
 
 const PracticeCollections = ({ collections }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSelect = (id) => {
-    dispatch(setCollectionId(id));
+  const handleSelect = (collection) => {
+    dispatch(setCollectionId(collection.id));
     navigate("/practice");
   };
 
@@ -30,13 +30,15 @@ const PracticeCollections = ({ collections }) => {
       <div className="w-11/12 md:w-8/12 flex flex-col items-center justify-between overflow-y-auto overflow-x-hidden">
         {collections.length > 0 ? (
           <div className="mx-auto m-2 w-full pb-4">
-            {collections.map((collection) => (
-              <CollectionCard
-                key={collection.id}
-                collection={collection}
-                handleSelect={handleSelect}
-              />
-            ))}
+            {collections
+              .filter((collection) => collection.cards.length > 0)
+              .map((collection) => (
+                <CollectionCard
+                  key={collection.id}
+                  collection={collection}
+                  handleSelect={() => handleSelect(collection)}
+                />
+              ))}
           </div>
         ) : (
           <div className="text-center py-12">

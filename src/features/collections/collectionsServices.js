@@ -245,7 +245,7 @@ export const addCardToCollection = async (userId, colId, newCardData) => {
       id: uuidv4(),
       front: newCardData.front,
       back: newCardData.back,
-      difficulty: "medium",
+      difficulty: "hard",
       createdAt: new Date().toISOString(),
       updatedAt: null,
       studyedAt: null,
