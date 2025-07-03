@@ -3,7 +3,7 @@ import PracticeCard from "./PracticeCard";
 import { useDispatch, useSelector } from "react-redux";
 import NotifyCustom from "../../utils/NotifyCustom";
 import { cardUpdate } from "../../features/collections/collectionsThunks";
-import { HiOutlineArrowLeft } from "react-icons/hi";
+import { HiOutlineX } from "react-icons/hi";
 import { BiHappy, BiMeh, BiSad } from "react-icons/bi";
 import { AiOutlineEye } from "react-icons/ai";
 
@@ -97,55 +97,52 @@ export default function PracticeItem({
 
   return (
     <div className="relative w-full min-h-[590px] max-h-[590px] flex flex-col bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
-      {/* Header Section - Minimized */}
-      <div className="flex-shrink-0 px-3 py-2 bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 border-b border-gray-200">
-        {/* First Row: Question/Front - Reduced padding */}
-        <div className="mb-2">
-          <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 border border-gray-200 shadow-sm">
-            <div className="text-center">
-              {!loading ? (
-                <h2 className="text-base md:text-lg font-bold text-gray-800 leading-tight break-words">
-                  {card.front}
-                </h2>
-              ) : (
-                <div className="flex items-center justify-center gap-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-500"></div>
-                  <span className="text-sm text-gray-600">
-                    Yeni soru getiriliyor...
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Second Row: Controls - Reduced padding and size */}
-        <div className="flex items-center justify-between gap-2 flex-wrap">
-          {/* Left: Back Button - Smaller */}
-          <button
-            onClick={onBackToCollections}
-            className="flex items-center gap-1 text-xs px-2 py-1 bg-white/80 hover:bg-gray-100 text-gray-700 rounded-lg  hover:shadow-sm transition-all duration-200 border border-gray-200 flex-shrink-0"
-          >
-            <HiOutlineArrowLeft className="w-3 h-6" />
-            <span className="hidden sm:inline ">Koleksiyonlar</span>
-            <span className="sm:hidden">Geri</span>
-          </button>
-
-          {/* Center: Difficulty Badge - Smaller */}
-          <div className="flex-1 flex justify-center min-w-0">
+      {/* Header Section - Tek Satır */}
+      <div className="flex-shrink-0 px-3 py-3 bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 border-b border-gray-200">
+        <div className="flex items-center justify-between gap-3">
+          {/* Sol: Zorluk Badge */}
+          <div className="flex-shrink-0">
             <div
-              className={`flex items-center gap-1 px-2 py-1 ${difficultyConfig.bgColor} ${difficultyConfig.borderColor} border rounded-lg shadow-sm`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 ${difficultyConfig.bgColor} ${difficultyConfig.borderColor} border rounded-lg shadow-sm`}
             >
-              <DifficultyIcon className={`w-3 h-3 ${difficultyConfig.color}`} />
-              <span className={`text-xs font-medium ${difficultyConfig.color}`}>
+              <DifficultyIcon className={`w-4 h-4 ${difficultyConfig.color}`} />
+              <span
+                className={`text-sm font-medium ${difficultyConfig.color} hidden sm:inline`}
+              >
                 {difficultyConfig.label}
               </span>
             </div>
           </div>
 
-          {/* Right: Progress - Smaller */}
-          <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1 rounded-lg shadow-sm">
-            {/* Sol taraf: Sayı bilgisi */}
+          {/* Orta: Soru/Front */}
+          <div className="flex-1 min-w-0 mx-2">
+            <div className="bg-white/90 backdrop-blur-sm rounded-lg px-4 py-2.5 border border-gray-200 shadow-sm">
+              <div className="text-center">
+                {!loading ? (
+                  <h2 className="text-sm sm:text-base lg:text-lg font-bold text-gray-800 leading-tight break-words line-clamp-2">
+                    {card.front}
+                  </h2>
+                ) : (
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-500"></div>
+                    <span className="text-sm text-gray-600">
+                      Yeni soru getiriliyor...
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Sağ: Bitir Butonu */}
+          <div className="flex-shrink-0">
+            <button
+              onClick={onBackToCollections}
+              className="flex items-center gap-1.5 text-sm px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg hover:shadow-md transition-all duration-200 border border-emerald-600 font-medium"
+            >
+              <HiOutlineX className="w-4 h-4" />
+              <span className="hidden sm:inline">Bitir</span>
+            </button>
           </div>
         </div>
       </div>
