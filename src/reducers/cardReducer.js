@@ -136,6 +136,22 @@ export const cardReducer = (state, action) => {
         ),
       };
 
+    case "ADD_IMAGE":
+      return {
+        ...state,
+        back: [...state.back, { id: Date.now(), type: "image", url: null }],
+      };
+
+    case "SET_IMAGE":
+      return {
+        ...state,
+        back: state.back.map((item) =>
+          item.id === action.payload.id
+            ? { ...item, url: action.payload.file }
+            : item
+        ),
+      };
+
     case "DELETE_ITEM":
       return {
         ...state,

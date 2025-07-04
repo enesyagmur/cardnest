@@ -1,6 +1,7 @@
 import ParagraphInPracticeItem from "./ParagraphInPracticeItem";
 import DescriptionInPracticeItem from "./DescriptionInPracticeItem";
 import ListInPracticeItem from "./ListInPracticeItem";
+import ImageInPracticeItem from "./ImageInPracticeItem";
 
 const PracticeCard = ({ card }) => {
   return (
@@ -15,6 +16,7 @@ const PracticeCard = ({ card }) => {
           {item.type === "description" && (
             <DescriptionInPracticeItem item={item} />
           )}
+          {item.type === "image" && <ImageInPracticeItem item={item} />}
           {item.type === "list" && <ListInPracticeItem item={item} />}
         </div>
       ))}

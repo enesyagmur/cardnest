@@ -144,6 +144,8 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
     }
   };
 
+  console.log(state);
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -247,6 +249,14 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
           >
             <span className="text-base">📄</span>
             Kısa Açıklama Ekle
+          </button>
+          <button
+            type="button"
+            onClick={() => dispatch({ type: "ADD_IMAGE" })}
+            className="flex items-center gap-2 text-sm bg-white text-blue-700 px-4 py-2.5 border border-blue-200 rounded-xl hover:bg-blue-50 hover:border-blue-300 transition-all shadow-sm hover:shadow"
+          >
+            <span className="text-base">🖼️</span>
+            Resim Ekle
           </button>
         </div>
       </div>

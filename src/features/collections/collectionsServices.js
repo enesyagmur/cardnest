@@ -13,8 +13,9 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
+import { db, storage } from "../../firebase/firebaseConfig";
 import { v4 as uuidv4 } from "uuid";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export const getCollectionsByUserId = async (userId) => {
   if (!userId) {
@@ -243,10 +244,25 @@ export const addCardToCollection = async (userId, colId, newCardData) => {
       throw new Error("Koleksiyon bulunamadı.");
     }
 
+    const backWithImages = await Promise.all(
+      newCardData.back.map(async (item) => {
+        if (item.type === "image" && item.url) {
+          const imageRef = ref(
+            storage,
+            `users/${userId}/collections/${colId}/cards/${item.id}`
+          );
+          await uploadBytes(imageRef, item.url);
+          const url = await getDownloadURL(imageRef);
+          return { ...item, url: url };
+        }
+        return item;
+      })
+    );
+
     const newCard = {
       id: uuidv4(),
       front: newCardData.front,
-      back: newCardData.back,
+      back: backWithImages,
       difficulty: "hard",
       createdAt: new Date().toISOString(),
       updatedAt: null,
