@@ -15,7 +15,12 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebaseConfig";
 import { v4 as uuidv4 } from "uuid";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 
 export const getCollectionsByUserId = async (userId) => {
   if (!userId) {
@@ -340,6 +345,26 @@ export const deleteCardFromCollection = async (userId, colId, cardId) => {
 
     const updatedCollections = [...userCollections];
     const currentCollection = updatedCollections[colIndex];
+
+    const cardToDelete = (currentCollection.cards || []).find(
+      (card) => card.id === cardId
+    );
+
+    if (cardToDelete && Array.isArray(cardToDelete.back)) {
+      for (const item of cardToDelete.back) {
+        if (item.type === "image" && typeof item.url === "string" && item.url) {
+          try {
+            const imageRef = ref(
+              storage,
+              `users/${userId}/collections/${colId}/cards/${item.id}`
+            );
+            await deleteObject(imageRef);
+          } catch (err) {
+            console.error("Storage'dan görsel silinirken hata oluştu:", err);
+          }
+        }
+      }
+    }
 
     const updatedCards = (currentCollection.cards || []).filter(
       (card) => card.id !== cardId
