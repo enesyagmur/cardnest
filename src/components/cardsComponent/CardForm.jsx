@@ -144,8 +144,6 @@ const CardForm = ({ collection, formMode, setFormMode }) => {
     }
   };
 
-  console.log(state);
-
   return (
     <form
       onSubmit={handleSubmit}

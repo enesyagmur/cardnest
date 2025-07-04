@@ -400,8 +400,33 @@ export const updateCardInCollection = async (userId, colId, cardId, values) => {
     const updatedCollections = [...userCollections];
     const currentCollection = updatedCollections[colIndex];
 
+    const backWithImages = await Promise.all(
+      (values.back || []).map(async (item) => {
+        if (
+          item.type === "image" &&
+          item.url &&
+          (item.url instanceof File || item.url instanceof Blob)
+        ) {
+          // Sadece dosya ise yükle
+          const imageRef = ref(
+            storage,
+            `users/${userId}/collections/${colId}/cards/${item.id}`
+          );
+          await uploadBytes(imageRef, item.url);
+          const imageUrl = await getDownloadURL(imageRef);
+          return { ...item, url: imageUrl };
+        }
+        // Eğer url string ise, olduğu gibi bırak
+        if (typeof item.url === "string") {
+          return item;
+        }
+        // Eğer url geçersizse (ör: boş obje), url'yi boş string yap
+        return { ...item, url: "" };
+      })
+    );
+
     const updatedCards = (currentCollection.cards || []).map((card) =>
-      card.id === cardId ? { ...card, ...values } : card
+      card.id === cardId ? { ...card, ...values, back: backWithImages } : card
     );
 
     updatedCollections[colIndex] = {
@@ -421,7 +446,11 @@ export const updateCardInCollection = async (userId, colId, cardId, values) => {
         const publicColData = publicDocSnap.data();
         const updatedPublicCards = (
           Array.isArray(publicColData.cards) ? publicColData.cards : []
-        ).map((card) => (card.id === cardId ? { ...card, ...values } : card));
+        ).map((card) =>
+          card.id === cardId
+            ? { ...card, ...values, back: backWithImages }
+            : card
+        );
 
         await updateDoc(publicDocRef, {
           cards: updatedPublicCards,
@@ -432,7 +461,7 @@ export const updateCardInCollection = async (userId, colId, cardId, values) => {
     return {
       colId,
       cardId,
-      updatedCard: values,
+      updatedCard: { ...values, back: backWithImages },
       visibility: currentCollection.visibility,
     };
   } catch (err) {
