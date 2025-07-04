@@ -1,34 +1,43 @@
 import React from "react";
-import { HiOutlineViewList, HiOutlineChevronRight } from "react-icons/hi";
 
 const ListInPracticeItem = ({ item }) => {
   return (
-    <div className="w-full bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-xl border border-purple-200 shadow-sm hover:shadow-md transition-all duration-200">
-      {/* Header with Icon */}
-      <div className="flex items-center gap-3 mb-4">
-        <div className="flex-shrink-0 w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center border border-purple-200">
-          <HiOutlineViewList className="w-4 h-4 text-purple-600" />
-        </div>
-        <h3 className="text-base font-bold text-gray-800 leading-tight">
-          {item.listTitle}
-        </h3>
-      </div>
-
-      {/* List Items */}
-      <div className="space-y-2">
-        {item.listArray.map((dot) => (
-          <div
-            key={dot.id}
-            className="flex items-start gap-3 p-2 bg-white/70 rounded-lg border border-purple-100 hover:bg-white/90 transition-colors duration-150"
+    <div
+      key={item.id}
+      className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200"
+    >
+      <div className="flex items-start gap-3">
+        <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <svg
+            className="w-3 h-3 text-green-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            <div className="flex-shrink-0 w-5 h-5 bg-purple-100 rounded-full flex items-center justify-center mt-0.5">
-              <HiOutlineChevronRight className="w-3 h-3 text-purple-600" />
-            </div>
-            <p className="text-sm text-gray-700 leading-relaxed flex-1">
-              {dot.value}
-            </p>
-          </div>
-        ))}
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 10h16M4 14h16M4 18h16"
+            />
+          </svg>
+        </div>
+        <div className="flex-1">
+          <h4 className="text-sm font-semibold text-gray-800 mb-3">
+            {item.listTitle}
+          </h4>
+          <ul className="space-y-2">
+            {item.listArray.map((dot) => (
+              <li
+                key={dot.id}
+                className="flex items-start gap-2 text-sm text-gray-700"
+              >
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                <span className="leading-relaxed">{dot.value}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

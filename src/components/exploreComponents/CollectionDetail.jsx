@@ -38,7 +38,7 @@ const CollectionDetail = ({ collection, onBack }) => {
     }
   };
   return (
-    <div className="w-full min-h-[590px] bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+    <div className="w-full h-[590px] bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg border border-gray-100 ">
       {/* Header Section */}
       <div className="bg-white border-b border-gray-100 p-6">
         <div className="flex items-center justify-between mb-4">
@@ -68,7 +68,7 @@ const CollectionDetail = ({ collection, onBack }) => {
           </div>
         </div>
 
-        <div className="text-center space-y-2">
+        <div className="text-center space-y-2 ">
           <h2 className="text-3xl font-bold text-gray-800 capitalize">
             {collection.title}
           </h2>
@@ -79,7 +79,7 @@ const CollectionDetail = ({ collection, onBack }) => {
       </div>
 
       {/* Cards Section */}
-      <div className="p-6">
+      <div className="p-6 ">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
             <BsCardText className="w-4 h-4 text-purple-600" />
@@ -87,7 +87,7 @@ const CollectionDetail = ({ collection, onBack }) => {
           <h3 className="text-xl font-semibold text-gray-800">Kartlar</h3>
         </div>
 
-        <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+        <div className="space-y-4 h-[300px] overflow-y-auto pr-2">
           {collection.cards.map((card, index) => (
             <div
               key={card.id}
